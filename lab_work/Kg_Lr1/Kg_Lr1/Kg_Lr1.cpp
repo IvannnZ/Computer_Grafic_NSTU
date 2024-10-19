@@ -12,13 +12,13 @@ void DrawGrid(HDC hdc, int numSquares, int squareSize) {
     for (int i = 0; i <= numSquares; i++) {
         MoveToEx(hdc, x + i * squareSize, y, NULL);
         LineTo(hdc, x + i * squareSize, y + numSquares * squareSize);
-        Sleep(10);
+        //Sleep(10);
     }
 
     for (int i = 0; i <= numSquares; i++) {
         MoveToEx(hdc, x, y + i * squareSize, NULL); 
         LineTo(hdc, x + numSquares * squareSize, y + i * squareSize);
-        Sleep(10);
+        //Sleep(10);
     }
 }
 
