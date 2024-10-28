@@ -1,8 +1,7 @@
-File = prog.cpp
-OutputFile = myprogram.exe
+File = main.cpp
+OutputFile = main.exe
 
 CC = x86_64-w64-mingw32-g++ -o #myprogram.exe myprogram.cpp
-CArgs = 
 CFlags = -static -mwindows
 
 RunProgram = wine
