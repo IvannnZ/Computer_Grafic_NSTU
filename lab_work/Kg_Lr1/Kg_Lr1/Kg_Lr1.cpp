@@ -1,6 +1,85 @@
 ﻿// Kg_Lr1.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
 
+
+
+
+#include <iostream>
+#include <windows.h>                     //Два файла с определениями, макросами
+#include <windowsx.h>                  //и прототипами функций Windows
+//глобальные переменные для рисования окна
+HINSTANCE hInstance; HINSTANCE hPrevInst;
+LPSTR lpszArgs; int nWinMode;
+/*Прототип используемой в программе оконной функции */
+LRESULT CALLBACK WindowFunc(HWND, UINT, WPARAM, LPARAM);
+/*Произвольный класс*/
+class exemple
+{
+public:
+    /*Главная функция приложения WinMain*/
+    int  WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst,
+        LPSTR lpszArgs, int nWinMode) {
+        MSG msg;                    //Структура msg типа MSG для получения сообщений Windows
+        WNDCLASS wc;                                  //Структура wc типа WNDCLASS для задания 
+        //характеристик окна
+/*Заполнение структуры wc типа WNDCLASS для описания класса главного окна*/
+        ZeroMemory(&wc, sizeof(wc));                             //Обнуление всех членов структуры wc
+        wc.hInstance = hInstance;                                       // Дескриптор приложения
+        wc.lpszClassName = L"aaaa";                           // Имя класса окна
+        wc.lpfnWndProc = WindowFunc;                           // Определение оконной функции 
+        wc.style = 0;                                                            // Стиль по умолчанию
+        wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);           //Стандартная пиктограмма
+        wc.hCursor = LoadCursor(NULL, IDC_ARROW);              //Стандартный курсор мыши
+        wc.hbrBackground = GetStockBrush(WHITE_BRUSH);         // Белый фон окна
+        wc.lpszMenuName = NULL;                                  // Без меню
+        wc.cbClsExtra = 0;                                                  // Без дополнительной информации
+        wc.cbWndExtra = 0;                                                // Без дополнительной информации
+        /*Регистрация класса главного окна*/
+        if (!RegisterClass(&wc))                                         //Если класс окна не регистрируется
+        {                                   
+            return 1;
+        }                                                           // возвращаем код ошибки
+/*Создание главного окна и отображение его на мониторе*/
+        ShowWindow(CreateWindow(L"dsdsds", L"prog", WS_OVERLAPPEDWINDOW, 100, 100, 500, 100, HWND_DESKTOP, NULL, hInstance, NULL), SW_SHOWNORMAL);       //  Вызов функции API
+        // для отображения окна 
+/*Организация цикла обнаружения сообщений*/
+        while (GetMessage(&msg, NULL, 0, 0))               // Если есть сообщение, передать его
+            // нашему приложению
+            DispatchMessage(&msg);                               //и вызвать оконную функцию WindowFunc 
+        return 0;                                                     //После выхода из цикла вернуться в Windows
+    }                                                                    //Конец функции WinMain
+
+};
+
+/*Оконная функция WindowFunc главного окна, вызываемая Windows и получающая в качестве параметра сообщение из очереди сообщений данного приложения */
+LRESULT CALLBACK WindowFunc(HWND hwnd, UINT message,
+    WPARAM wParam, LPARAM lParam) {
+    switch (message) {                                      // выбор по значению сообщения (message)
+    case WM_DESTROY:                           //При завершении приложения пользователем
+        PostQuitMessage(0);                           //вызвать функцию API завершения приложения
+        break;
+    default:                                    // Все сообщения, не обрабатываемые данной функцией,
+        // направляются на обработку по умолчанию 
+        return DefWindowProc(hwnd, message, wParam, lParam);
+    }                                                           //Конец оператора switch
+    return 0;
+}
+//главная функция консольного приложения
+int main()
+{
+
+    //setlocale(LC_ALL, "Russian_Russia.1251");//изменения кодировки для вывода русского языка 
+//SYSTEMCRASH: //точка возврата
+    class exemple val;
+        val.WinMain(hInstance, hPrevInst,
+            lpszArgs, nWinMode);
+    
+
+
+}
+
+
+/*
 #include <iostream>
 #include <windows.h>
 #include <windowsx.h>
@@ -88,7 +167,7 @@ int main()
     ReleaseDC(hwnd, hdc);
 
     return 0;*/
-}
+//}
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
 // Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
