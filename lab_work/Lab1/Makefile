@@ -16,7 +16,7 @@ Compile:
 
 Run: Compile
 	$(RunComand)$(OutputFile)
-	Clear
+
 
 Clear:
 	rm $(OutputFile)
