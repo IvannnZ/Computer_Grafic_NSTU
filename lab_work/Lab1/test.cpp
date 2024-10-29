@@ -85,3 +85,19 @@ int main() {
   SDL_Quit();
   return 0;
 }
+
+
+//  bool running = true;
+//  while (running) {
+//    SDL_Event event;
+//    while (SDL_PollEvent(&event)) {
+//      if (event.type == SDL_QUIT) {
+//        running = false;
+//      }
+//    }
+//
+//    DrawGrid(renderer, 10, 30);
+//    DrawPoint(renderer, 1, 2, 30, 10);
+//
+//     SDL_RenderPresent(renderer);
+//  }

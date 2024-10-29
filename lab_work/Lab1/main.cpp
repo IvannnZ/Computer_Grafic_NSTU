@@ -1,29 +1,10 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
-void DrawGrid(SDL_Renderer *renderer, int numSquares, int squareSize) {
-  // Рисуем вертикальные линии
-  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // Красный цвет
-  for (int i = 0; i <= numSquares; i++) {
-    SDL_RenderDrawLine(renderer, i * squareSize, 0, i * squareSize,
-                       numSquares * squareSize);
-    SDL_RenderDrawLine(renderer, 0, i * squareSize, numSquares * squareSize,
-                       i * squareSize);
-  }
-  SDL_RenderPresent(renderer);
-}
+void DrawGrid(SDL_Renderer *renderer, int numSquares, int squareSize);
 
-
-void DrawPoint(SDL_Renderer* renderer, int x, int y, int squareSize, int numSquares) {
-  SDL_Rect rect = {x * squareSize, numSquares * squareSize - (y + 1) * squareSize, squareSize, squareSize}; // Прямоугольник (x, y, ширина, высота)
-  SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Зеленый цвет
-  SDL_RenderFillRect(renderer, &rect);
-
-  // Отображение изменений
-  SDL_RenderPresent(renderer);
-
-}
-
+void DrawPoint(SDL_Renderer *renderer, int x, int y, int squareSize,
+               int numSquares);
 
 int main() {
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -52,12 +33,31 @@ int main() {
   SDL_RenderClear(renderer);
 
   DrawGrid(renderer, 10, 30);
+  DrawPoint(renderer, 1, 2, 30, 10);
+  SDL_RenderPresent(renderer);
   int a;
-  std::cin>>a;
-  // Рисование прямоугольника
-
+  std::cin >> a;
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
   SDL_Quit();
   return 0;
+}
+
+void DrawGrid(SDL_Renderer *renderer, int numSquares, int squareSize) {
+  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+  for (int i = 0; i <= numSquares; i++) {
+    SDL_RenderDrawLine(renderer, i * squareSize, 0, i * squareSize,
+                       numSquares * squareSize);
+    SDL_RenderDrawLine(renderer, 0, i * squareSize, numSquares * squareSize,
+                       i * squareSize);
+  }
+}
+
+void DrawPoint(SDL_Renderer *renderer, int x, int y, int squareSize,
+               int numSquares) {
+  SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+  SDL_Rect rect = {x * squareSize,
+                   numSquares * squareSize - (y + 1) * squareSize, squareSize,
+                   squareSize};
+  SDL_RenderFillRect(renderer, &rect);
 }
