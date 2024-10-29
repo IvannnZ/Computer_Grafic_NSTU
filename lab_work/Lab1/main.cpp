@@ -29,7 +29,7 @@ int main() {
 
   SDL_Window *window =
       SDL_CreateWindow("SDL Window", SDL_WINDOWPOS_CENTERED,
-                       SDL_WINDOWPOS_CENTERED, numSquares*squareSize, numSquares*squareSize, SDL_WINDOW_SHOWN);
+                       SDL_WINDOWPOS_CENTERED, numSquares*squareSize+1, numSquares*squareSize+1, SDL_WINDOW_SHOWN);
   if (!window) {
     std::cerr << "Ошибка создания окна: " << SDL_GetError() << std::endl;
     SDL_Quit();
