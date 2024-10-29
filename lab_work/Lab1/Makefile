@@ -1,10 +1,10 @@
-File = test.cpp
-OutputFile = main.exe
+File = main.cpp
+OutputFile = main
 
-CC = x86_64-w64-mingw32-g++ #myprogram.exe myprogram.cpp
-CFlags = -static -mwindows
+CC = g++
+CFlags = -lSDL2
 
-RunProgram = wine
+RunComand = ./
 
 all: Compile Run Clear
 
@@ -12,7 +12,7 @@ Compile:
 	$(CC) -o $(OutputFile) $(File) $(CFlags)
 
 Run: Compile
-	$(RunProgram) $(OutputFile)
+	$(RunComand)$(OutputFile)
 	Clear
 
 Clear:
