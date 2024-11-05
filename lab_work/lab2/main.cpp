@@ -20,7 +20,7 @@ int main() {
   int numSquares;     // Количество квадратов в сетке
   int squareSize;     // Размер одного квадрата
   int pointX, pointY; // Координаты точки
-                      //  int l_x_s, l_x_e, l_y_s, l_y_e;
+  int l_x_s, l_x_e, l_y_s, l_y_e;
   int centerX, centerY, radius;
 
   std::cout << "Enter number of squares in grid: ";
@@ -31,11 +31,10 @@ int main() {
   //    << "Enter the coordinates of the point (X and Y separated by a space): ";
   //std::cin >> pointX >> pointY;
 
-  //  std::cout << "Enter coordinate line like l_x_s, l_y_s, l_x_e, l_y_e: ";
-  //  std::cin >> l_x_s >> l_y_s >> l_x_e >> l_y_e;
-
-  std::cout << "Enter center circle x, y, and radius: ";
-  std::cin >> centerX >> centerY >> radius;
+  std::cout << "Enter coordinate line like l_x_s, l_y_s, l_x_e, l_y_e: ";
+  std::cin >> l_x_s >> l_y_s >> l_x_e >> l_y_e;
+//  std::cout << "Enter center circle x, y, and radius: ";
+//  std::cin >> centerX >> centerY >> radius;
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
     std::cerr << "Ошибка инициализации SDL: " << SDL_GetError() << std::endl;
     return 1;
@@ -63,14 +62,14 @@ int main() {
   SDL_RenderClear(renderer);
   Draw_grid(renderer, numSquares, squareSize);
 //  Draw_point(renderer, pointX, pointY, squareSize, numSquares);
-//  Draw_line_digital_differential_analyzer(renderer, l_x_s, l_y_s, l_x_e, l_y_e,
-//                                          squareSize, numSquares);
+  Draw_line_digital_differential_analyzer(renderer, l_x_s, l_y_s, l_x_e, l_y_e,
+                                          squareSize, numSquares);
 //  DrawlineBresenham(renderer, l_x_s, l_y_s, l_x_e, l_y_e, squareSize,
 //                    numSquares);
 
 
-  DrawCircleBresenham(renderer, centerX, centerY, radius, squareSize,
-                      numSquares);
+//  DrawCircleBresenham(renderer, centerX, centerY, radius, squareSize,
+//                      numSquares);
 
   SDL_RenderPresent(renderer);
   int a;
