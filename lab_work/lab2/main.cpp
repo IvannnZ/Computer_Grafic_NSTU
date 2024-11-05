@@ -12,66 +12,16 @@ void Draw_line_digital_differential_analyzer(SDL_Renderer *renderer, int x_s, in
 void DrawlineBresenham(SDL_Renderer *renderer, int x_s, int y_s, int x_e,
                        int y_e, int squareSize, int numSquares);
 
-void DrawSmoothPoint(SDL_Renderer *renderer, int x, int y, int squareSize,
-                     int numSquares, float alpha) {
-  // Вычисляем альфа-канал для сглаживания
-  int alphaChannel = static_cast<int>(255 * alpha);
-
-  // Устанавливаем цвет сглаживания (может быть цвет линии с уменьшенной
-  // прозрачностью)
-  SDL_SetRenderDrawColor(renderer, 0, 255, 0, alphaChannel);
-
-  // Преобразуем координаты и рисуем квадрат, чтобы сгладить линию
-  SDL_Rect rect = {x * squareSize,
-                   numSquares * squareSize - (y + 1) * squareSize, squareSize,
-                   squareSize};
-  SDL_RenderFillRect(renderer, &rect);
-}
-
-void DrawlineBresenhamSmooth(SDL_Renderer *renderer, int x_s, int y_s, int x_e,
-                             int y_e, int squareSize, int numSquares) {
-  int dx = abs(x_e - x_s);
-  int dy = abs(y_e - y_s);
-  int sx = (x_s < x_e) ? 1 : -1; // Направление изменения x
-  int sy = (y_s < y_e) ? 1 : -1; // Направление изменения y
-  int err = dx - dy;
-
-  int x = x_s;
-  int y = y_s;
-
-  while (true) {
-    // Основная точка на линии
-    Draw_point(renderer, x, y, squareSize, numSquares);
-
-    if (x == x_e && y == y_e)
-      break;
-
-    int e2 = 2 * err;
-
-    // Сглаживание по x
-    if (e2 > -dy) {
-      err -= dy;
-      x += sx;
-      // Дополнительная точка для сглаживания
-      DrawSmoothPoint(renderer, x, y + sy, squareSize, numSquares, 0.5);
-    }
-
-    // Сглаживание по y
-    if (e2 < dx) {
-      err += dx;
-      y += sy;
-      // Дополнительная точка для сглаживания
-      DrawSmoothPoint(renderer, x + sx, y, squareSize, numSquares, 0.5);
-    }
-  }
-}
+void DrawCircleBresenham(SDL_Renderer *renderer, int centerX, int centerY,
+                         int radius, int squareSize, int numSquares);
 
 int main() {
 
   int numSquares;     // Количество квадратов в сетке
   int squareSize;     // Размер одного квадрата
   int pointX, pointY; // Координаты точки
-  int l_x_s, l_x_e, l_y_s, l_y_e;
+                      //  int l_x_s, l_x_e, l_y_s, l_y_e;
+  int centerX, centerY, radius;
 
   std::cout << "Enter number of squares in grid: ";
   std::cin >> numSquares;
@@ -81,9 +31,11 @@ int main() {
   //    << "Enter the coordinates of the point (X and Y separated by a space): ";
   //std::cin >> pointX >> pointY;
 
-  std::cout << "Enter coordinate line like l_x_s, l_y_s, l_x_e, l_y_e: ";
-  std::cin >> l_x_s >> l_y_s >> l_x_e >> l_y_e;
+  //  std::cout << "Enter coordinate line like l_x_s, l_y_s, l_x_e, l_y_e: ";
+  //  std::cin >> l_x_s >> l_y_s >> l_x_e >> l_y_e;
 
+  std::cout << "Enter center circle x, y, and radius: ";
+  std::cin >> centerX >> centerY >> radius;
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
     std::cerr << "Ошибка инициализации SDL: " << SDL_GetError() << std::endl;
     return 1;
@@ -111,12 +63,15 @@ int main() {
   SDL_RenderClear(renderer);
   Draw_grid(renderer, numSquares, squareSize);
 //  Draw_point(renderer, pointX, pointY, squareSize, numSquares);
-  // Draw_line_digital_differential_analyzer(renderer, l_x_s, l_y_s, l_x_e,
-  // l_y_e, squareSize, numSquares);
-  //  DrawlineBresenham(renderer, l_x_s, l_y_s, l_x_e, l_y_e, squareSize,
-  //                    numSquares);
-  DrawlineBresenhamSmooth(renderer, l_x_s, l_y_s, l_x_e, l_y_e, squareSize,
-                          numSquares);
+//  Draw_line_digital_differential_analyzer(renderer, l_x_s, l_y_s, l_x_e, l_y_e,
+//                                          squareSize, numSquares);
+//  DrawlineBresenham(renderer, l_x_s, l_y_s, l_x_e, l_y_e, squareSize,
+//                    numSquares);
+
+
+  DrawCircleBresenham(renderer, centerX, centerY, radius, squareSize,
+                      numSquares);
+
   SDL_RenderPresent(renderer);
   int a;
   std::cin >> a;
@@ -209,5 +164,34 @@ void DrawlineBresenham(SDL_Renderer *renderer, int x_s, int y_s, int x_e,
       // направления sx
       Draw_point(renderer, x - sx, y, squareSize, numSquares);
     }
+  }
+}
+
+void DrawCircleBresenham(SDL_Renderer *renderer, int centerX, int centerY,
+                         int radius, int squareSize, int numSquares) {
+  int x = 0;
+  int y = radius;
+  int d = 3 - 2 * radius;
+
+  // Рисуем окружность, используя симметрию
+  while (y >= x) {
+    // Отображаем точки на 8 секторах
+    Draw_point(renderer, centerX + x, centerY + y, squareSize, numSquares);
+    Draw_point(renderer, centerX - x, centerY + y, squareSize, numSquares);
+    Draw_point(renderer, centerX + x, centerY - y, squareSize, numSquares);
+    Draw_point(renderer, centerX - x, centerY - y, squareSize, numSquares);
+    Draw_point(renderer, centerX + y, centerY + x, squareSize, numSquares);
+    Draw_point(renderer, centerX - y, centerY + x, squareSize, numSquares);
+    Draw_point(renderer, centerX + y, centerY - x, squareSize, numSquares);
+    Draw_point(renderer, centerX - y, centerY - x, squareSize, numSquares);
+
+    // Обновляем параметры в зависимости от положения
+    if (d <= 0) {
+      d = d + 4 * x + 6;
+    } else {
+      d = d + 4 * (x - y) + 10;
+      y--;
+    }
+    x++;
   }
 }
