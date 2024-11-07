@@ -16,8 +16,7 @@ My_graphics ::My_graphics(size_t numSquares, size_t squareSize) {
     throw "Ошибка инициализации SDL: ";
   }
 
-  SDL_Window *window =
-      SDL_CreateWindow("Lab 2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+  window = SDL_CreateWindow("Lab 2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                        numSquares * squareSize + 1, numSquares * squareSize + 1,
                        SDL_WINDOW_SHOWN);
   if (!window) {
@@ -25,8 +24,7 @@ My_graphics ::My_graphics(size_t numSquares, size_t squareSize) {
     throw "Ошибка создания окна: ";
   }
 
-  SDL_Renderer *renderer =
-      SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   if (!renderer) {
     SDL_DestroyWindow(window);
     SDL_Quit();
