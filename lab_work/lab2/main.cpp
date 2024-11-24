@@ -18,13 +18,13 @@
 
 int main() {
 
-  int numSquares;     // Количество квадратов в сетке
-  int squareSize;     // Размер одного квадрата
+  int numSquares=20;     // Количество квадратов в сетке
+  int squareSize=20;     // Размер одного квадрата
 
   std::cout << "Enter number of squares in grid: ";
-  std::cin >> numSquares;
+//  std::cin >> numSquares;
   std::cout << "Enter the size of one square: ";
-  std::cin >> squareSize;
+//  std::cin >> squareSize;
 
   std::cout << "1-dot 2-line 3-circle";
 //  int chouse;
@@ -33,6 +33,7 @@ int main() {
   window.refresh_screen();
   window.Draw_grid();
   window.Draw_point(1,1);
+//  window.DrawlineBresenham(1, 1,20, 7);
   window.render();
 
 
@@ -66,7 +67,6 @@ int main() {
 //    std::cin >> centerX >> centerY >> radius;
 //    window.DrawCircleBresenham(centerX, centerY, radius);
 //  }
-  window.render();
   int a;
   std::cin >> a;
 
