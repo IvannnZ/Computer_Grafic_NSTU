@@ -1,7 +1,7 @@
 #to install SDL2
 #$sudo apt install libsdl2-dev
 
-File = main.cpp  My_grafcs.cpp
+File = main.cpp  My_grafcs.cpp My_grafcs.h
 OutputFile = main
 
 CC = g++

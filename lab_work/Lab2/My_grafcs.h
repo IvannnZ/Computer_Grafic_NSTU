@@ -2,13 +2,15 @@
 
 class My_graphics  {
 private:
-  int numSquares;
-  int squareSize;
+  int numSquares{};
+  int squareSize{};
   SDL_Window *window;
   SDL_Renderer *renderer;
 
+  inline void lineHelp(int x, int y, bool swap);
+
 public:
-  My_graphics (size_t numSquares, size_t squareSize);
+  My_graphics (int numSquares, int squareSize);
 
   ~My_graphics ();
 
@@ -40,6 +42,11 @@ public:
 
   void DrawCircleBresenham(int centerX, int centerY, int radius,
                            SDL_Color color);
+
+
+  void DLB(int x_s, int y_s, int x_e, int y_e);
+
+  void DLB(int x_s, int y_s, int x_e, int y_e, SDL_Color color);
 
   SDL_Color create_color(int r, int g, int b, int a);
 };

@@ -39,8 +39,8 @@ int main() {
   //     ";
   // std::cin >> pointX >> pointY;
 
-  std::cout << "Enter coordinate line like l_x_s, l_y_s, l_x_e, l_y_e: ";
-  std::cin >> l_x_s >> l_y_s >> l_x_e >> l_y_e;
+//  std::cout << "Enter coordinate line like l_x_s, l_y_s, l_x_e, l_y_e: ";
+//  std::cin >> l_x_s >> l_y_s >> l_x_e >> l_y_e;
   //  std::cout << "Enter center circle x, y, and radius: ";
   //  std::cin >> centerX >> centerY >> radius;
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -70,7 +70,7 @@ int main() {
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
   SDL_RenderClear(renderer);
   Draw_grid(renderer, numSquares, squareSize);
-  //  Draw_point(renderer, pointX, pointY, squareSize, numSquares);
+    Draw_point(renderer, 1,1, squareSize, numSquares);
 
   //  Draw_line_digital_differential_analyzer(renderer, l_x_s, l_y_s, l_x_e,
   //  l_y_e, squareSize, numSquares);
@@ -78,7 +78,7 @@ int main() {
   //  DrawlineBresenham(renderer, l_x_s, l_y_s, l_x_e, l_y_e, squareSize,
   //                    numSquares);
 
-  DLB(renderer, l_x_s, l_y_s, l_x_e, l_y_e, squareSize, numSquares);
+//  DLB(renderer, l_x_s, l_y_s, l_x_e, l_y_e, squareSize, numSquares);
 
   //  DrawCircleBresenham(renderer, centerX, centerY, radius, squareSize,
   //                      numSquares);

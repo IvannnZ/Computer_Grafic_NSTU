@@ -11,23 +11,20 @@ SDL_Color My_graphics ::create_color(int r, int g, int b, int a) {
   return color;
 }
 
-My_graphics ::My_graphics(int numSquares, int squareSize) {
-  std::cout<<"1";
+My_graphics ::My_graphics(int numSquares, int squareSize):numSquares(numSquares), squareSize(squareSize) {
+
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
     throw "Ошибка инициализации SDL: ";
   }
-  std::cout<<"2";
 
   window = SDL_CreateWindow("SDL Window", SDL_WINDOWPOS_CENTERED,
                             SDL_WINDOWPOS_CENTERED, numSquares * squareSize + 1,
                             numSquares * squareSize + 1, SDL_WINDOW_SHOWN);
-  std::cout<<"3";
 
   if (!window) {
     SDL_Quit();
     throw "Ошибка создания окна: ";
   }
-  std::cout<<"4";
 
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   if (!renderer) {
@@ -35,7 +32,6 @@ My_graphics ::My_graphics(int numSquares, int squareSize) {
     SDL_Quit();
     throw "Ошибка создания рендерера: ";
   }
-  std::cout<<"end create window";
 }
 
 My_graphics::~My_graphics(){
@@ -44,10 +40,11 @@ My_graphics::~My_graphics(){
   SDL_Quit();
 }
 
-void My_graphics ::Draw_grid() { Draw_grid(create_color(0, 0, 0, 255)); }
+void My_graphics ::Draw_grid() { Draw_grid(create_color(255, 255, 255, 255)); }
 
 void My_graphics ::Draw_grid(SDL_Color color) {
   SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+
   for (int i = 0; i <= numSquares; i++) {
     SDL_RenderDrawLine(renderer, i * squareSize, 0, i * squareSize,
                        numSquares * squareSize);
@@ -112,6 +109,8 @@ void My_graphics::DrawlineBresenham(int x_s, int y_s, int x_e, int y_e,
                                     SDL_Color color) {
 
   SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+
+  //  SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
 
   int dx = abs(x_e - x_s);
   int dy = abs(y_e - y_s);
@@ -193,3 +192,64 @@ void My_graphics::refresh_screen(SDL_Color color) {
 }
 
 void My_graphics::render() { SDL_RenderPresent(renderer); }
+
+
+
+void My_graphics::DLB(int x1, int y1, int x2, int y2) {
+
+  if (x1 == x2 && y1 == y2) {
+    Draw_point(x1, y1);
+
+    return;
+  }
+  int dx = abs(x2 - x1);
+  int dy = abs(y2 - y1);
+  bool swap = false;
+  if (dy > dx) {
+    swap = true;
+    int z = x1;
+    x1 = y1;
+    y1 = z;
+    z = x2;
+    x2 = y2;
+    y2 = z;
+    z = dx;
+    dx = dy;
+    dy = z;
+  }
+  int sx = x2 >= x1 ? 1 : -1;
+  int sy = y2 >= y1 ? 1 : -1;
+  float t = numSquares * (float)dy / dx;
+  float w = numSquares - t;
+  float d = numSquares / 2.0;
+
+  int i = dx + 1;
+  if (!t) {
+    while (i--) {
+      lineHelp(x1, y1, swap);
+      x1 += sx;
+    }
+    return;
+  }
+  lineHelp(x1, y1, swap);
+  while (--i) {
+    if (d >= w) {
+      d -= w;
+      y1 += sy;
+      lineHelp(x1, y1, swap);
+      x1 += sx;
+    } else {
+      d += t;
+      x1 += sx;
+    }
+    lineHelp(x1, y1, swap);
+    //    lineHelp(hDC, x1, sx, y1, size, d, swap);
+  }
+}
+inline void My_graphics::lineHelp(int x, int y, bool swap) {
+
+  if (swap)
+    Draw_point(y, x);
+  else
+    Draw_point(x, y);
+}
