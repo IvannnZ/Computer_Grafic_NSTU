@@ -11,16 +11,16 @@ SDL_Color My_graphics ::create_color(int r, int g, int b, int a) {
   return color;
 }
 
-My_graphics ::My_graphics(size_t numSquares, size_t squareSize) {
+My_graphics ::My_graphics(int numSquares, int squareSize) {
   std::cout<<"1";
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
     throw "Ошибка инициализации SDL: ";
   }
   std::cout<<"2";
 
-  window = SDL_CreateWindow("Lab 2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                       numSquares * squareSize + 1, numSquares * squareSize + 1,
-                       SDL_WINDOW_SHOWN);
+  window = SDL_CreateWindow("SDL Window", SDL_WINDOWPOS_CENTERED,
+                            SDL_WINDOWPOS_CENTERED, numSquares * squareSize + 1,
+                            numSquares * squareSize + 1, SDL_WINDOW_SHOWN);
   std::cout<<"3";
 
   if (!window) {

@@ -8,7 +8,7 @@ private:
   SDL_Renderer *renderer;
 
 public:
-  My_graphics (size_t numSquares, size_t squareSize);
+  My_graphics (int numSquares, int squareSize);
 
   ~My_graphics ();
 
