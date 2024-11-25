@@ -143,8 +143,6 @@ void My_graphics::DrawlineBresenham(int x_s, int y_s, int x_e, int y_e,
       err -= dy;
       x += dir_x;
     }
-
-
   }
 }
 
