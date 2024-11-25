@@ -114,8 +114,8 @@ void My_graphics::DrawlineBresenham(int x_s, int y_s, int x_e, int y_e,
 
   int dx = abs(x_e - x_s);
   int dy = abs(y_e - y_s);
-  int sx = (x_s < x_e) ? 1 : -1; // Направление изменения x
-  int sy = (y_s < y_e) ? 1 : -1; // Направление изменения y
+  int dir_x = (x_s < x_e) ? 1 : -1; // Направление изменения x
+  int dir_y = (y_s < y_e) ? 1 : -1; // Направление изменения y
   int err = dx - dy;
 
   int x = x_s;
@@ -134,18 +134,14 @@ void My_graphics::DrawlineBresenham(int x_s, int y_s, int x_e, int y_e,
     // Двигаемся по оси x
     if (e2 > -dy) {
       err -= dy;
-      x += sx;
+      x += dir_x;
     }
 
     // Двигаемся по оси y
     if (e2 < dx) {
       err += dx;
-      y += sy;
-
-      // Рисуем дополнительную точку для создания ступеньки
-      // Рисуем её справа или слева от текущей точки, в зависимости от
-      // направления sx
-      Draw_point(x - sx, y, color);
+      y += dir_y;
+      Draw_point(x - dir_x, y, color);
     }
   }
 }
@@ -202,35 +198,29 @@ void My_graphics::DLB(int x1, int y1, int x2, int y2, SDL_Color color) {
   SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
   if (x1 == x2 && y1 == y2) {
     Draw_point(x1, y1);
-
     return;
   }
+
   int dx = abs(x2 - x1);
   int dy = abs(y2 - y1);
   bool swap = false;
   if (dy > dx) {
     swap = true;
-    int z = x1;
-    x1 = y1;
-    y1 = z;
-    z = x2;
-    x2 = y2;
-    y2 = z;
-    z = dx;
-    dx = dy;
-    dy = z;
+    std::swap(x1, y1);
+    std::swap(x2, y2);
+    std::swap(dx, dy);
   }
-  int sx = x2 >= x1 ? 1 : -1;
-  int sy = y2 >= y1 ? 1 : -1;
-  float t = numSquares * (float)dy / dx;
-  float w = numSquares - t;
-  float d = numSquares / 2.0;
+  int dir_x = x2 >= x1 ? 1 : -1;
+  int dir_y = y2 >= y1 ? 1 : -1;
+  float t = (float)numSquares * (float)dy / (float)dx;
+  float w = (float)numSquares - t;
+  float d = (float)numSquares / (float)2;
 
   int i = dx + 1;
   if (!t) {
     while (i--) {
       lineHelp(x1, y1, swap);
-      x1 += sx;
+      x1 += dir_x;
     }
     return;
   }
@@ -238,15 +228,14 @@ void My_graphics::DLB(int x1, int y1, int x2, int y2, SDL_Color color) {
   while (--i) {
     if (d >= w) {
       d -= w;
-      y1 += sy;
+      y1 += dir_y;
       lineHelp(x1, y1, swap);
-      x1 += sx;
+      x1 += dir_x;
     } else {
       d += t;
-      x1 += sx;
+      x1 += dir_x;
     }
     lineHelp(x1, y1, swap);
-    //    lineHelp(hDC, x1, sx, y1, size, d, swap);
   }
 }
 inline void My_graphics::lineHelp(int x, int y, bool swap) {
