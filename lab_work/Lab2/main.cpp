@@ -32,8 +32,8 @@ int main() {
     break;
   case 2:
 
-    std::cout << "1 - Draw_line_digital_differential_analyzer\n 2 - "
-                 "DrawlineBresenham";
+    std::cout << "1 - Draw_line_digital_differential_analyzer\n2 - "
+                 "DrawlineBresenham: ";
     std::cin >> chouse;
     int l_x_s, l_x_e, l_y_s, l_y_e;
     std::cout << "Enter coordinate line like l_x_s, l_y_s, l_x_e, l_y_e: ";

@@ -86,12 +86,12 @@ void My_graphics ::Draw_line_digital_differential_analyzer(int x_s, int y_s,
   int steps = std::max(dx, dy);
 
   // Определяем приращения для x и y
-  float x_inc = dx / static_cast<float>(steps);
-  float y_inc = dy / static_cast<float>(steps);
+  float x_inc = (float)dx / (float)steps;
+  float y_inc = (float)dy / (float)steps;
 
   // Начальные координаты
-  float x = x_s;
-  float y = y_s;
+  float x = (float)x_s;
+  float y = (float)y_s;
 
   // Рисуем пиксель на каждом шаге
   for (int i = 0; i <= steps; i++) {
@@ -131,18 +131,20 @@ void My_graphics::DrawlineBresenham(int x_s, int y_s, int x_e, int y_e,
 
     int e2 = 2 * err;
 
+    // Двигаемся по оси y
+    if (e2 < dx) {
+      err += dx;
+      y += dir_y;
+      Draw_point(x, y, color);
+    }
+
     // Двигаемся по оси x
     if (e2 > -dy) {
       err -= dy;
       x += dir_x;
     }
 
-    // Двигаемся по оси y
-    if (e2 < dx) {
-      err += dx;
-      y += dir_y;
-      Draw_point(x - dir_x, y, color);
-    }
+
   }
 }
 
