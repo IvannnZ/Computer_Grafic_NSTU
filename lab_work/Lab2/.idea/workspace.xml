@@ -23,11 +23,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd4da93c-89ff-4a73-8503-e9cbc25bb5b4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.~lock.ЛР2-3.docx#" beforeDir="false" afterPath="$PROJECT_DIR$/.~lock.ЛР2-3.docx#" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/My_grafcs.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/My_grafcs.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ЛР2-3.docx" beforeDir="false" afterPath="$PROJECT_DIR$/ЛР2-3.docx" afterDir="false" />
-    </list>
+    <list default="true" id="cd4da93c-89ff-4a73-8503-e9cbc25bb5b4" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -117,7 +113,7 @@
       <workItem from="1732432592893" duration="2315000" />
       <workItem from="1732506539515" duration="1540000" />
       <workItem from="1732508362616" duration="1844000" />
-      <workItem from="1732526854202" duration="3712000" />
+      <workItem from="1732526854202" duration="3867000" />
     </task>
     <servers />
   </component>
