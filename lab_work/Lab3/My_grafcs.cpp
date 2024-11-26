@@ -81,18 +81,14 @@ void My_graphics ::Draw_line_digital_differential_analyzer(int x_s, int y_s,
   int dx = abs(x_e - x_s);
   int dy = abs(y_e - y_s);
 
-  // Определяем количество шагов
   int steps = std::max(dx, dy);
 
-  // Определяем приращения для x и y
   float x_inc = (float)dx / (float)steps;
   float y_inc = (float)dy / (float)steps;
 
-  // Начальные координаты
   float x = (float)x_s;
   float y = (float)y_s;
 
-  // Рисуем пиксель на каждом шаге
   for (int i = 0; i <= steps; i++) {
     Draw_point(static_cast<int>(x), static_cast<int>(y), color);
     x += x_inc;
@@ -109,35 +105,29 @@ void My_graphics::DrawlineBresenham(int x_s, int y_s, int x_e, int y_e,
 
   SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 
-  //  SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-
   int dx = abs(x_e - x_s);
   int dy = abs(y_e - y_s);
-  int dir_x = (x_s < x_e) ? 1 : -1; // Направление изменения x
-  int dir_y = (y_s < y_e) ? 1 : -1; // Направление изменения y
+  int dir_x = (x_s < x_e) ? 1 : -1;
+  int dir_y = (y_s < y_e) ? 1 : -1;
   int err = dx - dy;
 
   int x = x_s;
   int y = y_s;
 
   while (true) {
-    // Рисуем точку на сетке
     Draw_point(x, y, color);
 
-    // Выходим, если достигли конечной точки
     if (x == x_e && y == y_e)
       break;
 
     int e2 = 2 * err;
 
-    // Двигаемся по оси y
     if (e2 < dx) {
       err += dx;
       y += dir_y;
       Draw_point(x, y, color);
     }
 
-    // Двигаемся по оси x
     if (e2 > -dy) {
       err -= dy;
       x += dir_x;
@@ -155,9 +145,7 @@ void My_graphics::DrawCircleBresenham(int centerX, int centerY, int radius,
   int y = radius;
   int d = 3 - 2 * radius;
 
-  // Рисуем окружность, используя симметрию
   while (y >= x) {
-    // Отображаем точки на 8 секторах
     Draw_point(centerX + x, centerY + y, color);
     Draw_point(centerX - x, centerY + y, color);
     Draw_point(centerX + x, centerY - y, color);
@@ -167,7 +155,6 @@ void My_graphics::DrawCircleBresenham(int centerX, int centerY, int radius,
     Draw_point(centerX + y, centerY - x, color);
     Draw_point(centerX - y, centerY - x, color);
 
-    // Обновляем параметры в зависимости от положения
     if (d <= 0) {
       d = d + 4 * x + 6;
     } else {
@@ -184,23 +171,83 @@ void My_graphics::DrawTriangle(int x0, int y0, int x1, int y1, int x2, int y2) {
 
 void My_graphics::DrawTriangle(int x0, int y0, int x1, int y1, int x2, int y2,
                                SDL_Color color) {
-  //  Draw_line_digital_differential_analyzer(x0, y0, x1, y1,
-  //                                          create_color(0, 0, 255, 255));
-  //  Draw_line_digital_differential_analyzer(x1, y1, x2, y2,
-  //                                          create_color(0, 255, 0, 255));
-  //  Draw_line_digital_differential_analyzer(x2, y2, x0, y0,
-  //                                          create_color(255, 0, 0, 255));
   DrawlineBresenham(x0, y0, x1, y1, create_color(0, 0, 255, 255));
   DrawlineBresenham(x1, y1, x2, y2, create_color(0, 255, 0, 255));
   DrawlineBresenham(x2, y2, x0, y0, create_color(255, 0, 0, 255));
+
   int y_min = std::min(y0,std::min(y1,y2));
   int y_max = std::max(y0,std::max(y1,y2));
 
+  if (y1 == y_min) {
+    std::swap(x0, x1);
+    std::swap(y0, y1);
+  } else if (y2 == y_min) {
+    std::swap(x0, x2);
+    std::swap(y0, y2);
+  }
+  if (y0 == y_max) {
+    std::swap(x2, x0);
+    std::swap(y2, y0);
+  } else if (y1 == y_max) {
+    std::swap(x2, x1);
+    std::swap(y2, y1);
+  }
+  int line_x0;
+  int line_x1;
+  for (int i = y0; i < y1; ++i) {
+    line_x0 = x0 + (i - y0) * (x2 - x0) / (y2 - y0);
+    line_x1 = x0 + (i - y0) * (x1 - x0) / (y1 - y0);
+    horisontal_line(line_x0, line_x1, i, color);
+  }
+  for (int i = y1; i < y2; ++i) {
+    line_x0 = x2 + (i - y2) * (x1 - x2) / (y1 - y2);
+    line_x1 = x2 + (i - y2) * (x0 - x2) / (y0 - y2);
+    horisontal_line(line_x0, line_x1, i, color);
+  }
 }
 
-void My_graphics::FillTriangle(int x0, int y0, int x1, int y1, int x2, int y2) {
-
+void My_graphics::horisontal_line(int x0, int x1, int y, SDL_Color color) {
+  for (int i = std::min(x0, x1); i <= std::max(x0, x1); ++i) {
+    Draw_point(i, y, color);
+  }
 }
+
+// void My_graphics::DrawTriangle(int x0, int y0, int x1, int y1, int x2, int
+// y2,
+//                                SDL_Color color) {
+//   DrawlineBresenham(x0, y0, x1, y1, create_color(0, 0, 255, 255));
+//   DrawlineBresenham(x1, y1, x2, y2, create_color(0, 255, 0, 255));
+//   DrawlineBresenham(x2, y2, x0, y0, create_color(255, 0, 0, 255));
+//   int y_min = std::min(y0,std::min(y1,y2));
+//   int y_max = std::max(y0,std::max(y1,y2));
+//
+//   if (y1 == y_min) {
+//     std::swap(x0, x1);
+//     std::swap(y0, y1);
+//   } else if (y2 == y_min) {
+//     std::swap(x0, x2);
+//     std::swap(y0, y2);
+//   }
+//   if (y0 == y_max) {
+//     std::swap(x2, x0);
+//     std::swap(y2, y0);
+//   } else if (y1 == y_max) {
+//     std::swap(x2, x1);
+//     std::swap(y2, y1);
+//   }
+//   int line_x0;
+//   int line_x1;
+//   for (int i = y0; i < y1; i++) {
+//     line_x0 = x0 + (i - y0) * (x2 - x0) / (y2 - y0);
+//     line_x1 = x0 + (i - y0) * (x1 - x0) / (y1 - y0);
+//     DrawlineBresenham(line_x0, i, line_x1, i, color);
+//   }
+//   for (int i = y1; i < y2; i++) {
+//     line_x0 = x2 + (i - y2) * (x1 - x2) / (y1 - y2);
+//     line_x1 = x2 + (i - y2) * (x0 - x2) / (y0 - y2);
+//     DrawlineBresenham(line_x0, i, line_x1, i, color);
+//   }
+// }
 
 void My_graphics::refresh_screen() {
   refresh_screen(create_color(0, 0, 0, 255));

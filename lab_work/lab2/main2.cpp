@@ -55,6 +55,8 @@ int main() {
     SDL_Quit();
     return 1;
   }
+  SDL_Event e;
+  SDL_PollEvent(&e);
   std::cout << "1-dot 2-line 3-circle: ";
   int chouse;
   std::cin >> chouse;

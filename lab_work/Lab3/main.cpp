@@ -17,9 +17,6 @@ int main() {
   My_graphics window(numSquares, squareSize);
   window.refresh_screen();
   window.Draw_grid();
-  //  window.Draw_point(10,10);
-  //    window.DrawlineBresenham(1, 1,20, 7);
-  //  window.render();
 
   switch (chouse) {
   case 1:

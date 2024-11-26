@@ -7,7 +7,7 @@ private:
   SDL_Window *window;
   SDL_Renderer *renderer;
 
-  void FillTriangle(int x0, int y0, int x1, int y1, int x2, int y2);
+  void horisontal_line(int x0, int x1, int y, SDL_Color color);
 
   inline void lineHelp(int x, int y, bool swap);
 
