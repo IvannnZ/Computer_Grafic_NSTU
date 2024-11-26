@@ -188,15 +188,9 @@ void DrawLineBresenham(int x1, int y1, int x2, int y2) {
   bool swap = false;
   if (dy > dx) {
     swap = true;
-    int z = x1;
-    x1 = y1;
-    y1 = z;
-    z = x2;
-    x2 = y2;
-    y2 = z;
-    z = dx;
-    dx = dy;
-    dy = z;
+    std::swap(x1, y1);
+    std::swap(x2, y2);
+    std::swap(dx, dy);
   }
   int sx = x2 >= x1 ? 1 : -1;
   int sy = y2 >= y1 ? 1 : -1;
