@@ -1,0 +1,3 @@
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/Lab4/cmake-build-debug/CMakeFiles/Lab4.dir
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/Lab4/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/Lab4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
