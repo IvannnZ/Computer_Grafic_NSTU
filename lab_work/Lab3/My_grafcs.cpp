@@ -67,8 +67,8 @@ void My_graphics ::Draw_point(int x, int y, SDL_Color color) {
                    squareSize};
   SDL_RenderFillRect(renderer, &rect);
 
-  SDL_Delay(5);
-  render();
+  //  SDL_Delay(5);
+  //  render();
 }
 
 void My_graphics ::Draw_line_digital_differential_analyzer(int x_s, int y_s,
@@ -175,12 +175,13 @@ void My_graphics::DrawTriangle(int x0, int y0, int x1, int y1, int x2, int y2) {
 
 void My_graphics::DrawTriangle(int x0, int y0, int x1, int y1, int x2, int y2,
                                SDL_Color color) {
+
+  int y_min = std::min(y0,std::min(y1,y2));
+  int y_max = std::max(y0,std::max(y1,y2));
   DrawlineBresenham(x0, y0, x1, y1, create_color(0, 0, 255, 255));
   DrawlineBresenham(x1, y1, x2, y2, create_color(0, 255, 0, 255));
   DrawlineBresenham(x2, y2, x0, y0, create_color(255, 0, 0, 255));
 
-  int y_min = std::min(y0,std::min(y1,y2));
-  int y_max = std::max(y0,std::max(y1,y2));
 
   if (y1 == y_min) {
     std::swap(x0, x1);
@@ -199,15 +200,17 @@ void My_graphics::DrawTriangle(int x0, int y0, int x1, int y1, int x2, int y2,
   int line_x0;
   int line_x1;
   for (int i = y0; i < y1; ++i) {
-    line_x0 = floor(x0 + (i - y0) * (x2 - x0) / (y2 - y0));
-    line_x1 = floor(x0 + (i - y0) * (x1 - x0) / (y1 - y0));
+    line_x0 = floor((float)x0 + ((float)i - (float)y0) * ((float)x2 - (float)x0) / ((float)y2 - (float)y0));
+    line_x1 = floor((float)x0 + ((float)i - (float)y0) * ((float)x1 - (float)x0) / ((float)y1 - (float)y0));
     horisontal_line(line_x0, line_x1, i, color);
   }
   for (int i = y1; i < y2; ++i) {
-    line_x0 = floor(x2 + (i - y2) * (x1 - x2) / (y1 - y2));
-    line_x1 = floor(x2 + (i - y2) * (x0 - x2) / (y0 - y2));
+    line_x0 = floor((float)x2 + ((float)i - (float)y2) * ((float)x1 - (float)x2) / ((float)y1 - (float)y2));
+    line_x1 = floor((float)x2 + ((float)i - (float)y2) * ((float)x0 - (float)x2) / ((float)y0 - (float)y2));
     horisontal_line(line_x0, line_x1, i, color);
   }
+
+
 }
 
 void My_graphics::horisontal_line(int x0, int x1, int y, SDL_Color color) {
