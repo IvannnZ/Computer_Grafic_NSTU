@@ -20,3 +20,13 @@ Run: Compile
 
 Clear:
 	rm $(OutputFile)
+
+
+Prompt_data:
+	echo "My_grafcs.h:"
+	cat My_grafcs.h
+	echo "My_grafcs.cpp:"
+	cat My_grafcs.cpp
+	echo "main.cpp:"
+	cat main.cpp
+

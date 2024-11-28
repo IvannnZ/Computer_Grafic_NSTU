@@ -50,6 +50,11 @@ public:
   void DrawTriangle(int x0, int y0, int x1, int y1, int x2, int y2,
                     SDL_Color color);
 
+  void DrawTriangleShape(int x0, int y0, int x1, int y1, int x2, int y2);
+
+  void DrawTriangleShape(int x0, int y0, int x1, int y1, int x2, int y2,
+                         SDL_Color color);
+
   void DLB(int x_s, int y_s, int x_e, int y_e);
 
   void DLB(int x_s, int y_s, int x_e, int y_e, SDL_Color color);

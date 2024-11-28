@@ -60,6 +60,10 @@ int main() {
 
     window.DrawTriangle(x0, y0, x1, y1, x2, y2);
     break;
+  case 5:
+    window.DrawCircleBresenham(10,10,10, window.create_color(255,0,0,255));
+    window.DrawTriangle(5, 5, 5, 13,15,13,  window.create_color(0,0,0,255));
+    break;
   }
   window.render();
   int a;

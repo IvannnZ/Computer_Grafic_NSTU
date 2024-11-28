@@ -66,9 +66,9 @@ void My_graphics ::Draw_point(int x, int y, SDL_Color color) {
                    numSquares * squareSize - (y + 1) * squareSize, squareSize,
                    squareSize};
   SDL_RenderFillRect(renderer, &rect);
-
-  SDL_Delay(5);
-  render();
+//
+//  SDL_Delay(5);
+//  render();
 }
 
 void My_graphics ::Draw_line_digital_differential_analyzer(int x_s, int y_s,
@@ -106,7 +106,6 @@ void My_graphics::DrawlineBresenham(int x_s, int y_s, int x_e, int y_e) {
 
 void My_graphics::DrawlineBresenham(int x_s, int y_s, int x_e, int y_e,
                                     SDL_Color color) {
-
   SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 
   int dx = abs(x_e - x_s);
@@ -121,8 +120,9 @@ void My_graphics::DrawlineBresenham(int x_s, int y_s, int x_e, int y_e,
   while (true) {
     Draw_point(x, y, color);
 
-    if (x == x_e && y == y_e)
+    if (x == x_e && y == y_e) {
       break;
+    }
 
     int e2 = 2 * err;
 
@@ -168,6 +168,19 @@ void My_graphics::DrawCircleBresenham(int centerX, int centerY, int radius,
     x++;
   }
 }
+
+void My_graphics::DrawTriangleShape(int x0, int y0, int x1, int y1, int x2, int y2) {
+  DrawTriangleShape(x0, y0, x1, y1, x2, y2, create_color(255, 255, 255, 100));
+}
+
+void My_graphics::DrawTriangleShape(int x0, int y0, int x1, int y1, int x2, int y2,
+                               SDL_Color color) {
+  DrawlineBresenham(x0, y0, x1, y1, create_color(0, 0, 255, 255));
+  DrawlineBresenham(x1, y1, x2, y2, create_color(0, 255, 0, 255));
+  DrawlineBresenham(x2, y2, x0, y0, create_color(255, 0, 0, 255));
+}
+
+
 
 void My_graphics::DrawTriangle(int x0, int y0, int x1, int y1, int x2, int y2) {
   DrawTriangle(x0, y0, x1, y1, x2, y2, create_color(255, 255, 255, 100));
@@ -313,7 +326,6 @@ void My_graphics::DLB(int x1, int y1, int x2, int y2, SDL_Color color) {
   }
 }
 inline void My_graphics::lineHelp(int x, int y, bool swap) {
-
   if (swap)
     Draw_point(y, x);
   else
