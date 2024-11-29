@@ -9,8 +9,6 @@ private:
 
   void horisontal_line(int x0, int x1, int y, SDL_Color color);
 
-  SDL_Color Get_Square_color(int x, int y);
-
   inline void lineHelp(int x, int y, bool swap);
 
 public:
@@ -21,8 +19,6 @@ public:
   static SDL_Color create_color(int r, int g, int b, int a);
 
   static bool IsSameColor(SDL_Color c0, SDL_Color c1);
-
-  SDL_Surface* GetSurface();
 
   void refresh_screen();
 
@@ -69,4 +65,4 @@ public:
 
   void DLB(int x_s, int y_s, int x_e, int y_e, SDL_Color color);
 
-  };
+};

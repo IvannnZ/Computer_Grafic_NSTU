@@ -38,15 +38,6 @@ My_graphics ::My_graphics(int numSquares, int squareSize)
     throw "Ошибка создания рендерера: ";
   }
 
-//  surface = SDL_CreateRGBSurfaceWithFormat(0, numSquares * squareSize + 1,
-//                                           numSquares * squareSize + 1, 32,
-//                                           SDL_PIXELFORMAT_RGBA32);
-//  if (!surface) {
-//    SDL_DestroyWindow(window);
-//    SDL_DestroyRenderer(renderer);
-//    SDL_Quit();
-//    throw "Ошибка создания поверхности: ";
-//  }
 }
 
 My_graphics::~My_graphics() {
@@ -242,95 +233,6 @@ void My_graphics::horisontal_line(int x0, int x1, int y, SDL_Color color) {
   }
 }
 
-void My_graphics::FloodFill(int x, int y, SDL_Color fillColor,
-                            SDL_Color baseColor) {
-  std::cout<<x<<" "<<y<<std::endl;
-
-  if (x + 1 <= squareSize &&
-      IsSameColor(baseColor, Get_Square_color(x + 1, y))) {
-    Draw_point(x + 1, y, fillColor);
-    render();
-    FloodFill(x + 1, y, fillColor, baseColor);
-  }
-  if (x - 1 > 1 && IsSameColor(baseColor, Get_Square_color(x - 1, y))) {
-    Draw_point(x - 1, y, fillColor);
-//    render();
-    FloodFill(x - 1, y, fillColor, baseColor);
-  }
-  if (y + 1 < squareSize &&
-      IsSameColor(baseColor, Get_Square_color(x, y+1))) {
-    Draw_point(x, y + 1, fillColor);
-//    render();
-    FloodFill(x, y + 1, fillColor, baseColor);
-  }
-  if (y - 1 > 1 && IsSameColor(baseColor, Get_Square_color(x , y-1))) {
-    Draw_point(x, y - 1, fillColor);
-//    render();
-    FloodFill(x, y - 1, fillColor, baseColor);
-  }
-
-  //  SDL_Color currentColor;
-  //
-  //  // Функция для получения цвета пикселя
-  //  auto GetPixelColor = [&](int x, int y) -> SDL_Color {
-  //    Uint32 pixel;
-  //    SDL_Color color;
-  //    SDL_RenderReadPixels(renderer, nullptr, SDL_PIXELFORMAT_RGBA32,
-  //                         surface->pixels, surface->pitch);
-  //    int bpp = surface->format->BytesPerPixel;
-  //    Uint8 *p = (Uint8 *)surface->pixels + (y * surface->pitch) + (x * bpp);
-  //    pixel = *(Uint32 *)p;
-  //    SDL_GetRGBA(pixel, surface->format, &color.r, &color.g, &color.b,
-  //    &color.a); SDL_FreeSurface(surface); return color;
-  //  };
-  //
-  //  // Функция для сравнения двух цветов
-  //  auto IsSameColor = [&](SDL_Color c1, SDL_Color c2) -> bool {
-  //    return c1.r == c2.r && c1.g == c2.g && c1.b == c2.b && c1.a == c2.a;
-  //  };
-  //
-  //  // Создаем стек для обработки пикселей
-  //  std::stack<std::pair<int, int>> pixels;
-  //  pixels.push({x, y});
-  //
-  //  while (!pixels.empty()) {
-  //    auto [px, py] = pixels.top();
-  //    pixels.pop();
-  //
-  //    currentColor = GetPixelColor(px * squareSize, py * squareSize);
-  //    std::cout
-  //
-  //        if (!IsSameColor(currentColor, fillColor) &&
-  //            !IsSameColor(currentColor, boundaryColor)) {
-  //      Draw_point(px, py, fillColor);
-  //
-  //      pixels.push({px + 1, py});
-  //      pixels.push({px - 1, py});
-  //      pixels.push({px, py + 1});
-  //      pixels.push({px, py - 1});
-  //    }
-  //  }
-}
-
-SDL_Color My_graphics::Get_Square_color(int x, int y) {
-  Uint32 pixel;
-  SDL_Color color;
-
-  SDL_Surface* surface = SDL_CreateRGBSurfaceWithFormat(0, numSquares * squareSize + 1,
-                                           numSquares * squareSize + 1, 32,
-                                           SDL_PIXELFORMAT_RGBA32);
-
-  SDL_RenderReadPixels(renderer, nullptr, SDL_PIXELFORMAT_RGBA32,
-                       surface->pixels, surface->pitch);
-  int bpp = surface->format->BytesPerPixel;
-  Uint8 *p = (Uint8 *)surface->pixels +
-             ((int)(y * squareSize + squareSize / 2) * surface->pitch) +
-             ((int)(x * squareSize + squareSize / 2) * bpp);
-  pixel = *(Uint32 *)p;
-  SDL_GetRGBA(pixel, surface->format, &color.r, &color.g, &color.b, &color.a);
-  SDL_FreeSurface(surface);
-  return color;
-}
 
 void My_graphics::refresh_screen() {
   refresh_screen(create_color(0, 0, 0, 255));
@@ -391,14 +293,12 @@ void My_graphics::DLB(int x1, int y1, int x2, int y2, SDL_Color color) {
     lineHelp(x1, y1, swap);
   }
 }
+
 inline void My_graphics::lineHelp(int x, int y, bool swap) {
   if (swap)
     Draw_point(y, x);
   else
     Draw_point(x, y);
 }
-SDL_Surface *My_graphics::GetSurface() {
-  return SDL_CreateRGBSurfaceWithFormat(0, numSquares * squareSize + 1,
-                                        numSquares * squareSize + 1, 32,
-                                        SDL_PIXELFORMAT_RGBA32);
-}
+void My_graphics::FloodFill(int x, int y, SDL_Color fillColor,
+                            SDL_Color baseColor) {}

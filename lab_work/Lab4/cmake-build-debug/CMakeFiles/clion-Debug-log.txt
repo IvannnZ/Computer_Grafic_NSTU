@@ -1,12 +1,4 @@
 /home/ivannz/Downloads/bubuntu/clion-2024.2.2/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/ivannz/Downloads/bubuntu/clion-2024.2.2/bin/ninja/linux/x64/ninja -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -G Ninja -S /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/Lab4 -B /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/Lab4/cmake-build-debug
-CMake Error at CMakeLists.txt:17 (target_include_directories):
-  Cannot specify include directories for target "Lab3" which is not built by
-  this project.
-
-
-CMake Error at CMakeLists.txt:20 (target_link_libraries):
-  Cannot specify link libraries for target "Lab3" which is not built by this
-  project.
-
-
--- Configuring incomplete, errors occurred!
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/Lab4/cmake-build-debug

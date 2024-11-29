@@ -70,7 +70,6 @@ int main() {
     break;
   }
   case 6: {
-    //
     //    int startX, startY;
     //    std::cout << "Enter starting point (x, y): ";
     //    std::cin >> startX >> startY;
