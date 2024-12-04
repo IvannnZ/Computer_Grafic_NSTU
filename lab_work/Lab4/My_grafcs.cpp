@@ -16,6 +16,7 @@ bool My_graphics::IsSameColor(SDL_Color c0, SDL_Color c1) {
   return c0.r == c1.r && c0.g == c1.g && c0.b == c1.b && c0.a == c1.a;
 }
 
+
 My_graphics ::My_graphics(int numSquares, int squareSize)
     : numSquares(numSquares), squareSize(squareSize) {
 
@@ -37,6 +38,7 @@ My_graphics ::My_graphics(int numSquares, int squareSize)
     SDL_Quit();
     throw "Ошибка создания рендерера: ";
   }
+
 
 }
 

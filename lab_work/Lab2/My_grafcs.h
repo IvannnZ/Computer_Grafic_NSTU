@@ -2,8 +2,8 @@
 
 class My_graphics  {
 private:
-  int numSquares{};
-  int squareSize{};
+  int numSquares;
+  int squareSize;
   SDL_Window *window;
   SDL_Renderer *renderer;
 

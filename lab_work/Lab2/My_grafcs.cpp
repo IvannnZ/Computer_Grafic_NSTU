@@ -61,6 +61,10 @@ void My_graphics ::Draw_point(int x, int y, SDL_Color color) {
   SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
   x--;
   y--;
+  if (x < 0 || y < 0 || y >= numSquares || x >= numSquares) {
+    return;
+  }
+
   SDL_Rect rect = {x * squareSize,
                    numSquares * squareSize - (y + 1) * squareSize, squareSize,
                    squareSize};
@@ -79,11 +83,11 @@ void My_graphics ::Draw_line_digital_differential_analyzer(int x_s, int y_s,
 
   SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 
-  int dx = abs(x_e - x_s);
-  int dy = abs(y_e - y_s);
+  int dx = x_e - x_s;
+  int dy = y_e - y_s;
 
   // Определяем количество шагов
-  int steps = std::max(dx, dy);
+  int steps = std::max(abs(dx), abs(dy));
 
   // Определяем приращения для x и y
   float x_inc = (float)dx / (float)steps;

@@ -67,8 +67,6 @@ void My_graphics ::Draw_point(int x, int y, SDL_Color color) {
                    squareSize};
   SDL_RenderFillRect(renderer, &rect);
 
-  //  SDL_Delay(5);
-  //  render();
 }
 
 void My_graphics ::Draw_line_digital_differential_analyzer(int x_s, int y_s,
@@ -203,11 +201,15 @@ void My_graphics::DrawTriangle(int x0, int y0, int x1, int y1, int x2, int y2,
     line_x0 = floor((float)x0 + ((float)i - (float)y0) * ((float)x2 - (float)x0) / ((float)y2 - (float)y0));
     line_x1 = floor((float)x0 + ((float)i - (float)y0) * ((float)x1 - (float)x0) / ((float)y1 - (float)y0));
     horisontal_line(line_x0, line_x1, i, color);
+    render();
+    SDL_Delay(100);
   }
   for (int i = y1; i < y2; ++i) {
     line_x0 = floor((float)x2 + ((float)i - (float)y2) * ((float)x1 - (float)x2) / ((float)y1 - (float)y2));
     line_x1 = floor((float)x2 + ((float)i - (float)y2) * ((float)x0 - (float)x2) / ((float)y0 - (float)y2));
     horisontal_line(line_x0, line_x1, i, color);
+    render();
+    SDL_Delay(100);
   }
 
 

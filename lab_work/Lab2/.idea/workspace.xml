@@ -24,7 +24,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd4da93c-89ff-4a73-8503-e9cbc25bb5b4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../lab2/main2.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../lab2/main2.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2024-11-24T07-17-14-0102.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab3/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab3/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab3/My_grafcs.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab3/My_grafcs.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab3/cmake-build-debug/.cmake/api/v1/reply/index-2024-11-26T10-01-32-0309.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab3/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab3/cmake-build-debug/.ninja_deps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab3/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab3/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab3/cmake-build-debug/CMakeFiles/Lab3.dir/My_grafcs.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab3/cmake-build-debug/CMakeFiles/Lab3.dir/My_grafcs.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab3/cmake-build-debug/Lab3" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab3/cmake-build-debug/Lab3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab3/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab3/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab4/My_grafcs.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab4/My_grafcs.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab4/My_grafcs.h" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab4/My_grafcs.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab4/cmake-build-debug/.cmake/api/v1/reply/index-2024-11-29T08-09-45-0207.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab4/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab4/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab4/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab4/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +82,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CPPToolchains&quot;,
     &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -93,6 +112,28 @@
       </texify-external>
       <method v="2" />
     </configuration>
+    <configuration default="true" type="LATEX_RUN_CONFIGURATION" factoryName="LaTeX configuration factory">
+      <texify>
+        <compiler>PDFLATEX</compiler>
+        <compiler-path />
+        <sumatra-path />
+        <pdf-viewer>EVINCE</pdf-viewer>
+        <viewer-command />
+        <compiler-arguments />
+        <envs />
+        <before-run-command />
+        <main-file />
+        <output-path>{projectDir}/out</output-path>
+        <auxil-path>{projectDir}/auxil</auxil-path>
+        <compile-twice>false</compile-twice>
+        <output-format>PDF</output-format>
+        <latex-distribution>TEXLIVE</latex-distribution>
+        <has-been-run>false</has-been-run>
+        <bib-run-config>[]</bib-run-config>
+        <makeindex-run-config>[]</makeindex-run-config>
+      </texify>
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="MAKEINDEX_RUN_CONFIGURATION" factoryName="LaTeX configuration factory">
       <texify-makeindex>
         <program>MAKEINDEX</program>
@@ -117,6 +158,8 @@
       <workItem from="1732508362616" duration="1844000" />
       <workItem from="1732526854202" duration="3867000" />
       <workItem from="1732612729352" duration="1593000" />
+      <workItem from="1733054517591" duration="280000" />
+      <workItem from="1733210550872" duration="1000" />
     </task>
     <servers />
   </component>

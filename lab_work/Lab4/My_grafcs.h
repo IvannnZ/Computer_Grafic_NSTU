@@ -6,6 +6,7 @@ private:
   int squareSize{};
   SDL_Window *window;
   SDL_Renderer *renderer;
+  SDL_Color 
 
   void horisontal_line(int x0, int x1, int y, SDL_Color color);
 
