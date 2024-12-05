@@ -38,8 +38,10 @@ My_graphics ::My_graphics(int numSquares, int squareSize)
     SDL_Quit();
     throw "Ошибка создания рендерера: ";
   }
-
-
+  pixels = new SDL_Color *[numSquares];
+  for (int i = 0; i < numSquares; ++i) {
+    pixels[i] = new SDL_Color[numSquares];
+  }
 }
 
 My_graphics::~My_graphics() {
@@ -47,6 +49,10 @@ My_graphics::~My_graphics() {
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
   SDL_Quit();
+  for (int i = 0; i < numSquares; ++i) {
+    delete pixels[i];
+  }
+  delete pixels;
 }
 
 void My_graphics ::Draw_grid() { Draw_grid(create_color(255, 255, 255, 255)); }
@@ -67,14 +73,15 @@ void My_graphics ::Draw_point(int x, int y) {
 }
 
 void My_graphics ::Draw_point(int x, int y, SDL_Color color) {
-  SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-  x--;
-  y--;
-  SDL_Rect rect = {x * squareSize,
-                   numSquares * squareSize - (y + 1) * squareSize, squareSize,
-                   squareSize};
-  SDL_RenderFillRect(renderer, &rect);
+  //  SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 
+  if (x >= 0 && y >= 0 && x < numSquares && y < numSquares) {
+    pixels[x][y] = color;
+  }
+  //  SDL_Rect rect = {x * squareSize,
+  //                   numSquares * squareSize - (y + 1) * squareSize,
+  //                   squareSize, squareSize};
+  //  SDL_RenderFillRect(renderer, &rect);
 }
 
 void My_graphics ::Draw_line_digital_differential_analyzer(int x_s, int y_s,
@@ -238,13 +245,35 @@ void My_graphics::horisontal_line(int x0, int x1, int y, SDL_Color color) {
 
 void My_graphics::refresh_screen() {
   refresh_screen(create_color(0, 0, 0, 255));
+
 }
 void My_graphics::refresh_screen(SDL_Color color) {
+  for (int x = 0; x < numSquares; ++x) {
+    for (int y = 0; y < numSquares; ++y) {
+      pixels[x][y] = color;
+    }
+  }
   SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
   SDL_RenderClear(renderer);
+  SDL_RenderPresent(renderer);
 }
 
-void My_graphics::render() { SDL_RenderPresent(renderer); }
+void My_graphics::render() {
+  for (int x = 0; x < numSquares; ++x) {
+    for (int y = 0; y < numSquares; ++y) {
+
+      SDL_SetRenderDrawColor(renderer, pixels[x][y].r, pixels[x][y].g,
+                             pixels[x][y].b, pixels[x][y].a);
+
+      SDL_Rect rect = {(x-1) * squareSize,
+                       numSquares * squareSize - y * squareSize,
+                       squareSize, squareSize};
+      SDL_RenderFillRect(renderer, &rect);
+    }
+  }
+  Draw_grid();
+  SDL_RenderPresent(renderer);
+}
 
 void My_graphics::DLB(int x1, int y1, int x2, int y2) {
   DLB(x1, y1, x2, y2, create_color(255, 0, 0, 255));
@@ -303,4 +332,35 @@ inline void My_graphics::lineHelp(int x, int y, bool swap) {
     Draw_point(x, y);
 }
 void My_graphics::FloodFill(int x, int y, SDL_Color fillColor,
-                            SDL_Color baseColor) {}
+                            SDL_Color baseColor) {
+
+  if (x < 0 || y < 0 || x >= numSquares || y >= numSquares) {
+    return;
+  }
+  SDL_Color p = pixels[x][y];
+  if (IsSameColor( pixels[x+1][y], baseColor)){
+    Draw_point(x+1,y, fillColor);
+    render();
+    SDL_Delay(100);
+    FloodFill(x+1,y,fillColor,baseColor);
+  }
+  if (IsSameColor( pixels[x-1][y], baseColor)){
+    Draw_point(x-1,y, fillColor);
+    render();
+    SDL_Delay(100);
+    FloodFill(x-1,y,fillColor,baseColor);
+  }
+  if (IsSameColor( pixels[x][y+1], baseColor)){
+    Draw_point(x,y+1, fillColor);
+    render();
+    SDL_Delay(100);
+    FloodFill(x,y+1,fillColor,baseColor);
+  }
+  if (IsSameColor( pixels[x][y-1], baseColor)){
+    Draw_point(x,y-1, fillColor);
+    render();
+    SDL_Delay(100);
+    FloodFill(x,y-1,fillColor,baseColor);
+  }
+
+}

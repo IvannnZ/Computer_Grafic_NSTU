@@ -18,6 +18,7 @@ int main() {
   window.refresh_screen();
   window.Draw_grid();
 
+
   switch (chouse) {
   case 1: {
     int pointX, pointY; // Координаты точки
@@ -85,7 +86,7 @@ int main() {
 
     window.refresh_screen(window.create_color(0, 0, 0, 255));
     window.DrawCircleBresenham(10, 10, 5);
-    window.Draw_grid();
+    window.DrawCircleBresenham(13, 10, 5);
     window.render();
     SDL_Delay(3000);
     std::cout << "a\n";

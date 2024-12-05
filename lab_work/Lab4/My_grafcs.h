@@ -2,11 +2,11 @@
 
 class My_graphics {
 private:
-  int numSquares{};
-  int squareSize{};
+  int numSquares;
+  int squareSize;
   SDL_Window *window;
   SDL_Renderer *renderer;
-  SDL_Color 
+  SDL_Color ** pixels;
 
   void horisontal_line(int x0, int x1, int y, SDL_Color color);
 
