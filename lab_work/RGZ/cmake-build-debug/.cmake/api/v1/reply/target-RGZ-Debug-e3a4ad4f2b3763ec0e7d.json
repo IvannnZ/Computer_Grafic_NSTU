@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "Lab3"
+			"path" : "RGZ"
 		}
 	],
 	"backtrace" : 1,
@@ -63,7 +63,7 @@
 			[
 				{
 					"backtrace" : 3,
-					"path" : "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/Lab3/."
+					"path" : "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/RGZ/."
 				},
 				{
 					"backtrace" : 4,
@@ -87,7 +87,7 @@
 			]
 		}
 	],
-	"id" : "Lab3::@6890427a1f51a3e7e1df",
+	"id" : "RGZ::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -108,8 +108,8 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "Lab3",
-	"nameOnDisk" : "Lab3",
+	"name" : "RGZ",
+	"nameOnDisk" : "RGZ",
 	"paths" : 
 	{
 		"build" : ".",
