@@ -94,6 +94,13 @@ int main() {
                      window.create_color(0, 0, 0, 255));
     break;
   }
+  case 7: {
+    window.DrawCircleBresenham(20, 20, 15);
+    window.DrawTriangleShape(5, 25, 35, 25, 20, 40);
+    window.FloodFill(20,20, window.create_color(255,2,25,255), window.create_color(0,0,0,255));
+
+
+  }
   }
   window.render();
   int a;

@@ -20,3 +20,7 @@ Run: Compile
 
 Clear:
 	rm $(OutputFile)
+
+
+Prompt_Data:
+	cat main.cpp
