@@ -1,0 +1,3 @@
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/kursovaya1/cmake-build-debug/CMakeFiles/kursovaya1.dir
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/kursovaya1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/kursovaya1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
