@@ -114,9 +114,10 @@ int main()
     case 8:
         {
             window.refresh_screen(window.create_color(0, 0, 0, 0));
+            std::vector<point> points;
+
             // std::cout << "Enter point coordinate point until enter - coordinate:\n";
             // int x, y;
-            std::vector<point> points;
             // std::cin >> x >> y;
             // while (x >= 0 && y >= 0)
             // {
@@ -125,22 +126,31 @@ int main()
             //     std::cin >> x >> y;
             // }
 
-            points.push_back({2,2});
-            points.push_back({18,2});
-            points.push_back({18,8});
-            points.push_back({12,16});
-            points.push_back({2, 5});
+            // домик
+            // points.push_back({2, 2});
+            // points.push_back({18, 2});
+            // points.push_back({18, 8});
+            // points.push_back({12, 16});
+            // points.push_back({2, 5});
 
+            // домик с обратной крышей
             // points.push_back({2,2});
             // points.push_back({18,2});
             // points.push_back({18,18});
             // points.push_back({12,8});
             // points.push_back({2, 16});
 
-            points.push_back({5, 5});
-            points.push_back({15, 3});
-            points.push_back({3, 15});
-            // window.DrawTriangleShape(5,5,15,3,3,15);
+            // треугольник
+            // points.push_back({5, 5});
+            // points.push_back({15, 3});
+            // points.push_back({3, 15});
+
+            // галочка ей бы масштаб больше
+            points.push_back({2, 2});
+            points.push_back({19, 5});
+            points.push_back({7, 7});
+            points.push_back({5, 19});
+
             window.DrawPoligon(points);
         }
     default: break;

@@ -515,15 +515,15 @@ void My_graphics::DrawPoligon(std::vector<point>& points, SDL_Color color) const
                 y0 = points[j - 1].y;
                 x1 = points[j].x;
                 y1 = points[j].y;
-                x2 = points[j < (points.size() - 1) ? j + 1 : 2].x;
+                x2 = points[j < (points.size() - 1) ? j + 1 : 1].x;
                 // следующая точка, и либо у нас нет выхда за массив, либо нет, и тогда мы берём 2 элемент( первый и последний это один и тот же элемент)
-                y2 = points[j < (points.size() - 1) ? j + 1 : 2].y;
+                y2 = points[j < (points.size() - 1) ? j + 1 : 1].y;
                 // следующая точка, и либо у нас нет выхда за массив, либо нет, и тогда мы берём 2 элемент( первый и последний это один и тот же элемент)
 
                 // if (x0 > x1) { std::swap(x0, x1); std::swap(y0, y1); }
                 if (y0 != y1)
                 {
-                    if (y0 == i && ((y1<y0&&y1>y2)||(y1>y0&&y1<y2))) {continue;}
+                    if (y1 == i && ((y1<y0&&y1>y2)||(y1>y0&&y1<y2))) {continue;}
                     lines.push_back({x0 + (i - y0) * (x1 - x0) / (y1 - y0), i});
                 }
 
