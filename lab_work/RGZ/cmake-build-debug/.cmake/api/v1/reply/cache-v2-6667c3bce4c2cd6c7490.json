@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/Lab4/cmake-build-debug"
+			"value" : "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/RGZ/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -151,11 +151,11 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "CXX compiler"
 				}
 			],
-			"type" : "UNINITIALIZED",
-			"value" : "g++"
+			"type" : "FILEPATH",
+			"value" : "/usr/bin/c++"
 		},
 		{
 			"name" : "CMAKE_CXX_COMPILER_AR",
@@ -279,11 +279,11 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "C compiler"
 				}
 			],
-			"type" : "UNINITIALIZED",
-			"value" : "gcc"
+			"type" : "FILEPATH",
+			"value" : "/usr/bin/cc"
 		},
 		{
 			"name" : "CMAKE_C_COMPILER_AR",
@@ -543,7 +543,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/Lab4/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/RGZ/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -603,7 +603,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/Lab4"
+			"value" : "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/RGZ"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -843,7 +843,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "Lab4"
+			"value" : "RGZ"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1142,7 +1142,7 @@
 			"value" : "FALSE"
 		},
 		{
-			"name" : "Lab4_BINARY_DIR",
+			"name" : "RGZ_BINARY_DIR",
 			"properties" : 
 			[
 				{
@@ -1151,10 +1151,10 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/Lab4/cmake-build-debug"
+			"value" : "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/RGZ/cmake-build-debug"
 		},
 		{
-			"name" : "Lab4_IS_TOP_LEVEL",
+			"name" : "RGZ_IS_TOP_LEVEL",
 			"properties" : 
 			[
 				{
@@ -1166,7 +1166,7 @@
 			"value" : "ON"
 		},
 		{
-			"name" : "Lab4_SOURCE_DIR",
+			"name" : "RGZ_SOURCE_DIR",
 			"properties" : 
 			[
 				{
@@ -1175,7 +1175,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/Lab4"
+			"value" : "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/RGZ"
 		},
 		{
 			"name" : "SDL2_DIR",

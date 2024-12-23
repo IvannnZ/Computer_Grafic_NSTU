@@ -14,7 +14,7 @@ add_executable(kursovaya1
 find_package(SDL2 REQUIRED)
 
 # Подключаем include директории SDL2
-target_include_directories(Lab4 PRIVATE ${SDL2_INCLUDE_DIRS})
+target_include_directories(kursovaya1 PRIVATE ${SDL2_INCLUDE_DIRS})
 
 # Линкуем SDL2
-target_link_libraries(Lab4 PRIVATE ${SDL2_LIBRARIES})
+target_link_libraries(kursovaya1 PRIVATE ${SDL2_LIBRARIES})

@@ -1,4 +1,16 @@
-/home/ivannz/Downloads/bubuntu/clion-2024.2.2/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/ivannz/Downloads/bubuntu/clion-2024.2.2/bin/ninja/linux/x64/ninja -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -G Ninja -S /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/RGZ -B /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/RGZ/cmake-build-debug
--- Configuring done (0.0s)
+/home/ivannz/Downloads/bubuntu/clion-2024.2.2/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/ivannz/Downloads/bubuntu/clion-2024.2.2/bin/ninja/linux/x64/ninja -G Ninja -S /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/RGZ -B /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/RGZ/cmake-build-debug
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (0.5s)
 -- Generating done (0.0s)
 -- Build files have been written to: /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/RGZ/cmake-build-debug

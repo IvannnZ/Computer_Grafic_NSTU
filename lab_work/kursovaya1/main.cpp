@@ -1,5 +1,6 @@
 #include "My_grafcs.h"
 #include <iostream>
+#include <vector>
 
 int main()
 {
@@ -52,6 +53,7 @@ int main()
                     window.DrawlineBresenham(l_x_s, l_y_s, l_x_e, l_y_e);
                     break;
                 }
+            default: break;;
             }
             break;
         }
@@ -109,6 +111,39 @@ int main()
             window.DrawTriangleShape(5, 25, 35, 25, 20, 40);
             window.FloodFill(20, 20, window.create_color(255, 2, 25, 255), window.create_color(0, 0, 0, 255));
         }
+    case 8:
+        {
+            window.refresh_screen(window.create_color(0, 0, 0, 0));
+            // std::cout << "Enter point coordinate point until enter - coordinate:\n";
+            // int x, y;
+            std::vector<point> points;
+            // std::cin >> x >> y;
+            // while (x >= 0 && y >= 0)
+            // {
+            //     std::cout<<"\nnext:";
+            //     points.push_back({x, y});
+            //     std::cin >> x >> y;
+            // }
+
+            // points.push_back({2,2});
+            // points.push_back({18,2});
+            // points.push_back({18,8});
+            // points.push_back({12,16});
+            // points.push_back({2, 5});
+
+            points.push_back({2,2});
+            points.push_back({18,2});
+            points.push_back({18,18});
+            points.push_back({12,8});
+            points.push_back({2, 16});
+
+            // points.push_back({5, 5});
+            // points.push_back({15, 3});
+            // points.push_back({3, 15});
+            // window.DrawTriangleShape(5,5,15,3,3,15);
+            window.DrawPoligon(points);
+        }
+    default: break;
     }
     window.render();
     int a;
