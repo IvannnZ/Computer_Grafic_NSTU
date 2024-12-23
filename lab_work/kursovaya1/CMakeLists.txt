@@ -6,9 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(.)
 
 add_executable(kursovaya1
-        main.cpp
-        My_grafcs.cpp
-        My_grafcs.h)
+        main_k.cpp)
 
 # Ищем библиотеку SDL2
 find_package(SDL2 REQUIRED)
