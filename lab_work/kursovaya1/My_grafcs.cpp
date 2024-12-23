@@ -348,36 +348,6 @@ void My_graphics::horisontal_line(int x0, int x1, int y, SDL_Color color) const
 }
 
 
-void My_graphics::horisontal_lines(std::vector<point> points, SDL_Color color) const
-{
-    std::sort(points.begin(), points.end(), [](const point& a, const point& b) { return a.x < b.x; });
-    // if (points.size() % 2 != 0)
-    // {
-    //     return;
-    //     // throw "Error in points are not %2==0 point";
-    // }
-    int x0 = -1;
-    for (std::vector<point>::iterator a = points.begin(); a != points.end(); ++a)
-    {
-        if (x0 < 0)
-        {
-            x0 = a->x;
-        }
-        else
-        {
-            // if (x0 == a->x && points.size() % 2 != 0)
-            // {
-            //     continue;
-            // }
-            horisontal_line(x0, a->x, a->y, color);
-            x0 = -1;
-            render();
-            SDL_Delay(100);
-        }
-    }
-}
-
-
 void My_graphics::refresh_screen()
 {
     refresh_screen(create_color(0, 0, 0, 255));
@@ -485,6 +455,27 @@ inline void My_graphics::lineHelp(int x, int y, bool swap) const
 }
 
 
+void My_graphics::horisontal_lines(std::vector<point> points, SDL_Color color) const
+{
+    std::sort(points.begin(), points.end(), [](const point& a, const point& b) { return a.x < b.x; });
+    int x0 = -1;
+    for (std::vector<point>::iterator a = points.begin(); a != points.end(); ++a)
+    {
+        if (x0 < 0)
+        {
+            x0 = a->x;
+        }
+        else
+        {
+            horisontal_line(x0, a->x, a->y, color);
+            x0 = -1;
+            render();
+            SDL_Delay(100);
+        }
+    }
+}
+
+
 void My_graphics::DrawPoligon(std::vector<point>& points) const
 {
     DrawPoligon(points, create_color(255, 0, 0, 255));
@@ -515,44 +506,22 @@ void My_graphics::DrawPoligon(std::vector<point>& points, SDL_Color color) const
                 y0 = points[j - 1].y;
                 x1 = points[j].x;
                 y1 = points[j].y;
-                x2 = points[j < (points.size() - 1) ? j + 1 : 1].x;
+                //x2 = points[j < (points.size() - 1) ? j + 1 : 1].x;
                 // следующая точка, и либо у нас нет выхда за массив, либо нет, и тогда мы берём 2 элемент( первый и последний это один и тот же элемент)
                 y2 = points[j < (points.size() - 1) ? j + 1 : 1].y;
                 // следующая точка, и либо у нас нет выхда за массив, либо нет, и тогда мы берём 2 элемент( первый и последний это один и тот же элемент)
 
-                // if (x0 > x1) { std::swap(x0, x1); std::swap(y0, y1); }
                 if (y0 != y1)
                 {
-                    if (y1 == i && ((y1<y0&&y1>y2)||(y1>y0&&y1<y2))) {continue;}
+                    if (y1 == i && ((y1 < y0 && y1 > y2) || (y1 > y0 && y1 < y2))) { continue; }
                     lines.push_back({x0 + (i - y0) * (x1 - x0) / (y1 - y0), i});
                 }
-
-                // if (points[j - 1].y != points[j].y)
-                // {
-                //     lines.push_back({
-                //         points[j - 1].x + abs(i - points[j - 1].y) * abs(points[j].x - points[j - 1].x) / abs(
-                //             points[j].y - points[j - 1].y),
-                //         i
-                //     });
-                // }
             }
         }
-        // if ((points[points.size()].y >= i && points[0].y <= i) || (points[points.size()].y <= i && points[0].y >= i))
-        // {
-        //     x0 = points[0].x;
-        //     y0 = points[0].y;
-        //     x1 = points[points.size() - 1].x;
-        //     y1 = points[points.size() - 1].y;
-        //     //x0 + (i - y0) * (x2 - x0) / (y2 - y0)
-        //     if (y0 != y1)
-        //     {
-        //         lines.push_back({x0 + (i - y0) * (x1 - x0) / (y1 - y0), i});
-        //     }
-        // }
         horisontal_lines(lines, color);
-        // render();
         lines.clear();
     }
+    render();
 }
 
 

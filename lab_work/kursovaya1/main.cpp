@@ -12,7 +12,7 @@ int main()
     std::cout << "Enter the size of one square: ";
     std::cin >> squareSize;
 
-    std::cout << "1-dot 2-line 3-circle 4-triangle: ";
+    std::cout << "1-dot 2-line 3-circle 4-triangle ... 8-RGZ1: ";
     int chouse;
     std::cin >> chouse;
     My_graphics window(numSquares, squareSize);
