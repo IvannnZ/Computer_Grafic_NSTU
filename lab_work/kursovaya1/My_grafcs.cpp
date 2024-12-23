@@ -365,10 +365,10 @@ void My_graphics::horisontal_lines(std::vector<point> points, SDL_Color color) c
         }
         else
         {
-            if (x0 == a->x && points.size() % 2 != 0)
-            {
-                continue;
-            }
+            // if (x0 == a->x && points.size() % 2 != 0)
+            // {
+            //     continue;
+            // }
             horisontal_line(x0, a->x, a->y, color);
             x0 = -1;
             render();
@@ -523,6 +523,7 @@ void My_graphics::DrawPoligon(std::vector<point>& points, SDL_Color color) const
                 // if (x0 > x1) { std::swap(x0, x1); std::swap(y0, y1); }
                 if (y0 != y1)
                 {
+                    if (y0 == i && ((y1<y0&&y1>y2)||(y1>y0&&y1<y2))) {continue;}
                     lines.push_back({x0 + (i - y0) * (x1 - x0) / (y1 - y0), i});
                 }
 

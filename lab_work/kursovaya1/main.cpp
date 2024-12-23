@@ -125,21 +125,21 @@ int main()
             //     std::cin >> x >> y;
             // }
 
-            // points.push_back({2,2});
-            // points.push_back({18,2});
-            // points.push_back({18,8});
-            // points.push_back({12,16});
-            // points.push_back({2, 5});
-
             points.push_back({2,2});
             points.push_back({18,2});
-            points.push_back({18,18});
-            points.push_back({12,8});
-            points.push_back({2, 16});
+            points.push_back({18,8});
+            points.push_back({12,16});
+            points.push_back({2, 5});
 
-            // points.push_back({5, 5});
-            // points.push_back({15, 3});
-            // points.push_back({3, 15});
+            // points.push_back({2,2});
+            // points.push_back({18,2});
+            // points.push_back({18,18});
+            // points.push_back({12,8});
+            // points.push_back({2, 16});
+
+            points.push_back({5, 5});
+            points.push_back({15, 3});
+            points.push_back({3, 15});
             // window.DrawTriangleShape(5,5,15,3,3,15);
             window.DrawPoligon(points);
         }
