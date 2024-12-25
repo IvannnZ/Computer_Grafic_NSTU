@@ -5,7 +5,6 @@
 int main()
 {
     My_graphics window(500, 500);
-    window.refresh_screen();
     bool running = true;
     SDL_Event event;
     std::vector<Point> points;
@@ -21,11 +20,9 @@ int main()
             {
                 points.push_back(Point(event.button.x, event.button.y));
                 window.Triangulation(points);
-                // window.render();
             }
         }
     }
-    //window.render();
     int a;
     std::cin >> a;
 
