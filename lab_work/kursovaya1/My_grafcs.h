@@ -1,6 +1,8 @@
 #include <vector>
 #include <SDL2/SDL.h>
-
+#include <algorithm>
+#include <iostream>
+#include <stack>
 
 struct point
 {

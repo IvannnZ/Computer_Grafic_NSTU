@@ -1,10 +1,5 @@
 #include "My_grafcs.h"
 
-#include <algorithm>
-
-#include "iostream"
-#include <SDL2/SDL.h>
-#include <stack>
 
 SDL_Color My_graphics::create_color(int r, int g, int b, int a)
 {
@@ -495,7 +490,6 @@ void My_graphics::DrawPoligon(std::vector<point>& points, SDL_Color color) const
     int x0, y0, x1, y1, x2, y2;
     for (int i = min_y; i < max_y; ++i)
     {
-        std::cout << i << std::endl;
         std::vector<point> lines;
         for (int j = 1; j < points.size(); ++j)
         {

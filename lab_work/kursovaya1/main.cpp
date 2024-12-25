@@ -125,6 +125,13 @@ int main()
             //     points.push_back({x, y});
             //     std::cin >> x >> y;
             // }
+            
+            points.push_back({2, 2});
+            points.push_back({17, 17});
+            points.push_back({32, 2});
+            points.push_back({32, 35});
+            points.push_back({17, 20});
+            points.push_back({2, 35});
 
             // домик
             // points.push_back({2, 2});
@@ -146,10 +153,10 @@ int main()
             // points.push_back({3, 15});
 
             // галочка ей бы масштаб больше
-            points.push_back({2, 2});
-            points.push_back({19, 5});
-            points.push_back({7, 7});
-            points.push_back({5, 19});
+            // points.push_back({2, 2});
+            // points.push_back({19, 5});
+            // points.push_back({7, 7});
+            // points.push_back({5, 19});
 
             window.DrawPoligon(points);
         }
