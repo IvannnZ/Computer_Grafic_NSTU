@@ -40,7 +40,6 @@ My_graphics::My_graphics(int size_x, int size_y)
 
 My_graphics::~My_graphics()
 {
-    //  SDL_FreeSurface(surface);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
@@ -64,19 +63,16 @@ void My_graphics::Triangulation(const std::vector<Point>& points) const {
     }
     std::vector<Line> all_lines;
 
-    // Генерация всех возможных линий между точками
     for (size_t i = 0; i < points.size(); ++i) {
         for (size_t j = i + 1; j < points.size(); ++j) {
             all_lines.push_back(Line(points[i], points[j]));
         }
     }
 
-    // Сортируем линии по длине
     std::sort(all_lines.begin(), all_lines.end(), comp);
 
     std::vector<Line> approve_lines;
 
-    // Проверяем пересечения линий
     for (const Line& line_i : all_lines) {
         bool can_add = true;
         for (const Line& line_j : approve_lines) {
@@ -87,7 +83,7 @@ void My_graphics::Triangulation(const std::vector<Point>& points) const {
         }
         if (can_add) {
             approve_lines.push_back(line_i);
-            Draw_line(line_i); // Отрисовываем линию
+            Draw_line(line_i);
         }
     }
 
@@ -158,7 +154,6 @@ void My_graphics::Draw_line(int x1, int y1, int x2, int y2, SDL_Color color) con
 {
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
-    // render();
 }
 
 void My_graphics::Draw_line(const Line& line) const
@@ -170,5 +165,4 @@ void My_graphics::Draw_line(const Line& line, SDL_Color color) const
 {
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_RenderDrawLine(renderer, line.s().x, line.s().y, line.e().x, line.e().y);
-    // render();
 }

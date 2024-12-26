@@ -2,7 +2,6 @@
 #include <SDL2/SDL.h>
 #include <algorithm>
 #include <iostream>
-#include <stack>
 
 struct Point
 {
@@ -19,19 +18,6 @@ class Line
 private:
     Point start;
     Point end;
-
-    static int orientation(const Point& p, const Point& q, const Point& r)
-    {
-        int val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
-        if (val == 0) return 0;
-        return (val > 0) ? 1 : 2;
-    }
-
-    static bool onSegment(const Point& p, const Point& q, const Point& r)
-    {
-        return q.x <= std::max(p.x, r.x) && q.x >= std::min(p.x, r.x) &&
-            q.y <= std::max(p.y, r.y) && q.y >= std::min(p.y, r.y);
-    }
 
 public:
     Line(const Point& p1, const Point& p2) : start(p1), end(p2)

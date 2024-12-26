@@ -49,8 +49,15 @@ cmake_ninja_workdir = /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/kurs
 
 build cmake_object_order_depends_target_kursovaya2: phony || .
 
-build CMakeFiles/kursovaya2.dir/main_k.cpp.o: CXX_COMPILER__kursovaya2_unscanned_Debug /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/kursovaya2/main_k.cpp || cmake_object_order_depends_target_kursovaya2
-  DEP_FILE = CMakeFiles/kursovaya2.dir/main_k.cpp.o.d
+build CMakeFiles/kursovaya2.dir/main.cpp.o: CXX_COMPILER__kursovaya2_unscanned_Debug /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/kursovaya2/main.cpp || cmake_object_order_depends_target_kursovaya2
+  DEP_FILE = CMakeFiles/kursovaya2.dir/main.cpp.o.d
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
+  INCLUDES = -I/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/kursovaya2/. -isystem /usr/include/SDL2
+  OBJECT_DIR = CMakeFiles/kursovaya2.dir
+  OBJECT_FILE_DIR = CMakeFiles/kursovaya2.dir
+
+build CMakeFiles/kursovaya2.dir/My_grafcs.cpp.o: CXX_COMPILER__kursovaya2_unscanned_Debug /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/kursovaya2/My_grafcs.cpp || cmake_object_order_depends_target_kursovaya2
+  DEP_FILE = CMakeFiles/kursovaya2.dir/My_grafcs.cpp.o.d
   FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   INCLUDES = -I/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/kursovaya2/. -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/kursovaya2.dir
@@ -64,7 +71,7 @@ build CMakeFiles/kursovaya2.dir/main_k.cpp.o: CXX_COMPILER__kursovaya2_unscanned
 #############################################
 # Link the executable kursovaya2
 
-build kursovaya2: CXX_EXECUTABLE_LINKER__kursovaya2_Debug CMakeFiles/kursovaya2.dir/main_k.cpp.o | /usr/lib/x86_64-linux-gnu/libSDL2.so
+build kursovaya2: CXX_EXECUTABLE_LINKER__kursovaya2_Debug CMakeFiles/kursovaya2.dir/main.cpp.o CMakeFiles/kursovaya2.dir/My_grafcs.cpp.o | /usr/lib/x86_64-linux-gnu/libSDL2.so
   FLAGS = -g
   LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libSDL2.so
   OBJECT_DIR = CMakeFiles/kursovaya2.dir
