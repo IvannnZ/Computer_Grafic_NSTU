@@ -1,0 +1,81 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Numerics;
+
+public class Mesh
+{
+    public List<Triangle> Triangles { get; set; } = new List<Triangle>();
+
+    public bool LoadFromFile(string filePath)
+    {
+        if (!File.Exists(filePath)) return false;
+
+        List<Vector3> vertices = new List<Vector3>();
+
+        using (StreamReader reader = new StreamReader(filePath))
+        {
+            while (!reader.EndOfStream)
+            {
+                string line = reader.ReadLine();
+                if (line == null) continue;
+
+                if (line.StartsWith("v "))
+                {
+                    string[] parts = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    Vector3 vertex = new Vector3(
+                        float.Parse(parts[1]),
+                        float.Parse(parts[2]),
+                        float.Parse(parts[3])
+                    );
+                    vertices.Add(vertex);
+                }
+                else if (line.StartsWith("f "))
+                {
+                    string[] parts = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    List<int> indices = new List<int>();
+
+                    foreach (var part in parts[1..])
+                    {
+                        string[] subParts = part.Split('/');
+                        indices.Add(int.Parse(subParts[0]) - 1); // OBJ indices start from 1
+                    }
+
+                    Triangle tri = new Triangle(
+                        vertices[indices[0]],
+                        vertices[indices[1]],
+                        vertices[indices[2]]
+                    );
+                    Triangles.Add(tri);
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public void DefineAsCube()
+    {
+        Triangles = new List<Triangle>
+        {
+            // SOUTH
+            new Triangle(new Vector3(0, 0, 0), new Vector3(0, 1, 0), new Vector3(1, 1, 0)),
+            new Triangle(new Vector3(0, 0, 0), new Vector3(1, 1, 0), new Vector3(1, 0, 0)),
+            // EAST
+            new Triangle(new Vector3(1, 0, 0), new Vector3(1, 1, 0), new Vector3(1, 1, 1)),
+            new Triangle(new Vector3(1, 0, 0), new Vector3(1, 1, 1), new Vector3(1, 0, 1)),
+            // NORTH
+            new Triangle(new Vector3(1, 0, 1), new Vector3(1, 1, 1), new Vector3(0, 1, 1)),
+            new Triangle(new Vector3(1, 0, 1), new Vector3(0, 1, 1), new Vector3(0, 0, 1)),
+            // WEST
+            new Triangle(new Vector3(0, 0, 1), new Vector3(0, 1, 1), new Vector3(0, 1, 0)),
+            new Triangle(new Vector3(0, 0, 1), new Vector3(0, 1, 0), new Vector3(0, 0, 0)),
+            // TOP
+            new Triangle(new Vector3(0, 1, 0), new Vector3(0, 1, 1), new Vector3(1, 1, 1)),
+            new Triangle(new Vector3(0, 1, 0), new Vector3(1, 1, 1), new Vector3(1, 1, 0)),
+            // BOTTOM
+            new Triangle(new Vector3(1, 0, 1), new Vector3(0, 0, 1), new Vector3(0, 0, 0)),
+            new Triangle(new Vector3(1, 0, 1), new Vector3(0, 0, 0), new Vector3(1, 0, 0))
+        };
+    }
+}

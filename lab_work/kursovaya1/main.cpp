@@ -129,9 +129,9 @@ int main()
             points.push_back({2, 2});
             points.push_back({17, 17});
             points.push_back({32, 2});
-            points.push_back({32, 35});
+            points.push_back({25, 35});
             points.push_back({17, 20});
-            points.push_back({2, 35});
+            points.push_back({10, 35});
 
             // домик
             // points.push_back({2, 2});
@@ -148,9 +148,9 @@ int main()
             // points.push_back({2, 16});
 
             // треугольник
-            // points.push_back({5, 5});
-            // points.push_back({15, 3});
-            // points.push_back({3, 15});
+            // points.push_back({5, 18});
+            // points.push_back({35, 3});
+            // points.push_back({30, 39});
 
             // галочка ей бы масштаб больше
             // points.push_back({2, 2});

@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "PoRTcHCOp14=",
+  "success": true,
+  "projectFilePath": "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4_test/3d_test_deep/3d_deep_seek/3d_deep_seek/3d_deep_seek.csproj",
+  "expectedPackageFiles": [
+    "/home/ivannz/.nuget/packages/csfml/2.6.1/csfml.2.6.1.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/microsoft.win32.systemevents/9.0.3/microsoft.win32.systemevents.9.0.3.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/sfml.audio/2.6.1/sfml.audio.2.6.1.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/sfml.graphics/2.6.1/sfml.graphics.2.6.1.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/sfml.net/2.6.1/sfml.net.2.6.1.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/sfml.system/2.6.1/sfml.system.2.6.1.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/sfml.window/2.6.1/sfml.window.2.6.1.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/sixlabors.imagesharp/3.1.7/sixlabors.imagesharp.3.1.7.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/system.drawing.common/9.0.3/system.drawing.common.9.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
