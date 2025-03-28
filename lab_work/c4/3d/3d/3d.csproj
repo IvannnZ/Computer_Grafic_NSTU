@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="SFML.net" Version="2.6.1" />
+      <PackageReference Include="SFML.net" Version="2.6.1" /> 
     </ItemGroup>
 
 </Project>

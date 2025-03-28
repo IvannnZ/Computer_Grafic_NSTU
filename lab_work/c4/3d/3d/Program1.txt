@@ -1,0 +1,599 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using SFML.Graphics;
+using SFML.System;
+using SFML.Window;
+
+public struct Vector3f
+{
+    public float X, Y, Z;
+
+    public Vector3f(float x, float y, float z)
+    {
+        X = x;
+        Y = y;
+        Z = z;
+    }
+
+    public static Vector3f operator +(Vector3f a, Vector3f b) => new Vector3f(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+    public static Vector3f operator -(Vector3f a, Vector3f b) => new Vector3f(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
+    public static Vector3f operator *(Vector3f a, float b) => new Vector3f(a.X * b, a.Y * b, a.Z * b);
+    public static Vector3f operator /(Vector3f a, float b) => new Vector3f(a.X / b, a.Y / b, a.Z / b);
+    public static Vector3f operator -(Vector3f a) => new Vector3f(-a.X, -a.Y, -a.Z);
+
+    public static Vector3f Cross(Vector3f a, Vector3f b)
+    {
+        return new Vector3f(
+            a.Y * b.Z - a.Z * b.Y,
+            a.Z * b.X - a.X * b.Z,
+            a.X * b.Y - a.Y * b.X);
+    }
+
+    public static float Dot(Vector3f a, Vector3f b) => a.X * b.X + a.Y * b.Y + a.Z * b.Z;
+
+    public float Length() => (float)Math.Sqrt(X * X + Y * Y + Z * Z);
+
+    public Vector3f Normalize()
+    {
+        float len = Length();
+        if (len > 0) return this / len;
+        return this;
+    }
+
+    public static readonly Vector3f Zero = new Vector3f(0, 0, 0);
+}
+
+class Program
+{
+    static void Main()
+    {
+        var camera = new Camera();
+        var renderer = new Renderer(camera);
+        renderer.Run();
+    }
+}
+
+class Camera
+{
+    public Vector3f Position { get; set; } = new Vector3f(0, -2.0f, -5);
+    public Vector3f LookDirection { get; set; } = new Vector3f(0, 0, 1);
+    public Vector3f UpDirection { get; set; } = new Vector3f(0, 1, 0);
+    public Matrix4x4 ProjectionMatrix { get; private set; }
+    public Matrix4x4 ViewMatrix { get; private set; }
+
+    public Camera()
+    {
+        UpdateProjectionMatrix(1920, 1080, 0.1f, 1000, 90);
+    }
+
+    public void UpdateProjectionMatrix(int width, int height, float near, float far, float fov)
+    {
+        float aspectRatio = (float)height / width;
+        float fovRad = 1.0f / (float)Math.Tan(fov * 0.5f * Math.PI / 180);
+
+        ProjectionMatrix = new Matrix4x4(
+            aspectRatio * fovRad, 0, 0, 0,
+            0, fovRad, 0, 0,
+            0, 0, far / (far - near), 1,
+            0, 0, -far * near / (far - near), 0);
+    }
+
+    public void UpdateViewMatrix()
+    {
+        var target = Position + LookDirection;
+        ViewMatrix = Matrix4x4.LookAt(Position, target, UpDirection);
+    }
+
+    public void Rotate(float yaw, float pitch)
+    {
+        // Rotate around Y axis (yaw)
+        var rotY = Matrix4x4.CreateRotationY(yaw);
+        LookDirection = Matrix4x4.Transform(LookDirection, rotY);
+
+        // Rotate around X axis (pitch)
+        var right = Vector3f.Cross(UpDirection, LookDirection);
+        var rotX = Matrix4x4.CreateFromAxisAngle(right, pitch);
+        LookDirection = Matrix4x4.Transform(LookDirection, rotX);
+        LookDirection = LookDirection.Normalize();
+    }
+}
+
+class Triangle
+{
+    public Vector3f[] Points { get; set; } = new Vector3f[3];
+    public Vector3f Normal { get; set; }
+
+    public Triangle() { }
+    
+    public Triangle(Vector3f p1, Vector3f p2, Vector3f p3)
+    {
+        Points[0] = p1;
+        Points[1] = p2;
+        Points[2] = p3;
+        CalculateNormal();
+    }
+
+    public void CalculateNormal()
+    {
+        var line1 = Points[1] - Points[0];
+        var line2 = Points[2] - Points[0];
+        Normal = Vector3f.Cross(line1, line2);
+        Normal = Normal.Normalize();
+    }
+
+    public bool IsVisibleFrom(Vector3f cameraPosition)
+    {
+        var cameraToTriangle = (Points[0] + Points[1] + Points[2]) / 3 - cameraPosition;
+        return Vector3f.Dot(Normal, cameraToTriangle) < 0;
+    }
+
+    public List<Triangle> ClipAgainstPlane(Vector3f planePoint, Vector3f planeNormal)
+    {
+        planeNormal = planeNormal.Normalize();
+        
+        Func<Vector3f, float> distance = p => 
+            planeNormal.X * p.X + planeNormal.Y * p.Y + planeNormal.Z * p.Z - Vector3f.Dot(planeNormal, planePoint);
+
+        var insidePoints = new List<Vector3f>();
+        var outsidePoints = new List<Vector3f>();
+
+        foreach (var p in Points)
+        {
+            if (distance(p) >= 0)
+                insidePoints.Add(p);
+            else
+                outsidePoints.Add(p);
+        }
+
+        if (insidePoints.Count == 0) return new List<Triangle>();
+        if (insidePoints.Count == 3) return new List<Triangle> { this };
+
+        if (insidePoints.Count == 1 && outsidePoints.Count == 2)
+        {
+            var outTri = new Triangle
+            {
+                Points = { [0] = insidePoints[0] }
+            };
+
+            outTri.Points[1] = IntersectPlane(planePoint, planeNormal, insidePoints[0], outsidePoints[0]);
+            outTri.Points[2] = IntersectPlane(planePoint, planeNormal, insidePoints[0], outsidePoints[1]);
+            outTri.Normal = Normal;
+
+            return new List<Triangle> { outTri };
+        }
+
+        if (insidePoints.Count == 2 && outsidePoints.Count == 1)
+        {
+            var outTri1 = new Triangle
+            {
+                Points = { [0] = insidePoints[0], [1] = insidePoints[1] },
+                Normal = Normal
+            };
+            outTri1.Points[2] = IntersectPlane(planePoint, planeNormal, insidePoints[0], outsidePoints[0]);
+
+            var outTri2 = new Triangle
+            {
+                Points = { [0] = insidePoints[1], [1] = outTri1.Points[2] },
+                Normal = Normal
+            };
+            outTri2.Points[2] = IntersectPlane(planePoint, planeNormal, insidePoints[1], outsidePoints[0]);
+
+            return new List<Triangle> { outTri1, outTri2 };
+        }
+
+        return new List<Triangle>();
+    }
+
+    private Vector3f IntersectPlane(Vector3f planePoint, Vector3f planeNormal, Vector3f lineStart, Vector3f lineEnd)
+    {
+        planeNormal = planeNormal.Normalize();
+        float planeD = -Vector3f.Dot(planeNormal, planePoint);
+        float ad = Vector3f.Dot(lineStart, planeNormal);
+        float bd = Vector3f.Dot(lineEnd, planeNormal);
+        float t = (-planeD - ad) / (bd - ad);
+        var lineToIntersect = (lineEnd - lineStart) * t;
+        return lineStart + lineToIntersect;
+    }
+}
+
+class Mesh
+{
+    public List<Triangle> Triangles { get; set; } = new List<Triangle>();
+
+    public bool LoadFromFile(string fileName)
+    {
+        if (!File.Exists(fileName)) return false;
+
+        var vertices = new List<Vector3f>();
+
+        foreach (var line in File.ReadLines(fileName))
+        {
+            if (line.StartsWith("v "))
+            {
+                var parts = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length >= 4)
+                {
+                    var vertex = new Vector3f(
+                        float.Parse(parts[1]),
+                        float.Parse(parts[2]),
+                        float.Parse(parts[3]));
+                    vertices.Add(vertex);
+                }
+            }
+            else if (line.StartsWith("f "))
+            {
+                var parts = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length >= 4)
+                {
+                    var indices = new int[3];
+                    for (int i = 0; i < 3; i++)
+                    {
+                        var facePart = parts[i + 1].Split('/');
+                        indices[i] = int.Parse(facePart[0]) - 1;
+                    }
+                    Triangles.Add(new Triangle(
+                        vertices[indices[0]],
+                        vertices[indices[1]],
+                        vertices[indices[2]]));
+                }
+            }
+        }
+
+        return true;
+    }
+}
+
+class Renderer
+{
+    private const int WINDOW_WIDTH = 1920;
+    private const int WINDOW_HEIGHT = 1080;
+
+    private readonly Camera _camera;
+    private readonly RenderWindow _window;
+    private readonly Mesh _mesh = new Mesh();
+    
+    private bool _outlineOnly = false;
+    private bool _allowMouseMovement = false;
+    private bool _allowRotation = true;
+    private bool[] _keys = new bool[6];
+    private Vector2i _mouseOffset;
+    private Vector3f _lightDir = new Vector3f(1, -0.5f, -0.7f);
+    private float _theta = 0;
+
+    public Renderer(Camera camera)
+    {
+        _camera = camera;
+        _window = new RenderWindow(new VideoMode((uint)WINDOW_WIDTH, (uint)WINDOW_HEIGHT), "3D Engine");
+        _window.SetVerticalSyncEnabled(true);
+        _lightDir = _lightDir.Normalize();
+    }
+
+    public void Run()
+    {
+        if (!_mesh.LoadFromFile("cube.obj")) return;
+
+        _window.Closed += (s, e) => _window.Close();
+        _window.KeyPressed += HandleKeyPressed;
+        _window.KeyReleased += HandleKeyReleased;
+        _window.MouseMoved += HandleMouseMoved;
+
+        Mouse.SetPosition(new Vector2i(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2), _window);
+        _window.SetMouseCursorVisible(false);
+        _allowMouseMovement = true;
+
+        var clockForMovement = new Clock();
+        var clockForFps = new Clock();
+
+        while (_window.IsOpen)
+        {
+            _window.DispatchEvents();
+
+            if (clockForMovement.ElapsedTime.AsMilliseconds() >= 10)
+            {
+                HandleMovement();
+                clockForMovement.Restart();
+            }
+
+            _camera.Rotate(-_mouseOffset.X * 0.005f, -_mouseOffset.Y * 0.005f);
+            _mouseOffset = new Vector2i(0, 0);
+            _camera.UpdateViewMatrix();
+
+            _window.Clear(Color.White);
+
+            var trianglesToDraw = ProcessTriangles();
+
+            DrawTriangles(trianglesToDraw);
+
+            UpdateWindowTitle(clockForFps, trianglesToDraw.Count);
+            _theta += 0.01f * (_allowRotation ? 1 : 0);
+
+            _window.Display();
+        }
+    }
+
+    private void HandleKeyPressed(object? sender, KeyEventArgs e)
+    {
+        if (e.Code == Keyboard.Key.Escape) _window.Close();
+        if (e.Code == Keyboard.Key.W) _keys[0] = true;
+        if (e.Code == Keyboard.Key.A) _keys[1] = true;
+        if (e.Code == Keyboard.Key.S) _keys[2] = true;
+        if (e.Code == Keyboard.Key.D) _keys[3] = true;
+        if (e.Code == Keyboard.Key.Space) _keys[4] = true;
+        if (e.Code == Keyboard.Key.LShift) _keys[5] = true;
+        if (e.Code == Keyboard.Key.Tab) _outlineOnly = !_outlineOnly;
+        if (e.Code == Keyboard.Key.LControl) _allowMouseMovement = !_allowMouseMovement;
+        if (e.Code == Keyboard.Key.R) _allowRotation = !_allowRotation;
+    }
+
+    private void HandleKeyReleased(object? sender, KeyEventArgs e)
+    {
+        if (e.Code == Keyboard.Key.W) _keys[0] = false;
+        if (e.Code == Keyboard.Key.A) _keys[1] = false;
+        if (e.Code == Keyboard.Key.S) _keys[2] = false;
+        if (e.Code == Keyboard.Key.D) _keys[3] = false;
+        if (e.Code == Keyboard.Key.Space) _keys[4] = false;
+        if (e.Code == Keyboard.Key.LShift) _keys[5] = false;
+    }
+
+    private void HandleMouseMoved(object? sender, MouseMoveEventArgs e)
+    {
+        if (_allowMouseMovement)
+        {
+            _mouseOffset.X = e.X - WINDOW_WIDTH / 2;
+            _mouseOffset.Y = e.Y - WINDOW_HEIGHT / 2;
+            Mouse.SetPosition(new Vector2i(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2), _window);
+        }
+    }
+
+    // private void HandleMovement()
+    // {
+    //     var vel = Vector3f.Zero;
+    //     if (_keys[0]) vel += new Vector3f(0, 0, 0.1f);
+    //     if (_keys[1]) vel += new Vector3f(-0.1f, 0, 0);
+    //     if (_keys[2]) vel += new Vector3f(0, 0, -0.1f);
+    //     if (_keys[3]) vel += new Vector3f(0.1f, 0, 0);
+    //     if (_keys[4]) vel += new Vector3f(0, -0.1f, 0);
+    //     if (_keys[5]) vel += new Vector3f(0, 0.1f, 0);
+    //
+    //     var tempDir = new Vector3f(_camera.LookDirection.X, 0, _camera.LookDirection.Z);
+    //     tempDir = tempDir.Normalize();
+    //     float phi = (float)Math.Acos(Vector3f.Dot(tempDir, new Vector3f(0, 0, 1)));
+    //     phi = tempDir.X < 0 ? phi : -phi;
+    //     var rotY = Matrix4x4.CreateRotationY(phi);
+    //     var rotVel = Matrix4x4.Transform(vel, rotY);
+    //     _camera.Position += rotVel;
+    // }
+    private void HandleMovement()
+    {
+        // Вектор скорости в локальном пространстве камеры
+        var localVel = Vector3f.Zero;
+        if (_keys[0]) localVel.Z += 0.1f;  // Вперёд
+        if (_keys[2]) localVel.Z -= 0.1f;  // Назад
+        if (_keys[1]) localVel.X -= 0.1f;  // Влево
+        if (_keys[3]) localVel.X += 0.1f;  // Вправо
+        if (_keys[4]) localVel.Y -= 0.1f;  // Вверх
+        if (_keys[5]) localVel.Y += 0.1f;  // Вниз
+
+        if (localVel.X == 0 && localVel.Y == 0 && localVel.Z == 0)
+            return;
+
+        // Получаем базис камеры
+        var forward = _camera.LookDirection.Normalize();
+        var right = Vector3f.Cross(_camera.UpDirection, forward).Normalize();
+        var up = Vector3f.Cross(forward, right).Normalize();
+
+        // Преобразуем локальную скорость в мировые координаты
+        var worldVel = right * localVel.X + up * localVel.Y + forward * localVel.Z;
+        _camera.Position += worldVel;
+    }
+    private List<Triangle> ProcessTriangles()
+    {
+        var trianglesToDraw = new List<Triangle>();
+
+        foreach (var tri in _mesh.Triangles)
+        {
+            var newTri = new Triangle();
+            
+            // Apply rotation
+            for (int k = 0; k < 3; k++)
+            {
+                newTri.Points[k] = Matrix4x4.Transform(tri.Points[k], Matrix4x4.CreateRotationY(_theta * 1.5f));
+                newTri.Points[k] = Matrix4x4.Transform(newTri.Points[k], Matrix4x4.CreateRotationZ((float)Math.PI));
+            }
+
+            newTri.CalculateNormal();
+
+            // Backface culling
+            if (!newTri.IsVisibleFrom(_camera.Position))
+                continue;
+
+            // Apply view transformation
+            for (int k = 0; k < 3; k++)
+            {
+                newTri.Points[k] = Matrix4x4.Transform(newTri.Points[k], _camera.ViewMatrix);
+            }
+
+            // Clip against near plane
+            var clipped = newTri.ClipAgainstPlane(new Vector3f(0, 0, 0.2f), new Vector3f(0, 0, 1));
+            
+            // Apply projection and clip against screen edges
+            var Q = new List<Triangle>();
+            foreach (var t in clipped)
+            {
+                var projTri = new Triangle();
+                for (int m = 0; m < 3; m++)
+                {
+                    projTri.Points[m] = Matrix4x4.Transform(t.Points[m], _camera.ProjectionMatrix);
+                }
+                Q.Add(projTri);
+            }
+
+            for (int x = 0; x < 4; x++)
+            {
+                var temp = new List<Triangle>();
+                foreach (var t in Q)
+                {
+                    List<Triangle> newTris = x switch
+                    {
+                        0 => t.ClipAgainstPlane(new Vector3f(0, -1, 0), new Vector3f(0, 1, 0)), // TOP
+                        1 => t.ClipAgainstPlane(new Vector3f(0, 1, 0), new Vector3f(0, -1, 0)), // BOTTOM
+                        2 => t.ClipAgainstPlane(new Vector3f(-1, 0, 0), new Vector3f(1, 0, 0)), // LEFT
+                        3 => t.ClipAgainstPlane(new Vector3f(1, 0, 0), new Vector3f(-1, 0, 0)), // RIGHT
+                        _ => new List<Triangle>()
+                    };
+                    temp.AddRange(newTris);
+                }
+                Q = temp;
+            }
+
+            trianglesToDraw.AddRange(Q);
+        }
+
+        // Sort triangles by depth
+        trianglesToDraw.Sort((t1, t2) =>
+        {
+            float z1 = (t1.Points[0].Z + t1.Points[1].Z + t1.Points[2].Z) / 3.0f;
+            float z2 = (t2.Points[0].Z + t2.Points[1].Z + t2.Points[2].Z) / 3.0f;
+            return z2.CompareTo(z1);
+        });
+
+        return trianglesToDraw;
+    }
+
+    private void DrawTriangles(List<Triangle> triangles)
+    {
+        foreach (var tri in triangles)
+        {
+            if (_outlineOnly)
+            {
+                var outline = new VertexArray(PrimitiveType.LineStrip, 4);
+                for (int j = 0; j < 4; j++)
+                {
+                    int idx = j % 3;
+                    float x = (tri.Points[idx].X + 1) * _window.Size.X / 2;
+                    float y = (tri.Points[idx].Y + 1) * _window.Size.Y / 2;
+                    outline[(uint)j] = new Vertex(new Vector2f(x, y), Color.Black);
+                }
+                _window.Draw(outline);
+            }
+            else
+            {
+                var vertices = new VertexArray(PrimitiveType.Triangles, 3);
+                for (int j = 0; j < 3; j++)
+                {
+                    float x = (tri.Points[j].X + 1) * _window.Size.X / 2;
+                    float y = (tri.Points[j].Y + 1) * _window.Size.Y / 2;
+                    
+                    float light = Math.Max(0.0f, Vector3f.Dot(-tri.Normal, _lightDir));
+                    int R = (int)(153 * (0.3 + 0.7 * light));
+                    int G = (int)(249 * (0.3 + 0.7 * light));
+                    int B = (int)(142 * (0.3 + 0.7 * light));
+                    
+                    vertices[(uint)j] = new Vertex(new Vector2f(x, y), new Color((byte)R, (byte)G, (byte)B));
+                }
+                _window.Draw(vertices);
+            }
+        }
+    }
+
+    private void UpdateWindowTitle(Clock clock, int trianglesDrawn)
+    {
+        int fps = (int)(1.0f / clock.ElapsedTime.AsSeconds());
+        clock.Restart();
+        string title = $"FPS: {fps}; Triangles rendering: {_mesh.Triangles.Count}; Triangles drawing: {trianglesDrawn}, Position {_camera.Position}";
+        _window.SetTitle(title);
+    }
+}
+
+public struct Matrix4x4
+{
+    public float M11, M12, M13, M14;
+    public float M21, M22, M23, M24;
+    public float M31, M32, M33, M34;
+    public float M41, M42, M43, M44;
+
+    public Matrix4x4(
+        float m11, float m12, float m13, float m14,
+        float m21, float m22, float m23, float m24,
+        float m31, float m32, float m33, float m34,
+        float m41, float m42, float m43, float m44)
+    {
+        M11 = m11; M12 = m12; M13 = m13; M14 = m14;
+        M21 = m21; M22 = m22; M23 = m23; M24 = m24;
+        M31 = m31; M32 = m32; M33 = m33; M34 = m34;
+        M41 = m41; M42 = m42; M43 = m43; M44 = m44;
+    }
+
+    public static Matrix4x4 LookAt(Vector3f cameraPosition, Vector3f cameraTarget, Vector3f cameraUpVector)
+    {
+        var forward = (cameraTarget - cameraPosition).Normalize();
+        var right = Vector3f.Cross(cameraUpVector, forward).Normalize();
+        var up = Vector3f.Cross(forward, right);
+
+        return new Matrix4x4(
+            right.X, right.Y, right.Z, -Vector3f.Dot(right, cameraPosition),
+            up.X, up.Y, up.Z, -Vector3f.Dot(up, cameraPosition),
+            forward.X, forward.Y, forward.Z, -Vector3f.Dot(forward, cameraPosition),
+            0, 0, 0, 1);
+    }
+
+    public static Matrix4x4 CreateRotationX(float angle)
+    {
+        float cos = (float)Math.Cos(angle);
+        float sin = (float)Math.Sin(angle);
+
+        return new Matrix4x4(
+            1, 0, 0, 0,
+            0, cos, sin, 0,
+            0, -sin, cos, 0,
+            0, 0, 0, 1);
+    }
+
+    public static Matrix4x4 CreateRotationY(float angle)
+    {
+        float cos = (float)Math.Cos(angle);
+        float sin = (float)Math.Sin(angle);
+
+        return new Matrix4x4(
+            cos, 0, -sin, 0,
+            0, 1, 0, 0,
+            sin, 0, cos, 0,
+            0, 0, 0, 1);
+    }
+
+    public static Matrix4x4 CreateRotationZ(float angle)
+    {
+        float cos = (float)Math.Cos(angle);
+        float sin = (float)Math.Sin(angle);
+
+        return new Matrix4x4(
+            cos, sin, 0, 0,
+            -sin, cos, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1);
+    }
+
+    public static Matrix4x4 CreateFromAxisAngle(Vector3f axis, float angle)
+    {
+        float x = axis.X, y = axis.Y, z = axis.Z;
+        float sa = (float)Math.Sin(angle), ca = (float)Math.Cos(angle);
+        float xx = x * x, yy = y * y, zz = z * z;
+        float xy = x * y, xz = x * z, yz = y * z;
+
+        return new Matrix4x4(
+            xx + ca * (1 - xx), xy - ca * xy + sa * z, xz - ca * xz - sa * y, 0,
+            xy - ca * xy - sa * z, yy + ca * (1 - yy), yz - ca * yz + sa * x, 0,
+            xz - ca * xz + sa * y, yz - ca * yz - sa * x, zz + ca * (1 - zz), 0,
+            0, 0, 0, 1);
+    }
+
+    public static Vector3f Transform(Vector3f vector, Matrix4x4 matrix)
+    {
+        return new Vector3f(
+            vector.X * matrix.M11 + vector.Y * matrix.M21 + vector.Z * matrix.M31 + matrix.M41,
+            vector.X * matrix.M12 + vector.Y * matrix.M22 + vector.Z * matrix.M32 + matrix.M42,
+            vector.X * matrix.M13 + vector.Y * matrix.M23 + vector.Z * matrix.M33 + matrix.M43);
+    }
+}

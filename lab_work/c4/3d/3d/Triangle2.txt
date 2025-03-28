@@ -1,0 +1,93 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Numerics;
+
+public class Triangle
+{
+    public Vector3[] P = new Vector3[3];
+    public Vector3 Normal;
+
+    public Triangle() { }
+
+    public Triangle(Vector3 p1, Vector3 p2, Vector3 p3)
+    {
+        P[0] = p1;
+        P[1] = p2;
+        P[2] = p3;
+    }
+
+    public List<Triangle> ClipAgainstPlane(Vector3 planePoint, Vector3 planeNormal)
+    {
+        planeNormal = Vector3.Normalize(planeNormal);
+
+        float Dist(Vector3 p)
+        {
+            return Vector3.Dot(planeNormal, p - planePoint);
+        }
+
+        Vector3[] inside = new Vector3[3];
+        Vector3[] outside = new Vector3[3];
+        int insideCount = 0, outsideCount = 0;
+
+        foreach (var point in P)
+        {
+            if (Dist(point) >= 0)
+                inside[insideCount++] = point;
+            else
+                outside[outsideCount++] = point;
+        }
+
+        if (insideCount == 0)
+            return new List<Triangle>(); // Все вне — ничего не возвращаем
+
+        if (insideCount == 3)
+            return new List<Triangle> { this }; // Все внутри — возвращаем треугольник
+
+        if (insideCount == 1 && outsideCount == 2)
+        {
+            var result = new Triangle();
+            float t;
+
+            result.P[0] = inside[0];
+            result.P[1] = IntersectPlane(planePoint, planeNormal, inside[0], outside[0], out t);
+            result.P[2] = IntersectPlane(planePoint, planeNormal, inside[0], outside[1], out t);
+            result.Normal = Normal;
+
+            return new List<Triangle> { result };
+        }
+
+        if (insideCount == 2 && outsideCount == 1)
+        {
+            float t;
+            var t1 = new Triangle();
+            var t2 = new Triangle();
+
+            t1.P[0] = inside[0];
+            t1.P[1] = inside[1];
+            t1.P[2] = IntersectPlane(planePoint, planeNormal, inside[0], outside[0], out t);
+            t1.Normal = Normal;
+
+            t2.P[0] = inside[1];
+            t2.P[1] = t1.P[2];
+            t2.P[2] = IntersectPlane(planePoint, planeNormal, inside[1], outside[0], out t);
+            t2.Normal = Normal;
+
+            return new List<Triangle> { t1, t2 };
+        }
+
+        return new List<Triangle>();
+    }
+
+    private Vector3 IntersectPlane(Vector3 planeP, Vector3 planeN, Vector3 lineStart, Vector3 lineEnd, out float t)
+    {
+        planeN = Vector3.Normalize(planeN);
+        float d = -Vector3.Dot(planeN, planeP);
+        float ad = Vector3.Dot(lineStart, planeN);
+        float bd = Vector3.Dot(lineEnd, planeN);
+        t = (-d - ad) / (bd - ad);
+        Vector3 lineStartToEnd = lineEnd - lineStart;
+        return lineStart + t * lineStartToEnd;
+    }
+}

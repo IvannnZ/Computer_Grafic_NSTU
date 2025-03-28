@@ -1,0 +1,82 @@
+using System.Numerics;
+
+public class Mesh
+{
+    public List<Triangle> Tris = new();
+
+    public bool LoadFromFile(string filePath)
+    {
+        if (!File.Exists(filePath)) return false;
+
+        List<Vector3> verts = new();
+
+        foreach (var line in File.ReadLines(filePath))
+        {
+            if (string.IsNullOrWhiteSpace(line)) continue;
+
+            var tokens = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (tokens.Length == 0) continue;
+
+            if (tokens[0] == "v")
+            {
+                float x = float.Parse(tokens[1]);
+                float y = float.Parse(tokens[2]);
+                float z = float.Parse(tokens[3]);
+                verts.Add(new Vector3(x, y, z));
+            }
+            else if (tokens[0] == "f")
+            {
+                try
+                {
+                    // Простой .obj: f 1 2 3
+                    if (!line.Contains("/"))
+                    {
+                        int i1 = int.Parse(tokens[1]) - 1;
+                        int i2 = int.Parse(tokens[2]) - 1;
+                        int i3 = int.Parse(tokens[3]) - 1;
+                        Tris.Add(new Triangle(verts[i1], verts[i2], verts[i3]));
+                    }
+                    else
+                    {
+                        // f 1/1/1 2/2/2 3/3/3
+                        int i1 = int.Parse(tokens[1].Split('/')[0]) - 1;
+                        int i2 = int.Parse(tokens[2].Split('/')[0]) - 1;
+                        int i3 = int.Parse(tokens[3].Split('/')[0]) - 1;
+                        Tris.Add(new Triangle(verts[i1], verts[i2], verts[i3]));
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public void DefineAsCube()
+    {
+        Tris = new List<Triangle>
+        {
+            // SOUTH
+            new Triangle(new(0,0,0), new(0,1,0), new(1,1,0)),
+            new Triangle(new(0,0,0), new(1,1,0), new(1,0,0)),
+            // EAST
+            new Triangle(new(1,0,0), new(1,1,0), new(1,1,1)),
+            new Triangle(new(1,0,0), new(1,1,1), new(1,0,1)),
+            // NORTH
+            new Triangle(new(1,0,1), new(1,1,1), new(0,1,1)),
+            new Triangle(new(1,0,1), new(0,1,1), new(0,0,1)),
+            // WEST
+            new Triangle(new(0,0,1), new(0,1,1), new(0,1,0)),
+            new Triangle(new(0,0,1), new(0,1,0), new(0,0,0)),
+            // TOP
+            new Triangle(new(0,1,0), new(0,1,1), new(1,1,1)),
+            new Triangle(new(0,1,0), new(1,1,1), new(1,1,0)),
+            // BOTTOM
+            new Triangle(new(1,0,1), new(0,0,1), new(0,0,0)),
+            new Triangle(new(1,0,1), new(0,0,0), new(1,0,0)),
+        };
+    }
+}

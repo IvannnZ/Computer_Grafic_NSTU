@@ -1,282 +1,499 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 
-namespace SFML_3D_Viewer
+class Program
 {
-    class Program
+    static void Main()
     {
-        static void Main(string[] args)
+        // Инициализация камеры и проекции
+        Vec4 cameraLoc = new Vec4(0, -2.0f, -5);
+        Mat4x4 projMat = Mat4x4.GetProjectionMatrix(1920, 1080, 0.1f, 1000f, 90f);
+
+        // Загрузка модели
+        Mesh testMesh = new Mesh();
+        if (!testMesh.LoadFromFile("1.obj"))
         {
-            Console.WriteLine("SFML 3D Viewer");
-            Console.WriteLine("Controls:");
-            Console.WriteLine("W, A, S, D - Move camera");
-            Console.WriteLine("Q, E - Zoom in/out");
-            Console.WriteLine("1, 2, 3, 4, 5 - Load shapes (Tetrahedron, Cube, Octahedron, Dodecahedron, Icosahedron)");
-            Console.WriteLine("ESC - Exit");
-
-            var window = new RenderWindow(new VideoMode(800, 600), "3D Shape Viewer");
-            window.SetFramerateLimit(60);
-            
-            // Enable depth testing for proper 3D rendering
-            window.SetVerticalSyncEnabled(true);
-
-            // Camera position
-            Vector3f cameraPosition = new Vector3f(0, 0, -5);
-            float cameraSpeed = 0.1f;
-            float zoomSpeed = 0.1f;
-
-            // Current shape
-            Shape3D? currentShape = null;
-            float rotationSpeed = 1.0f;
-            float time = 0;
-
-            // Load default shape (cube)
-            try
-            {
-                currentShape = LoadObjFile("cube.obj");
-                if (currentShape != null)
-                {
-                    currentShape.Color = Color.Green;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error loading shape: {ex.Message}");
-            }
-
-            window.Closed += (sender, e) => window.Close();
-            window.KeyPressed += (sender, e) =>
-            {
-                if (e.Code == Keyboard.Key.Escape) window.Close();
-
-                // Shape selection
-                if (e.Code == Keyboard.Key.Num1) LoadShape("1.obj", Color.Red, ref currentShape);
-                if (e.Code == Keyboard.Key.Num2) LoadShape("2.obj", Color.Green, ref currentShape);
-                if (e.Code == Keyboard.Key.Num3) LoadShape("3.obj", Color.Blue, ref currentShape);
-                if (e.Code == Keyboard.Key.Num4) LoadShape("4.obj", Color.Yellow, ref currentShape);
-                if (e.Code == Keyboard.Key.Num5) LoadShape("5.obj", Color.Magenta, ref currentShape);
-                if (e.Code == Keyboard.Key.Num6) LoadShape("cube.obj", Color.Green, ref currentShape);
-                if (e.Code == Keyboard.Key.Num7) LoadShape("teapot.obj", Color.Blue, ref currentShape);
-
-                // Camera movement
-                if (e.Code == Keyboard.Key.W) cameraPosition.Y += cameraSpeed;
-                if (e.Code == Keyboard.Key.S) cameraPosition.Y -= cameraSpeed;
-                if (e.Code == Keyboard.Key.A) cameraPosition.X += cameraSpeed;
-                if (e.Code == Keyboard.Key.D) cameraPosition.X -= cameraSpeed;
-
-                // Zoom
-                if (e.Code == Keyboard.Key.Q) cameraPosition.Z += zoomSpeed;
-                if (e.Code == Keyboard.Key.E) cameraPosition.Z -= zoomSpeed;
-            };
-
-            Clock clock = new Clock();
-            while (window.IsOpen)
-            {
-                window.DispatchEvents();
-
-                // Update time
-                float deltaTime = clock.Restart().AsSeconds();
-                time += deltaTime;
-
-                // Update shape position (sinusoidal movement)
-                if (currentShape != null)
-                {
-                    currentShape.Position = new Vector3f(
-                        currentShape.Position.X,
-                        (float)Math.Sin(time) * 1.5f,
-                        currentShape.Position.Z
-                    );
-
-                    // Rotate shape
-                    currentShape.Rotation = new Vector3f(
-                        currentShape.Rotation.X,
-                        currentShape.Rotation.Y + rotationSpeed * deltaTime,
-                        currentShape.Rotation.Z
-                    );
-                }
-
-                window.Clear(Color.Black);
-
-                // Draw shape
-                if (currentShape != null)
-                {
-                    currentShape.Draw(window, cameraPosition);
-                }
-
-                window.Display();
-            }
+            Console.WriteLine("Failed to load model");
+            return;
         }
 
-        static void LoadShape(string filename, Color color, ref Shape3D? shape)
+        // Настройки приложения
+        float theta = 0;
+        bool outlineOnly = false;
+        bool allowMouseMovement = false;
+        bool allowRotation = true;
+        bool[] keys = new bool[6];
+
+        // Направления
+        Vec4 lookDir = new Vec4(0, 0, 1, 0);
+        Vec4 upDir = new Vec4(0, 1, 0, 0);
+        Vec4 lightDir = new Vec4(1, -0.5f, -0.7f, 0);
+        lightDir.Normalize();
+
+        // Таймеры
+        Clock movementClock = new Clock();
+        Clock fpsClock = new Clock();
+
+        // Создание окна
+        const int windowHeight = 1080;
+        const int windowWidth = 1920;
+        RenderWindow window = new RenderWindow(new VideoMode((uint)windowWidth, (uint)windowHeight), "3D Engine");
+        window.SetVerticalSyncEnabled(true);
+        Mouse.SetPosition(new Vector2i(windowWidth / 2, windowHeight / 2), window);
+        window.SetMouseCursorVisible(false);
+        allowMouseMovement = true;
+
+        // Главный цикл
+        while (window.IsOpen)
         {
-            try
+            window.DispatchEvents();
+
+            // Обработка ввода
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Escape)) window.Close();
+            keys[0] = Keyboard.IsKeyPressed(Keyboard.Key.W);
+            keys[1] = Keyboard.IsKeyPressed(Keyboard.Key.A);
+            keys[2] = Keyboard.IsKeyPressed(Keyboard.Key.S);
+            keys[3] = Keyboard.IsKeyPressed(Keyboard.Key.D);
+            keys[4] = Keyboard.IsKeyPressed(Keyboard.Key.Space);
+            keys[5] = Keyboard.IsKeyPressed(Keyboard.Key.LShift);
+
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Tab)) outlineOnly = !outlineOnly;
+            if (Keyboard.IsKeyPressed(Keyboard.Key.LControl)) allowMouseMovement = !allowMouseMovement;
+            if (Keyboard.IsKeyPressed(Keyboard.Key.R)) allowRotation = !allowRotation;
+
+            // Обработка движения мыши
+            Vector2i mouseOffset = new Vector2i(0, 0);
+            if (allowMouseMovement)
             {
-                var newShape = LoadObjFile(filename);
-                if (newShape != null)
+                Vector2i mousePos = Mouse.GetPosition(window);
+                mouseOffset.X = mousePos.X - windowWidth / 2;
+                mouseOffset.Y = mousePos.Y - windowHeight / 2;
+                Mouse.SetPosition(new Vector2i(windowWidth / 2, windowHeight / 2), window);
+            }
+
+            // Движение камеры
+            if (movementClock.ElapsedTime.AsMilliseconds() >= 10)
+            {
+                Vec4 vel = new Vec4(0, 0, 0, 0);
+                if (keys[0]) vel += new Vec4(0, 0, 0.1f, 0);
+                if (keys[1]) vel += new Vec4(-0.1f, 0, 0, 0);
+                if (keys[2]) vel += new Vec4(0, 0, -0.1f, 0);
+                if (keys[3]) vel += new Vec4(0.1f, 0, 0, 0);
+                if (keys[4]) vel += new Vec4(0, -0.1f, 0, 0);
+                if (keys[5]) vel += new Vec4(0, 0.1f, 0, 0);
+
+                Vec4 tempDir = new Vec4(lookDir.x, 0, lookDir.z, 0);
+                tempDir.Normalize();
+                float phi = MathF.Acos(Vec4.Dot(tempDir, new Vec4(0, 0, 1, 0)));
+                phi = tempDir.x < 0 ? phi : -phi;
+                Vec4 rotVel = vel * Mat4x4.GetRotationY(phi);
+                cameraLoc += rotVel;
+                movementClock.Restart();
+            }
+
+            // Обновление направления взгляда
+            lookDir = lookDir * Mat4x4.GetRotationY(-mouseOffset.X * 0.005f);
+            Vec4 horDir = new Vec4(lookDir.x, 0, lookDir.z, 0);
+            horDir.Normalize();
+            float phi2 = MathF.Acos(Vec4.Dot(horDir, new Vec4(0, 0, 1, 0)));
+            phi2 = horDir.x < 0 ? -phi2 : phi2;
+            Vec4 tempDir2 = lookDir * Mat4x4.GetRotationY(phi2);
+            tempDir2 = tempDir2 * Mat4x4.GetRotationX(-mouseOffset.Y * 0.005f);
+            lookDir = tempDir2 * Mat4x4.GetRotationY(-phi2);
+            lookDir.Normalize();
+
+            // Матрица вида
+            Vec4 target = cameraLoc + lookDir;
+            Mat4x4 viewMat = Mat4x4.GetPointAtMatrix(cameraLoc, target, upDir);
+            viewMat.Invert();
+
+            // Очистка экрана
+            window.Clear(Color.White);
+
+            // Обработка треугольников
+            List<Triangle> toDraw = new List<Triangle>();
+            foreach (Triangle t in testMesh.Tris)
+            {
+                // Преобразование модели
+                Triangle newTri = new Triangle(
+                    t.Points[0] * Mat4x4.GetRotationY(theta * 1.5f),
+                    t.Points[1] * Mat4x4.GetRotationY(theta * 1.5f),
+                    t.Points[2] * Mat4x4.GetRotationY(theta * 1.5f)
+                );
+
+                // Расчет нормали
+                Vec4 a = Vec4.Cross(newTri.Points[1] - newTri.Points[0], newTri.Points[2] - newTri.Points[0]);
+                a.Normalize();
+                newTri.Normal = a;
+
+                // Отсечение невидимых граней
+                Vec4 camDir = (newTri.Points[0] + newTri.Points[1] + newTri.Points[2]) / 3 - cameraLoc;
+                if (Vec4.Dot(newTri.Normal, camDir) >= 0)
+                    continue;
+
+                // Преобразование в пространство вида
+                for (int k = 0; k < 3; k++)
                 {
-                    newShape.Color = color;
-                    newShape.Position = shape?.Position ?? new Vector3f(0, 0, 0);
-                    newShape.Rotation = shape?.Rotation ?? new Vector3f(0, 0, 0);
-                    shape = newShape;
-                    Console.WriteLine($"Loaded {filename}");
+                    newTri.Points[k] = newTri.Points[k] * viewMat;
+                }
+
+                // Клиппинг у ближней плоскости
+                List<Triangle> clipped = newTri.ClipAgainstPlane(new Vec4(0, 0, 0.2f), new Vec4(0, 0, 1));
+                foreach (Triangle clippedTri in clipped)
+                {
+                    Triangle projected = new Triangle(
+                        clippedTri.Points[0] * projMat,
+                        clippedTri.Points[1] * projMat,
+                        clippedTri.Points[2] * projMat
+                    );
+                    projected.Normal = clippedTri.Normal;
+                    toDraw.Add(projected);
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error loading {filename}: {ex.Message}");
-            }
-        }
 
-        static Shape3D? LoadObjFile(string filename)
-        {
-            if (!File.Exists(filename))
+            // Дополнительный клиппинг по границам экрана
+            List<Triangle> finalTriangles = new List<Triangle>();
+            foreach (Triangle t in toDraw)
             {
-                Console.WriteLine($"File {filename} not found");
-                return null;
-            }
-
-            var vertices = new List<Vector3f>();
-            var faces = new List<int[]>();
-
-            foreach (var line in File.ReadAllLines(filename))
-            {
-                if (line.StartsWith("v "))
+                List<Triangle> temp = new List<Triangle> { t };
+                
+                for (int plane = 0; plane < 4; plane++)
                 {
-                    var parts = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (parts.Length >= 4)
+                    List<Triangle> toAdd = new List<Triangle>();
+                    foreach (Triangle tri in temp)
                     {
-                        vertices.Add(new Vector3f(
-                            float.Parse(parts[1], System.Globalization.CultureInfo.InvariantCulture),
-                            float.Parse(parts[2], System.Globalization.CultureInfo.InvariantCulture),
-                            float.Parse(parts[3], System.Globalization.CultureInfo.InvariantCulture))
-                        );
+                        switch (plane)
+                        {
+                            case 0: // TOP
+                                toAdd.AddRange(tri.ClipAgainstPlane(new Vec4(0, -1, 0), new Vec4(0, 1, 0)));
+                                break;
+                            case 1: // BOTTOM
+                                toAdd.AddRange(tri.ClipAgainstPlane(new Vec4(0, 1, 0), new Vec4(0, -1, 0)));
+                                break;
+                            case 2: // LEFT
+                                toAdd.AddRange(tri.ClipAgainstPlane(new Vec4(-1, 0, 0), new Vec4(1, 0, 0)));
+                                break;
+                            case 3: // RIGHT
+                                toAdd.AddRange(tri.ClipAgainstPlane(new Vec4(1, 0, 0), new Vec4(-1, 0, 0)));
+                                break;
+                        }
                     }
+                    temp = toAdd;
                 }
-                else if (line.StartsWith("f "))
+                finalTriangles.AddRange(temp);
+            }
+
+            // Сортировка по глубине
+            finalTriangles = finalTriangles.OrderByDescending(t => 
+                (t.Points[0].z + t.Points[1].z + t.Points[2].z) / 3).ToList();
+
+            // Отрисовка
+            foreach (Triangle T in finalTriangles)
+            {
+                if (outlineOnly)
                 {
-                    var parts = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    var face = new int[parts.Length - 1];
-                    for (int i = 1; i < parts.Length; i++)
+                    VertexArray outline = new VertexArray(PrimitiveType.LineStrip, 4);
+                    for (int j = 0; j < 4; j++)
                     {
-                        // Handle cases like "f v1/vt1/vn1 v2/vt2/vn2 ..."
-                        var vertexPart = parts[i].Split('/')[0];
-                        face[i - 1] = int.Parse(vertexPart) - 1; // OBJ indices are 1-based
+                        float x = (T.Points[j % 3].x + 1) * window.Size.X / 2;
+                        float y = (T.Points[j % 3].y + 1) * window.Size.Y / 2;
+                        outline[(uint)j] = new Vertex(new Vector2f(x, y), Color.Black);
                     }
-                    faces.Add(face);
+                    window.Draw(outline);
                 }
-            }
-
-            if (vertices.Count == 0 || faces.Count == 0)
-            {
-                Console.WriteLine($"No valid geometry found in {filename}");
-                return null;
-            }
-
-            return new Shape3D(vertices, faces);
-        }
-    }
-
-    class Shape3D
-    {
-        public List<Vector3f> Vertices { get; }
-        public List<int[]> Faces { get; }
-        public Vector3f Position { get; set; }
-        public Vector3f Rotation { get; set; }
-        public Color Color { get; set; }
-
-        public Shape3D(List<Vector3f> vertices, List<int[]> faces)
-        {
-            Vertices = vertices;
-            Faces = faces;
-            Position = new Vector3f(0, 0, 0);
-            Rotation = new Vector3f(0, 0, 0);
-            Color = Color.White;
-        }
-
-        public void Draw(RenderWindow window, Vector3f cameraPosition)
-        {
-            // Simple 3D to 2D projection
-            foreach (var face in Faces)
-            {
-                if (face.Length < 3) continue; // We need at least 3 vertices for a face
-
-                // Create SFML convex shape for each face
-                var convex = new ConvexShape((uint)face.Length);
-                convex.FillColor = new Color(Color.R, Color.G, Color.B, 150);
-                convex.OutlineThickness = 1;
-                convex.OutlineColor = Color;
-
-                // Project each vertex
-                for (int i = 0; i < face.Length; i++)
+                else
                 {
-                    if (face[i] < 0 || face[i] >= Vertices.Count) continue;
-
-                    var vertex = Vertices[face[i]];
-
-                    // Apply transformations
-                    vertex = RotateVertex(vertex, Rotation);
-                    vertex = new Vector3f(
-                        vertex.X + Position.X,
-                        vertex.Y + Position.Y,
-                        vertex.Z + Position.Z
-                    );
-
-                    // Simple perspective projection
-                    float scale = 200.0f; // Scaling factor
-                    float distance = 5.0f; // Distance to projection plane
-
-                    // Adjust for camera position
-                    vertex = new Vector3f(
-                        vertex.X - cameraPosition.X,
-                        vertex.Y - cameraPosition.Y,
-                        vertex.Z - cameraPosition.Z
-                    );
-
-                    // Avoid division by zero
-                    float z = vertex.Z == 0 ? 0.001f : vertex.Z;
-
-                    // Perspective projection
-                    Vector2f projected = new Vector2f(
-                        vertex.X * distance / z * scale + window.Size.X / 2,
-                        -vertex.Y * distance / z * scale + window.Size.Y / 2
-                    );
-
-                    convex.SetPoint((uint)i, projected);
+                    VertexArray tri = new VertexArray(PrimitiveType.Triangles, 3);
+                    for (int j = 0; j < 3; j++)
+                    {
+                        float x = (T.Points[j].x + 1) * window.Size.X / 2;
+                        float y = (T.Points[j].y + 1) * window.Size.Y / 2;
+                        float light = Math.Max(0, Vec4.Dot(-T.Normal, lightDir));
+                        byte R = (byte)(153 * (0.3f + 0.7f * light));
+                        byte G = (byte)(249 * (0.3f + 0.7f * light));
+                        byte B = (byte)(142 * (0.3f + 0.7f * light));
+                        tri[(uint)j] = new Vertex(new Vector2f(x, y), new Color(R, G, B));
+                    }
+                    window.Draw(tri);
                 }
-
-                window.Draw(convex);
             }
-        }
 
-        private Vector3f RotateVertex(Vector3f vertex, Vector3f rotation)
-        {
-            // Rotate around Y axis
-            float angleY = rotation.Y * (float)Math.PI / 180.0f;
-            float cosY = (float)Math.Cos(angleY);
-            float sinY = (float)Math.Sin(angleY);
+            // Обновление FPS
+            int fps = (int)(1.0f / fpsClock.ElapsedTime.AsSeconds());
+            fpsClock.Restart();
+            window.SetTitle($"FPS: {fps}; Triangles: {testMesh.Tris.Count}; Visible: {finalTriangles.Count}");
 
-            Vector3f rotated = new Vector3f(
-                vertex.X * cosY - vertex.Z * sinY,
-                vertex.Y,
-                vertex.X * sinY + vertex.Z * cosY
-            );
-
-            // Rotate around X axis
-            float angleX = rotation.X * (float)Math.PI / 180.0f;
-            float cosX = (float)Math.Cos(angleX);
-            float sinX = (float)Math.Sin(angleX);
-
-            rotated = new Vector3f(
-                rotated.X,
-                rotated.Y * cosX - rotated.Z * sinX,
-                rotated.Y * sinX + rotated.Z * cosX
-            );
-
-            return rotated;
+            if (allowRotation) theta += 0.01f;
+            window.Display();
         }
     }
 }
+
+// using System;
+// using System.Collections.Generic;
+// using System.Linq;
+// using System.Numerics;
+// using SFML.Graphics;
+// using SFML.System;
+// using SFML.Window;
+//
+// class Program
+// {
+//     static void Main()
+//     {
+//         // Инициализация камеры и проекции
+//         Vec4 cameraLoc = new Vec4(0, -2.0f, -5);
+//         // Matrix4x4 projMat = Matrix4x4.CreatePerspectiveFieldOfView(
+//         //     MathF.PI / 2, // 90 градусов в радианах
+//         //     1920f / 1080f,
+//         //     0.1f,
+//         //     1000f
+//         // );
+//         
+//         float fovRad = 90 * MathF.PI / 180;
+//         float aspect = 1920f / 1080f;
+//         float fNear = 0.1f;
+//         float fFar = 1000f;
+//
+//         Matrix4x4 projMat = new Matrix4x4(
+//             (aspect)/MathF.Tan(fovRad/2), 0, 0, 0,
+//             0, 1/MathF.Tan(fovRad/2), 0, 0,
+//             0, 0, fFar/(fFar-fNear), 1,
+//             0, 0, -fFar*fNear/(fFar-fNear), 0
+//         );
+//
+//         // Загрузка модели
+//         Mesh testMesh = new Mesh();
+//         // if (!testMesh.LoadFromFile("cube.obj"))
+//         // {
+//         //     Console.WriteLine("Failed to load model");
+//         //     return;
+//         // }
+//         
+//         testMesh.DefineAsCube();
+//
+//         // Настройки приложения
+//         float theta = 0;
+//         bool outlineOnly = false;
+//         bool allowMouseMovement = false;
+//         bool allowRotation = true;
+//         bool[] keys = new bool[6];
+//
+//         // Направления
+//         Vec4 lookDir = new Vec4(0, 0, 1);
+//         Vec4 upDir = new Vec4(0, 1, 0);
+//         Vec4 lightDir = Vec4.Normalize(new Vec4(1, -0.5f, -0.7f));
+//
+//         // Таймеры
+//         Clock movementClock = new Clock();
+//         Clock fpsClock = new Clock();
+//
+//         // Создание окна
+//         const int windowHeight = 1080;
+//         const int windowWidth = 1920;
+//         
+//         SFML.System.Vector2i mouseOffset = new SFML.System.Vector2i(0, 0);
+//         
+//         RenderWindow window = new RenderWindow(new VideoMode((uint)windowWidth, (uint)windowHeight), "3D Engine");
+//         window.SetVerticalSyncEnabled(true);
+//         Mouse.SetPosition(new Vector2i(windowWidth / 2, windowHeight / 2), window);
+//         window.SetMouseCursorVisible(false);
+//         allowMouseMovement = true;
+//
+//         // Главный цикл
+//         while (window.IsOpen)
+//         {
+//             window.DispatchEvents();
+//
+//             // Обработка событий
+//             if (Keyboard.IsKeyPressed(Keyboard.Key.Escape)) window.Close();
+//             keys[0] = Keyboard.IsKeyPressed(Keyboard.Key.W);
+//             keys[1] = Keyboard.IsKeyPressed(Keyboard.Key.A);
+//             keys[2] = Keyboard.IsKeyPressed(Keyboard.Key.S);
+//             keys[3] = Keyboard.IsKeyPressed(Keyboard.Key.D);
+//             keys[4] = Keyboard.IsKeyPressed(Keyboard.Key.Space);
+//             keys[5] = Keyboard.IsKeyPressed(Keyboard.Key.LShift);
+//
+//             if (Keyboard.IsKeyPressed(Keyboard.Key.Tab)) outlineOnly = !outlineOnly;
+//             if (Keyboard.IsKeyPressed(Keyboard.Key.LControl)) allowMouseMovement = !allowMouseMovement;
+//             if (Keyboard.IsKeyPressed(Keyboard.Key.R)) allowRotation = !allowRotation;
+//
+//             // Обработка движения мыши
+//             if (allowMouseMovement)
+//             {
+//                 SFML.System.Vector2i mousePos = Mouse.GetPosition(window);
+//                 mouseOffset.X = mousePos.X - windowWidth / 2;
+//                 mouseOffset.Y = mousePos.Y - windowHeight / 2;
+//                 Mouse.SetPosition(new SFML.System.Vector2i(windowWidth / 2, windowHeight / 2), window);
+//             }
+//
+//             // Обработка движения камеры
+//             if (movementClock.ElapsedTime.AsMilliseconds() >= 10)
+//             {
+//                 Vec4 vel = new Vec4(0, 0, 0);
+//                 if (keys[0]) vel += new Vec4(0, 0, 0.1f);
+//                 if (keys[1]) vel += new Vec4(-0.1f, 0, 0);
+//                 if (keys[2]) vel += new Vec4(0, 0, -0.1f);
+//                 if (keys[3]) vel += new Vec4(0.1f, 0, 0);
+//                 if (keys[4]) vel += new Vec4(0, -0.1f, 0);
+//                 if (keys[5]) vel += new Vec4(0, 0.1f, 0);
+//
+//                 Vec4 tempDir = new Vec4(lookDir.x, 0, lookDir.z);
+//                 tempDir.Normalize();
+//                 float phi = MathF.Acos(Vec4.Dot(tempDir, new Vec4(0, 0, 1)));
+//                 phi = tempDir.x < 0 ? phi : -phi;
+//                 Vec4 rotVel = Vec4.Transform(vel, Matrix4x4.CreateRotationY(phi));
+//                 cameraLoc += rotVel;
+//                 movementClock.Restart();
+//             }
+//
+//             // Обновление направления взгляда
+//             lookDir = Vec4.Transform(lookDir, Matrix4x4.CreateRotationY(-mouseOffset.X * 0.005f));
+//             Vec4 horDir = new Vec4(lookDir.X, 0, lookDir.Z);
+//             horDir = Vec4.Normalize(horDir);
+//             float phi2 = MathF.Acos(Vec4.Dot(horDir, new Vec4(0, 0, 1)));
+//             phi2 = horDir.X < 0 ? -phi2 : phi2;
+//             Vec4 tempDir2 = Vec4.Transform(lookDir, Matrix4x4.CreateRotationY(phi2));
+//             tempDir2 = Vec4.Transform(tempDir2, Matrix4x4.CreateRotationX(-mouseOffset.Y * 0.005f));
+//             lookDir = Vec4.Transform(tempDir2, Matrix4x4.CreateRotationY(-phi2));
+//             lookDir = Vec4.Normalize(lookDir);
+//
+//             // Матрица вида
+//             Vec4 target = cameraLoc + lookDir;
+//             Matrix4x4 viewMat = Matrix4x4.CreateLookAt(cameraLoc, target, upDir);
+//             Matrix4x4.Invert(viewMat, out viewMat);
+//
+//             // Очистка экрана
+//             window.Clear(Color.White);
+//
+//             // Обработка треугольников
+//             List<Triangle> toDraw = new List<Triangle>();
+//             foreach (Triangle t in testMesh.Tris)
+//             {
+//                 Triangle newTri = new Triangle();
+//                 for (int k = 0; k < 3; k++)
+//                 {
+//                     if (t.Points[k] == null) continue;
+//                     newTri.Points[k] = Vec4.Transform(t.Points[k], Matrix4x4.CreateRotationY(theta * 1.5f));
+//                     newTri.Points[k] = Vec4.Transform(newTri.Points[k], Matrix4x4.CreateRotationZ(MathF.PI));
+//                 }
+//
+//                 newTri.Normal = Vec4.Normalize(Vec4.Cross(
+//                     newTri.Points[2] - newTri.Points[0], 
+//                     newTri.Points[1] - newTri.Points[0]));
+//
+//                 Vec4 camDir = (newTri.Points[0] + newTri.Points[1] + newTri.Points[2]) / 3 - cameraLoc;
+//                 if (Vec4.Dot(newTri.Normal, camDir) < 0)
+//                     continue;
+//
+//                 // Преобразование в пространство вида
+//                 for (int k = 0; k < 3; k++)
+//                 {
+//                     newTri.Points[k] = Vec4.Transform(newTri.Points[k], viewMat);
+//                 }
+//
+//                 // Клиппинг
+//                 List<Triangle> clipped = newTri.ClipAgainstPlane(new Vec4(0, 0, 0.2f), new Vec4(0, 0, 1));
+//                 foreach (Triangle clippedTri in clipped)
+//                 {
+//                     Triangle projected = new Triangle();
+//                     for (int m = 0; m < 3; m++)
+//                     {
+//                         // Проекция
+//                         Vector4 point = Vector4.Transform(
+//                             new Vector4(clippedTri.Points[m], 1), 
+//                             projMat);
+//                         point /= point.W;
+//                         projected.Points[m] = new Vec4(point.X, point.Y, point.Z);
+//                     }
+//                     projected.Normal = clippedTri.Normal;
+//                     toDraw.Add(projected);
+//                 }
+//             }
+//
+//             // Сортировка по глубине
+//             // toDraw = toDraw.OrderByDescending(t => 
+//             //     (t.Points[0].Z + t.Points[1].Z + t.Points[2].Z) / 3).ToList();
+//
+//             // Отрисовка
+//             foreach (Triangle T in toDraw)
+//             {
+//                 if (outlineOnly)
+//                 {
+//                     VertexArray outline = new VertexArray(PrimitiveType.LineStrip, 4);
+//                     for (int j = 0; j < 4; j++)
+//                     {
+//                         float x = (T.Points[j % 3].X + 1) * window.Size.X / 2;
+//                         float y = (T.Points[j % 3].Y + 1) * window.Size.Y / 2;
+//                         outline[(uint)j] = new Vertex(
+//                             new Vector2f(x, y), 
+//                             Color.Black);
+//                     }
+//                     window.Draw(outline);
+//                 }
+//                 else
+//                 {
+//                     VertexArray tri = new VertexArray(PrimitiveType.Triangles, 3);
+//                     for (int j = 0; j < 3; j++)
+//                     {
+//                         float x = (T.Points[j].X + 1) * window.Size.X / 2;
+//                         float y = (T.Points[j].Y + 1) * window.Size.Y / 2;
+//                         float light = Math.Max(0, Vec4.Dot(-T.Normal, lightDir));
+//                         byte R = (byte)(153 * (0.3f + 0.7f * light));
+//                         byte G = (byte)(249 * (0.3f + 0.7f * light));
+//                         byte B = (byte)(142 * (0.3f + 0.7f * light));
+//                         tri[(uint)j] = new Vertex(
+//                             new Vector2f(x, y), 
+//                             new Color(R, G, B));
+//                     }
+//                     window.Draw(tri);
+//                 }
+//             }
+//
+//             // Обновление FPS
+//             int fps = (int)(1.0f / fpsClock.ElapsedTime.AsSeconds());
+//             fpsClock.Restart();
+//             window.SetTitle($"FPS: {fps}; Triangles rendering: {testMesh.Tris.Count}; Triangles drawing: {toDraw.Count}w, pos {cameraLoc}, dir {lookDir}");
+//
+//             if (allowRotation) theta += 0.01f;
+//             
+//             window.Display();
+//         }
+//     }
+// }
+//
+//
+
+
+// using System.Numerics;
+//
+//
+// class Program
+// {
+//     static void Main()
+//     {
+//         const int WINDOW_HEIGHT = 1080;
+//         const int WINDOW_WIDHT = 1920;
+//             
+//         
+//         Vec4 camers_loc = new Vec4(0, -2, -5);
+//         Matrix4x4 proj_mat = Matrix4x4.CreatePerspectiveFieldOfView(
+//                 fieldOfView: 90, // FOV в радианах
+//                 aspectRatio: WINDOW_WIDHT / WINDOW_HEIGHT,
+//                 nearPlaneDistance: 0.1f,
+//                 farPlaneDistance: 1000
+//             );
+//         Mesh mesh = new Mesh();
+//         if (!mesh.LoadFromFile("cube.obj"))
+//         {
+//             mesh.DefineAsCube();
+//             Console.WriteLine("can`t open file *.obj");
+//         }
+//         
+//         float the
+//     }
+// }
