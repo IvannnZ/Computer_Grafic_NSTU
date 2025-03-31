@@ -176,28 +176,28 @@ public class Mesh
         Tris = new List<Triangle>
         {
             // SOUTH
-            new Triangle(new Vec4(0.0f, 0.0f, 0.0f), new Vec4(0.0f, 1.0f, 0.0f), new Vec4(1.0f, 1.0f, 0.0f)),
-            new Triangle(new Vec4(0.0f, 0.0f, 0.0f), new Vec4(1.0f, 1.0f, 0.0f), new Vec4(1.0f, 0.0f, 0.0f)),
+            new Triangle(new Vec4(-2.0f, -2.0f, -2.0f), new Vec4(-2.0f, 2.0f, -2.0f), new Vec4(2.0f, 2.0f, -2.0f)),
+            new Triangle(new Vec4(-2.0f, -2.0f, -2.0f), new Vec4(2.0f, 2.0f, -2.0f), new Vec4(2.0f, -2.0f, -2.0f)),
             
             // EAST
-            new Triangle(new Vec4(1.0f, 0.0f, 0.0f), new Vec4(1.0f, 1.0f, 0.0f), new Vec4(1.0f, 1.0f, 1.0f)),
-            new Triangle(new Vec4(1.0f, 0.0f, 0.0f), new Vec4(1.0f, 1.0f, 1.0f), new Vec4(1.0f, 0.0f, 1.0f)),
+            new Triangle(new Vec4(2.0f, -2.0f, -2.0f), new Vec4(2.0f, 2.0f, -2.0f), new Vec4(2.0f, 2.0f, 2.0f)),
+            new Triangle(new Vec4(2.0f, -2.0f, -2.0f), new Vec4(2.0f, 2.0f, 2.0f), new Vec4(2.0f, -2.0f, 2.0f)),
             
             // NORTH
-            new Triangle(new Vec4(1.0f, 0.0f, 1.0f), new Vec4(1.0f, 1.0f, 1.0f), new Vec4(0.0f, 1.0f, 1.0f)),
-            new Triangle(new Vec4(1.0f, 0.0f, 1.0f), new Vec4(0.0f, 1.0f, 1.0f), new Vec4(0.0f, 0.0f, 1.0f)),
+            new Triangle(new Vec4(2.0f, -2.0f, 2.0f), new Vec4(2.0f, 2.0f, 2.0f), new Vec4(-2.0f, 2.0f, 2.0f)),
+            new Triangle(new Vec4(2.0f, -2.0f, 2.0f), new Vec4(-2.0f, 2.0f, 2.0f), new Vec4(-2.0f, -2.0f, 2.0f)),
             
             // WEST
-            new Triangle(new Vec4(0.0f, 0.0f, 1.0f), new Vec4(0.0f, 1.0f, 1.0f), new Vec4(0.0f, 1.0f, 0.0f)),
-            new Triangle(new Vec4(0.0f, 0.0f, 1.0f), new Vec4(0.0f, 1.0f, 0.0f), new Vec4(0.0f, 0.0f, 0.0f)),
+            new Triangle(new Vec4(-2.0f, -2.0f, 2.0f), new Vec4(-2.0f, 2.0f, 2.0f), new Vec4(-2.0f, 2.0f, -2.0f)),
+            new Triangle(new Vec4(-2.0f, -2.0f, 2.0f), new Vec4(-2.0f, 2.0f, -2.0f), new Vec4(-2.0f, -2.0f, -2.0f)),
             
             // TOP
-            new Triangle(new Vec4(0.0f, 1.0f, 0.0f), new Vec4(0.0f, 1.0f, 1.0f), new Vec4(1.0f, 1.0f, 1.0f)),
-            new Triangle(new Vec4(0.0f, 1.0f, 0.0f), new Vec4(1.0f, 1.0f, 1.0f), new Vec4(1.0f, 1.0f, 0.0f)),
+            new Triangle(new Vec4(-2.0f, 2.0f, -2.0f), new Vec4(-2.0f, 2.0f, 2.0f), new Vec4(2.0f, 2.0f, 2.0f)),
+            new Triangle(new Vec4(-2.0f, 2.0f, -2.0f), new Vec4(2.0f, 2.0f, 2.0f), new Vec4(2.0f, 2.0f, -2.0f)),
             
             // BOTTOM
-            new Triangle(new Vec4(1.0f, 0.0f, 1.0f), new Vec4(0.0f, 0.0f, 1.0f), new Vec4(0.0f, 0.0f, 0.0f)),
-            new Triangle(new Vec4(1.0f, 0.0f, 1.0f), new Vec4(0.0f, 0.0f, 0.0f), new Vec4(1.0f, 0.0f, 0.0f))
+            new Triangle(new Vec4(2.0f, -2.0f, 2.0f), new Vec4(-2.0f, -2.0f, 2.0f), new Vec4(-2.0f, -2.0f, -2.0f)),
+            new Triangle(new Vec4(2.0f, -2.0f, 2.0f), new Vec4(-2.0f, -2.0f, -2.0f), new Vec4(2.0f, -2.0f, -2.0f))
         };
     }
 }

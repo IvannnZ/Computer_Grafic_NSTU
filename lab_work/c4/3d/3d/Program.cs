@@ -15,17 +15,19 @@ class Program
 
         // Загрузка модели
         Mesh testMesh = new Mesh();
-        if (!testMesh.LoadFromFile("1.obj"))
-        {
-            Console.WriteLine("Failed to load model");
-            return;
-        }
-
+        // if (!testMesh.LoadFromFile("2.obj"))
+        // {
+        //     Console.WriteLine("Failed to load model");
+        //     return;
+        // }
+        testMesh.DefineAsCube();
         // Настройки приложения
-        float theta = 0;
+        float thetaY = 0;
+        float thetaX = 0;
+        float thetaZ = 0;
         bool outlineOnly = false;
         bool allowMouseMovement = false;
-        bool allowRotation = true;
+        bool allowRotation = false;
         bool[] keys = new bool[6];
 
         // Направления
@@ -58,6 +60,58 @@ class Program
             keys[1] = Keyboard.IsKeyPressed(Keyboard.Key.A);
             keys[2] = Keyboard.IsKeyPressed(Keyboard.Key.S);
             keys[3] = Keyboard.IsKeyPressed(Keyboard.Key.D);
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Q))
+            {
+                thetaY += 0.1f;
+            }
+
+            if (Keyboard.IsKeyPressed(Keyboard.Key.E))
+            {
+                thetaY -= 0.1f;
+            }
+
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Z))
+            {
+                thetaX += 0.1f;
+            }
+
+            if (Keyboard.IsKeyPressed(Keyboard.Key.X))
+            {
+                thetaX -= 0.1f;
+            }
+
+            if (Keyboard.IsKeyPressed(Keyboard.Key.R))
+            {
+                thetaZ += 0.1f;
+            }
+
+            if (Keyboard.IsKeyPressed(Keyboard.Key.T))
+            {
+                thetaZ -= 0.1f;
+            }
+
+            if (Keyboard.IsKeyPressed(Keyboard.Key.C))
+            {
+                Vec4 t1 = testMesh.Tris[0].Points[0];
+
+                foreach (Triangle t in testMesh.Tris)
+                {
+                    t.Points[0] *= Mat4x4.GetMatchtabe(1.1f, 1.1f,1.1f, t1);
+                    t.Points[1] *= Mat4x4.GetMatchtabe(1.1f, 1.1f,1.1f, t1);
+                    t.Points[2] *= Mat4x4.GetMatchtabe(1.1f, 1.1f,1.1f, t1);
+                }
+            }
+            if (Keyboard.IsKeyPressed(Keyboard.Key.V))
+            {
+                Vec4 t1 = testMesh.Tris[0].Points[0];
+
+                foreach (Triangle t in testMesh.Tris)
+                {
+                    t.Points[0] *= Mat4x4.GetMatchtabe(0.9f, 0.9f,0.9f, t1);
+                    t.Points[1] *= Mat4x4.GetMatchtabe(0.9f, 0.9f,0.9f, t1);
+                    t.Points[2] *= Mat4x4.GetMatchtabe(0.9f, 0.9f,0.9f, t1);
+                }
+            }
             keys[4] = Keyboard.IsKeyPressed(Keyboard.Key.Space);
             keys[5] = Keyboard.IsKeyPressed(Keyboard.Key.LShift);
 
@@ -86,12 +140,21 @@ class Program
                 if (keys[4]) vel += new Vec4(0, -0.1f, 0, 0);
                 if (keys[5]) vel += new Vec4(0, 0.1f, 0, 0);
 
-                Vec4 tempDir = new Vec4(lookDir.x, 0, lookDir.z, 0);
-                tempDir.Normalize();
-                float phi = MathF.Acos(Vec4.Dot(tempDir, new Vec4(0, 0, 1, 0)));
-                phi = tempDir.x < 0 ? phi : -phi;
-                Vec4 rotVel = vel * Mat4x4.GetRotationY(phi);
-                cameraLoc += rotVel;
+                foreach (Triangle t in testMesh.Tris)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        t.Points[i] += vel;
+                    }
+                }
+
+
+                // Vec4 tempDir = new Vec4(lookDir.x, 0, lookDir.z, 0);
+                // tempDir.Normalize();
+                // float phi = MathF.Acos(Vec4.Dot(tempDir, new Vec4(0, 0, 1, 0)));
+                // phi = tempDir.x < 0 ? phi : -phi;
+                // Vec4 rotVel = vel * Mat4x4.GetRotationY(phi);
+                // cameraLoc += rotVel;
                 movementClock.Restart();
             }
 
@@ -120,9 +183,12 @@ class Program
             {
                 // Преобразование модели
                 Triangle newTri = new Triangle(
-                    t.Points[0] * Mat4x4.GetRotationY(theta * 1.5f),
-                    t.Points[1] * Mat4x4.GetRotationY(theta * 1.5f),
-                    t.Points[2] * Mat4x4.GetRotationY(theta * 1.5f)
+                    t.Points[0] * Mat4x4.GetRotationY(thetaY * 0.5f) * Mat4x4.GetRotationX(thetaX * 0.5f) *
+                    Mat4x4.GetRotationZ(thetaZ * 0.5f),
+                    t.Points[1] * Mat4x4.GetRotationY(thetaY * 0.5f) * Mat4x4.GetRotationX(thetaX * 0.5f) *
+                    Mat4x4.GetRotationZ(thetaZ * 0.5f),
+                    t.Points[2] * Mat4x4.GetRotationY(thetaY * 0.5f) * Mat4x4.GetRotationX(thetaX * 0.5f) *
+                    Mat4x4.GetRotationZ(thetaZ * 0.5f)
                 );
 
                 // Расчет нормали
@@ -160,7 +226,7 @@ class Program
             foreach (Triangle t in toDraw)
             {
                 List<Triangle> temp = new List<Triangle> { t };
-                
+
                 for (int plane = 0; plane < 4; plane++)
                 {
                     List<Triangle> toAdd = new List<Triangle>();
@@ -182,13 +248,15 @@ class Program
                                 break;
                         }
                     }
+
                     temp = toAdd;
                 }
+
                 finalTriangles.AddRange(temp);
             }
 
             // Сортировка по глубине
-            finalTriangles = finalTriangles.OrderByDescending(t => 
+            finalTriangles = finalTriangles.OrderByDescending(t =>
                 (t.Points[0].z + t.Points[1].z + t.Points[2].z) / 3).ToList();
 
             // Отрисовка
@@ -203,6 +271,7 @@ class Program
                         float y = (T.Points[j % 3].y + 1) * window.Size.Y / 2;
                         outline[(uint)j] = new Vertex(new Vector2f(x, y), Color.Black);
                     }
+
                     window.Draw(outline);
                 }
                 else
@@ -218,6 +287,7 @@ class Program
                         byte B = (byte)(142 * (0.3f + 0.7f * light));
                         tri[(uint)j] = new Vertex(new Vector2f(x, y), new Color(R, G, B));
                     }
+
                     window.Draw(tri);
                 }
             }
@@ -227,7 +297,7 @@ class Program
             fpsClock.Restart();
             window.SetTitle($"FPS: {fps}; Triangles: {testMesh.Tris.Count}; Visible: {finalTriangles.Count}");
 
-            if (allowRotation) theta += 0.01f;
+            if (allowRotation) thetaY += 0.01f;
             window.Display();
         }
     }

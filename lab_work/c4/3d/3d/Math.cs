@@ -78,7 +78,6 @@ public struct Vec4
         }
     }
 
-    // Длина вектора (только xyz)
     public float Length() => (float)Math.Sqrt(x * x + y * y + z * z);
 
     // Преобразование в Vector3
@@ -160,6 +159,40 @@ public class Mat4x4
             { 0, -sin, cos, 0 },
             { 0, 0, 0, 1 }
         });
+    }
+
+    public static Mat4x4 GetMatchtabe(float scaleX, float scaleY, float scaleZ, Vec4 point )
+    {
+        point = new Vec4(0.5f, 0.5f, 0.5f);
+        // 1. Перенос точки в начало координат
+        Mat4x4 translateToOrigin = new Mat4x4(new float[4, 4]
+        {
+            { 1, 0, 0, -point.x },
+            { 0, 1, 0, -point.y },
+            { 0, 0, 1, -point.z },
+            { 0, 0, 0, 1 }
+        });
+
+        // 2. Матрица масштабирования
+        Mat4x4 scaleMatrix = new Mat4x4(new float[4, 4]
+        {
+            { scaleX, 0, 0, 0 },
+            { 0, scaleY, 0, 0 },
+            { 0, 0, scaleZ, 0 },
+            { 0, 0, 0, 1 }
+        });
+
+        // 3. Обратный перенос
+        Mat4x4 translateBack = new Mat4x4(new float[4, 4]
+        {
+            { 1, 0, 0, point.x },
+            { 0, 1, 0, point.y },
+            { 0, 0, 1, point.z },
+            { 0, 0, 0, 1 }
+        });
+
+        // Комбинируем преобразования: T⁻¹ * S * T
+        return translateBack * scaleMatrix * translateToOrigin;
     }
 
     public static Mat4x4 GetRotationY(float angle)
@@ -263,3 +296,5 @@ public class Mat4x4
         return result;
     }
 }
+
+
