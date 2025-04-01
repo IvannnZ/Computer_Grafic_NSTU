@@ -158,6 +158,18 @@ public class Mat4x4
         matrix.m[3, 3] = 1.0f;
         return matrix;
     }
+    
+    
+    public static Mat4x4 GetScaleMatrix(float scaleX, float scaleY, float scaleZ)
+    {
+        Mat4x4 matrix = new Mat4x4();
+        matrix.m[0, 0] = scaleX;
+        matrix.m[1, 1] = scaleY;
+        matrix.m[2, 2] = scaleZ;
+        matrix.m[3, 3] = 1;
+        return matrix;
+    }
+
 
     public static Mat4x4 GetRotationY(float angle)
     {

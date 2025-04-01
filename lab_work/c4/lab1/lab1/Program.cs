@@ -67,7 +67,7 @@ class WireframeEditor
             (4, 5), (5, 6), (6, 7), (7, 4), // передняя грань
             (0, 4), (1, 5), (2, 6), (3, 7) // соединения
         };
-
+ы
         return new Mesh { Vertices = vertices, Edges = edges };
     }
 

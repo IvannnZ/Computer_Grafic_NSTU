@@ -42,7 +42,8 @@ namespace Wireframe3DViewer
             float thetaY = 0;
             float thetaX = 0;
             float thetaZ = 0;
-
+            float scale = 1f;
+            
             Vec4 Position_model = new Vec4();
 
 
@@ -62,12 +63,12 @@ namespace Wireframe3DViewer
                 //Обработка перемещения фигуры
                 if (Keyboard.IsKeyPressed(Keyboard.Key.W))
                 {
-                    Position_model.y += 0.1f;
+                    Position_model.z += 0.1f;
                 }
 
                 if (Keyboard.IsKeyPressed(Keyboard.Key.S))
                 {
-                    Position_model.y -= 0.1f;
+                    Position_model.z -= 0.1f;
                 }
 
                 if (Keyboard.IsKeyPressed(Keyboard.Key.D))
@@ -82,12 +83,12 @@ namespace Wireframe3DViewer
 
                 if (Keyboard.IsKeyPressed(Keyboard.Key.Space))
                 {
-                    Position_model.z += 0.1f;
+                    Position_model.y += 0.1f;
                 }
 
                 if (Keyboard.IsKeyPressed(Keyboard.Key.LShift))
                 {
-                    Position_model.z -= 0.1f;
+                    Position_model.y -= 0.1f;
                 }
 
 
@@ -101,7 +102,24 @@ namespace Wireframe3DViewer
                 {
                     thetaZ -= 0.1f;
                 }
+                
+                if (Keyboard.IsKeyPressed(Keyboard.Key.Z))
+                {
+                    if (scale>0.1f) scale -= 0.01f;
+                }
 
+                if (Keyboard.IsKeyPressed(Keyboard.Key.X))
+                {
+                    scale += 0.01f;
+                }
+                
+                if (Keyboard.IsKeyPressed(Keyboard.Key.R))
+                {
+                    Position_model = new Vec4();
+                    thetaY = 0;
+                    thetaX = 0;
+                    thetaZ = 0;
+                }
 
                 //обработка двидение мыши
                 Vector2i mouseOffset = new Vector2i(0, 0);
@@ -111,8 +129,8 @@ namespace Wireframe3DViewer
                 Mouse.SetPosition(new Vector2i(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2), window);
 
                 // в зависимости от того на сколько отклонилась мышь, меняем поворо модели
-                thetaX += mouseOffset.X;
-                thetaY += mouseOffset.Y;
+                thetaY += mouseOffset.X * 0.05f;
+                thetaX += mouseOffset.Y * 0.05f;
 
 
                 Mat4x4 viewMat = Mat4x4.GetPointAtMatrix(cameraLoc, cameraLoc + lookDir, upDir);
@@ -137,37 +155,14 @@ namespace Wireframe3DViewer
 
                     for (int k = 0; k < 3; k++)
                     {
-                        new_tri.Points[k] = t.Points[k] * Mat4x4.GetRotationY(thetaY * 1.5f);
-                        new_tri.Points[k] = new_tri.Points[k] * Mat4x4.GetRotationZ(3.1415f);
-                    }
-
-                    for (int k = 0; k < 3; k++)
-                    {
+                        new_tri.Points[k] = t.Points[k] * Mat4x4.GetRotationY(thetaY) ;
+                        new_tri.Points[k] = new_tri.Points[k] * Mat4x4.GetRotationZ(thetaZ);
+                        new_tri.Points[k] = new_tri.Points[k] * Mat4x4.GetRotationX(thetaX);
+                        new_tri.Points[k] = new_tri.Points[k] * Mat4x4.GetScaleMatrix(scale, scale, scale);
                         new_tri.Points[k] = new_tri.Points[k] * viewMat;
-                    }
-
-                    //клипинг
-
-                    for (int k = 0; k < 3; k++)
-                    {
+                        new_tri.Points[k] += Position_model;
                         new_tri.Points[k] = new_tri.Points[k] * projMat;
                     }
-
-
-                    
-                    // тоже клипинг
-                    //
-                    // VertexArray outline = new VertexArray(PrimitiveType.LineStrip, 4);
-                    //
-                    // for (int j = 0; j < 4; j++)
-                    // {
-                    //     float x = (new_tri.Points[j % 3].x + 1) * window.Size.X / 2;
-                    //     float y = (new_tri.Points[j % 3].y + 1) * window.Size.Y / 2;
-                    //     outline[(uint)j].Color = Color.White;
-                    //     
-                    //     outline[j].Color = Color.White;
-                    //     outline[j].position = sf::Vector2f(x, y);
-                    // }
 
                     VertexArray outline = new VertexArray(PrimitiveType.Lines, 6);
                     for (int j = 0; j < 3; j++)
