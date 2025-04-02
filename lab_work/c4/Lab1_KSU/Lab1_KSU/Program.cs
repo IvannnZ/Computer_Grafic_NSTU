@@ -29,13 +29,13 @@ namespace Wireframe3DViewer
 
             // Загрузка модели
             Mesh mesh = new Mesh();
-            if (!mesh.LoadFromFile("2.obj"))
+            if (!mesh.LoadFromFile("1.obj"))
             {
                 Console.WriteLine("Failed to load model");
                 return;
             }
 
-            mesh.DefineAsCube();
+            // mesh.DefineAsCube();
 
 
             // параметры модели

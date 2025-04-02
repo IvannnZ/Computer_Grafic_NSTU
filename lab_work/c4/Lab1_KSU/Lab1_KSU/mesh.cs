@@ -158,91 +158,164 @@ public class Mesh
     public List<Triangle> Triangles { get; private set; } = new List<Triangle>(); // плоскости(полигоны)
 
     public bool LoadFromFile(string filePath)
+{
+    try
     {
-        try
+        string[] lines = File.ReadAllLines(filePath);
+        Vertices.Clear();
+        Lines.Clear();
+        Triangles.Clear();
+
+        foreach (string line in lines)
         {
-            string[] lines = File.ReadAllLines(filePath);
+            string trimmed = line.Trim();
+            if (string.IsNullOrWhiteSpace(trimmed)) continue;
 
-            foreach (string line in lines)
+            string[] parts = trimmed.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (parts.Length == 0) continue;
+
+            switch (parts[0].ToLower())
             {
-                string trimmed = line.Trim();
-                if (string.IsNullOrWhiteSpace(trimmed)) continue;
+                case "v": // Vertex: v x y z
+                    if (parts.Length >= 4) // Проверяем, что есть как минимум 3 координаты
+                    {
+                        Vertices.Add(new Vec4(
+                            float.Parse(parts[1]),
+                            float.Parse(parts[2]),
+                            float.Parse(parts[3])));
+                    }
+                    break;
 
-                string[] parts = trimmed.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
-                if (parts.Length == 0) continue;
-
-                switch (parts[0].ToLower())
-                {
-                    case "v": // Vertex: v x y z
-                        if (parts.Length == 4)
+                case "l": // Line: l index1 index2
+                    if (parts.Length >= 3)
+                    {
+                        int index1 = int.Parse(parts[1]) - 1; // Вычитаем 1 для 0-based индекса
+                        int index2 = int.Parse(parts[2]) - 1;
+                        if (index1 >= 0 && index1 < Vertices.Count && 
+                            index2 >= 0 && index2 < Vertices.Count)
                         {
-                            Vertices.Add(new Vec4(
-                                float.Parse(parts[1]),
-                                float.Parse(parts[2]),
-                                float.Parse(parts[3])));
+                            Lines.Add(new Tuple<int, int>(index1, index2));
                         }
+                    }
+                    break;
 
-                        break;
-
-                    case "l": // Line: l index1 index2
-                        if (parts.Length == 3)
-                        {
-                            Lines.Add(new Tuple<int, int>(
-                                int.Parse(parts[1]),
-                                int.Parse(parts[2])));
-                        }
-
-                        break;
-
-                    case "p": // Polygon: p index1 index2 index3
-                        if (parts.Length == 4)
+                case "f": // Face (полигон): f index1 index2 index3 (в OBJ обычно 'f', а не 'p')
+                case "p": // На случай, если в вашем формате используется 'p'
+                    if (parts.Length >= 4)
+                    {
+                        int index1 = int.Parse(parts[1]) - 1;
+                        int index2 = int.Parse(parts[2]) - 1;
+                        int index3 = int.Parse(parts[3]) - 1;
+                        if (index1 >= 0 && index1 < Vertices.Count && 
+                            index2 >= 0 && index2 < Vertices.Count && 
+                            index3 >= 0 && index3 < Vertices.Count)
                         {
                             Triangles.Add(new Triangle(
-                                Vertices[int.Parse(parts[1])],
-                                Vertices[int.Parse(parts[2])],
-                                Vertices[int.Parse(parts[3])]));
+                                Vertices[index1],
+                                Vertices[index2],
+                                Vertices[index3]));
                         }
-
-                        break;
-                }
+                    }
+                    break;
             }
+        }
 
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
+        return true;
     }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error loading file: {ex.Message}");
+        return false;
+    }
+}
+    
+    // public bool LoadFromFile(string filePath)
+    // {
+    //     try
+    //     {
+    //         string[] lines = File.ReadAllLines(filePath);
+    //
+    //         foreach (string line in lines)
+    //         {
+    //             string trimmed = line.Trim();
+    //             if (string.IsNullOrWhiteSpace(trimmed)) continue;
+    //
+    //             string[] parts = trimmed.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+    //
+    //             if (parts.Length == 0) continue;
+    //
+    //             switch (parts[0].ToLower())
+    //             {
+    //                 case "v": // Vertex: v x y z
+    //                     if (parts.Length == 4)
+    //                     {
+    //                         Vertices.Add(new Vec4(
+    //                             float.Parse(parts[1]),
+    //                             float.Parse(parts[2]),
+    //                             float.Parse(parts[3])));
+    //                     }
+    //
+    //                     break;
+    //
+    //                 case "l": // Line: l index1 index2
+    //                     if (parts.Length == 3)
+    //                     {
+    //                         Lines.Add(new Tuple<int, int>(
+    //                             int.Parse(parts[1]),
+    //                             int.Parse(parts[2])));
+    //                     }
+    //
+    //                     break;
+    //
+    //                 case "p": // Polygon: p index1 index2 index3
+    //                     if (parts.Length == 4)
+    //                     {
+    //                         Triangles.Add(new Triangle(
+    //                             Vertices[int.Parse(parts[1])],
+    //                             Vertices[int.Parse(parts[2])],
+    //                             Vertices[int.Parse(parts[3])]));
+    //                     }
+    //
+    //                     break;
+    //             }
+    //         }
+    //
+    //         return true;
+    //     }
+    //     catch
+    //     {
+    //         return false;
+    //     }
+    // }
 
     public void DefineAsCube()
     {
         this.Triangles = new List<Triangle>
         {
             // SOUTH
-            new Triangle(new Vec4(0.0f, 0.0f, 0.0f), new Vec4(0.0f, 1.0f, 0.0f), new Vec4(1.0f, 1.0f, 0.0f)),
-            new Triangle(new Vec4(0.0f, 0.0f, 0.0f), new Vec4(1.0f, 1.0f, 0.0f), new Vec4(1.0f, 0.0f, 0.0f)),
+            new Triangle(new Vec4(-1.0f, -1.0f, -1.0f), new Vec4(-1.0f, 1.0f, -1.0f), new Vec4(1.0f, 1.0f, -1.0f)),
+            new Triangle(new Vec4(-1.0f, -1.0f, -1.0f), new Vec4(1.0f, 1.0f, -1.0f), new Vec4(1.0f, -1.0f, -1.0f)),
 
             // EAST
-            new Triangle(new Vec4(1.0f, 0.0f, 0.0f), new Vec4(1.0f, 1.0f, 0.0f), new Vec4(1.0f, 1.0f, 1.0f)),
-            new Triangle(new Vec4(1.0f, 0.0f, 0.0f), new Vec4(1.0f, 1.0f, 1.0f), new Vec4(1.0f, 0.0f, 1.0f)),
+            new Triangle(new Vec4(1.0f, -1.0f, -1.0f), new Vec4(1.0f, 1.0f, -1.0f), new Vec4(1.0f, 1.0f, 1.0f)),
+            new Triangle(new Vec4(1.0f, -1.0f, -1.0f), new Vec4(1.0f, 1.0f, 1.0f), new Vec4(1.0f, -1.0f, 1.0f)),
 
             // NORTH
-            new Triangle(new Vec4(1.0f, 0.0f, 1.0f), new Vec4(1.0f, 1.0f, 1.0f), new Vec4(0.0f, 1.0f, 1.0f)),
-            new Triangle(new Vec4(1.0f, 0.0f, 1.0f), new Vec4(0.0f, 1.0f, 1.0f), new Vec4(0.0f, 0.0f, 1.0f)),
+            new Triangle(new Vec4(1.0f, -1.0f, 1.0f), new Vec4(1.0f, 1.0f, 1.0f), new Vec4(-1.0f, 1.0f, 1.0f)),
+            new Triangle(new Vec4(1.0f, -1.0f, 1.0f), new Vec4(-1.0f, 1.0f, 1.0f), new Vec4(-1.0f, -1.0f, 1.0f)),
 
             // WEST
-            new Triangle(new Vec4(0.0f, 0.0f, 1.0f), new Vec4(0.0f, 1.0f, 1.0f), new Vec4(0.0f, 1.0f, 0.0f)),
-            new Triangle(new Vec4(0.0f, 0.0f, 1.0f), new Vec4(0.0f, 1.0f, 0.0f), new Vec4(0.0f, 0.0f, 0.0f)),
+            new Triangle(new Vec4(-1.0f, -1.0f, 1.0f), new Vec4(-1.0f, 1.0f, 1.0f), new Vec4(-1.0f, 1.0f, -1.0f)),
+            new Triangle(new Vec4(-1.0f, -1.0f, 1.0f), new Vec4(-1.0f, 1.0f, -1.0f), new Vec4(-1.0f, -1.0f, -1.0f)),
 
             // TOP
-            new Triangle(new Vec4(0.0f, 1.0f, 0.0f), new Vec4(0.0f, 1.0f, 1.0f), new Vec4(1.0f, 1.0f, 1.0f)),
-            new Triangle(new Vec4(0.0f, 1.0f, 0.0f), new Vec4(1.0f, 1.0f, 1.0f), new Vec4(1.0f, 1.0f, 0.0f)),
+            new Triangle(new Vec4(-1.0f, 1.0f, -1.0f), new Vec4(-1.0f, 1.0f, 1.0f), new Vec4(1.0f, 1.0f, 1.0f)),
+            new Triangle(new Vec4(-1.0f, 1.0f, -1.0f), new Vec4(1.0f, 1.0f, 1.0f), new Vec4(1.0f, 1.0f, -1.0f)),
 
             // BOTTOM
-            new Triangle(new Vec4(1.0f, 0.0f, 1.0f), new Vec4(0.0f, 0.0f, 1.0f), new Vec4(0.0f, 0.0f, 0.0f)),
-            new Triangle(new Vec4(1.0f, 0.0f, 1.0f), new Vec4(0.0f, 0.0f, 0.0f), new Vec4(1.0f, 0.0f, 0.0f))
+            new Triangle(new Vec4(1.0f, -1.0f, 1.0f), new Vec4(-1.0f, -1.0f, 1.0f), new Vec4(-1.0f, -1.0f, -1.0f)),
+            new Triangle(new Vec4(1.0f, -1.0f, 1.0f), new Vec4(-1.0f, -1.0f, -1.0f), new Vec4(1.0f, -1.0f, -1.0f))
         };
     }
 }
