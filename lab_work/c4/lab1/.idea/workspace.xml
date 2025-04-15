@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0c119060-1cd4-44cf-9546-5c38c11fa9e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Lab1_KSU/Lab1_KSU/obj/Debug/net8.0/Lab1_KSU.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab1_KSU/Lab1_KSU/obj/Debug/net8.0/Lab1_KSU.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab1_KSU/Lab1_KSU/obj/Debug/net8.0/Lab1_KSU.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab1_KSU/Lab1_KSU/obj/Debug/net8.0/Lab1_KSU.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/bin/Debug/net8.0/lab1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/bin/Debug/net8.0/lab1.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/bin/Debug/net8.0/lab1.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/bin/Debug/net8.0/lab1.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/apphost" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/apphost" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/lab1.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/lab1.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/lab1.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/lab1.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/lab1.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/lab1.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/lab1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/lab1.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/lab1.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/lab1.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/lab1.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/lab1.sourcelink.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/ref/lab1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/ref/lab1.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/refint/lab1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/obj/Debug/net8.0/refint/lab1.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/obj/lab1.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/obj/lab1.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab1/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../c4_test/3D-Engine" beforeDir="false" afterPath="$PROJECT_DIR$/../../c4_test/3D-Engine" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../lab2_1/3D-Engine" beforeDir="false" afterPath="$PROJECT_DIR$/../../lab2_1/3D-Engine" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2vWSOACTNW3biHdJ0XcaxY4XAKa" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.rust.reset.selective.auto.import": "true",
+    "git-widget-placeholder": "main",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0c119060-1cd4-44cf-9546-5c38c11fa9e8" name="Changes" comment="" />
+      <created>1744259302652</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744259302652</updated>
+      <workItem from="1744259304271" duration="1000" />
+      <workItem from="1744341078950" duration="187000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
