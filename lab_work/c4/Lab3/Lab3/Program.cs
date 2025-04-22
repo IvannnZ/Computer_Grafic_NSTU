@@ -13,11 +13,13 @@ namespace FloatingHorizonSFML
         static Vector2i lastMousePos; // Используем Vector2i из SFML
         const int scale = 2;
 
+        private const int windowWidth = 1200;
+        private const int windowHeight = 1000;
         static void Main(string[] args)
         {
             var window = new RenderWindow(
-                new VideoMode(1200, 1000), 
-                "Floating Horizon",
+                new VideoMode(windowWidth, windowHeight), 
+                "Lab3",
                 Styles.Default);
             
             window.SetVerticalSyncEnabled(true);
@@ -41,10 +43,9 @@ namespace FloatingHorizonSFML
             using var image = new Image(path);
             var map = new float[image.Size.X, image.Size.Y];
             
-            for (uint x = 0; x < image.Size.X; x++)
-                for (uint y = 0; y < image.Size.Y; y++)
+            for (uint x = 0; x < image.Size.X; ++x)
+                for (uint y = 0; y < image.Size.Y; ++y)
                     map[x, y] = image.GetPixel(x, y).G / 255f;
-            
             return map;
         }
 
@@ -70,8 +71,7 @@ namespace FloatingHorizonSFML
         {
             if (heightMap == null) return;
 
-            const int windowWidth = 1200;
-            const int windowHeight = 1000;
+            
     
             var vertices = new VertexArray();
             int width = heightMap.GetLength(0);
