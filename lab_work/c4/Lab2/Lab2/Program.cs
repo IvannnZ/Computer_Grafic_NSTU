@@ -19,7 +19,7 @@ class Program
         // Создание окна и загрузка модели
         var window = new RenderWindow(new VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "3D Engine");
         Mesh mesh = new Mesh();
-        mesh.LoadFromFile("2.obj");
+        mesh.LoadFromFile("1.obj");
 
         float thetaY = 0;
         float thetaX = 0;
