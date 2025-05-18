@@ -19,7 +19,7 @@ class Program
         // Создание окна и загрузка модели
         var window = new RenderWindow(new VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "3D Engine");
         Mesh mesh = new Mesh();
-        mesh.LoadFromFile("1.obj");
+        mesh.LoadFromFile("2.obj");
 
         float thetaY = 0;
         float thetaX = 0;
@@ -159,6 +159,7 @@ class Program
                     Vector2f p2 = Project(projTri.Points[(j + 1) % 3], window.Size);
                     outline[(uint)(2 * j)] = new Vertex(p1, Color.White);
                     outline[(uint)(2 * j + 1)] = new Vertex(p2, Color.White);
+                    
                 }
 
                 window.Draw(outline);

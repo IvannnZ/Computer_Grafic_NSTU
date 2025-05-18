@@ -29,7 +29,7 @@ namespace Wireframe3DViewer
 
             // Загрузка модели
             Mesh mesh = new Mesh();
-            if (!mesh.LoadFromFile("1.obj"))
+            if (!mesh.LoadFromFile("teapot.obj"))
             {
                 Console.WriteLine("Failed to load model");
                 return;

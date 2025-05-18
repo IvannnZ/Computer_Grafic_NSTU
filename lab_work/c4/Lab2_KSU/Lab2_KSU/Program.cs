@@ -161,7 +161,6 @@ namespace Wireframe3DViewer
                         outline[(uint)(2 * j)] = new Vertex(p1, Color.White);
                         outline[(uint)(2 * j + 1)] = new Vertex(p2, Color.White);
                     }
-
                     window.Draw(outline);
                 }
 

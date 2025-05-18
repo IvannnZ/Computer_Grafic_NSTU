@@ -198,9 +198,9 @@ namespace Wireframe3DViewer
                 }
 
                 zBuffer.FinalizeFrame();
-                // Sprite renderSprite = new Sprite(zBuffer.GetTexture());
-                // window.Draw(renderSprite);
-                zBuffer.Draw(window);
+                Sprite renderSprite = new Sprite(zBuffer.GetTexture());
+                window.Draw(renderSprite);
+                // zBuffer.Draw(window);
                 zBuffer.Clear();
 
                 window.Display();
