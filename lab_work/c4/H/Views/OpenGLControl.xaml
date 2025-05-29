@@ -1,0 +1,12 @@
+﻿<!-- Views/OpenGLControl.xaml -->
+<UserControl x:Class="Photo3DEditor.Views.OpenGLControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sharpGL="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF">
+    <Grid>
+        <sharpGL:OpenGLControl x:Name="openGLControl" 
+                              DrawFPS="False" 
+                              RenderContextType="FBO"
+                              OpenGLDraw="OpenGLControl_OpenGLDraw"/>
+    </Grid>
+</UserControl>

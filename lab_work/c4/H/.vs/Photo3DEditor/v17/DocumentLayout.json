@@ -1,0 +1,291 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\461\\source\\repos\\H\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|c:\\users\\461\\source\\repos\\h\\views\\viewer3dwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|solutionrelative:views\\viewer3dwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|c:\\users\\461\\source\\repos\\h\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|solutionrelative:app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|c:\\users\\461\\source\\repos\\h\\views\\imagewindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|solutionrelative:views\\imagewindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|c:\\users\\461\\source\\repos\\h\\views\\viewer3dwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|solutionrelative:views\\viewer3dwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|c:\\users\\461\\source\\repos\\h\\views\\deptheditorwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|solutionrelative:views\\deptheditorwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|c:\\users\\461\\source\\repos\\h\\views\\imagewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|solutionrelative:views\\imagewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|c:\\users\\461\\source\\repos\\h\\services\\triangulationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|solutionrelative:services\\triangulationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|c:\\users\\461\\source\\repos\\h\\views\\openglcontrol.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|solutionrelative:views\\openglcontrol.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|c:\\users\\461\\source\\repos\\h\\models\\point3d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|solutionrelative:models\\point3d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|c:\\users\\461\\source\\repos\\h\\models\\triangle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|solutionrelative:models\\triangle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|c:\\users\\461\\source\\repos\\h\\services\\dataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|solutionrelative:services\\dataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|c:\\users\\461\\source\\repos\\h\\utils\\openglhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|solutionrelative:utils\\openglhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|c:\\users\\461\\source\\repos\\h\\views\\openglcontrol.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|solutionrelative:views\\openglcontrol.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|c:\\users\\461\\source\\repos\\h\\services\\nulltovisibilityconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|solutionrelative:services\\nulltovisibilityconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|c:\\users\\461\\source\\repos\\h\\views\\deptheditorwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|solutionrelative:views\\deptheditorwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|c:\\users\\461\\source\\repos\\h\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{1F82A8A5-63D0-4FA8-A19B-4ECEB19B1AA9}|Photo3DEditor.csproj|solutionrelative:app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 175,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "OpenGLControl.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\461\\source\\repos\\H\\Views\\OpenGLControl.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\OpenGLControl.xaml.cs",
+              "ToolTip": "C:\\Users\\461\\source\\repos\\H\\Views\\OpenGLControl.xaml.cs",
+              "RelativeToolTip": "Views\\OpenGLControl.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T02:55:51.281Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "OpenGLHelper.cs",
+              "DocumentMoniker": "C:\\Users\\461\\source\\repos\\H\\Utils\\OpenGLHelper.cs",
+              "RelativeDocumentMoniker": "Utils\\OpenGLHelper.cs",
+              "ToolTip": "C:\\Users\\461\\source\\repos\\H\\Utils\\OpenGLHelper.cs",
+              "RelativeToolTip": "Utils\\OpenGLHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T02:55:24.872Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "NullToVisibilityConverter.cs",
+              "DocumentMoniker": "C:\\Users\\461\\source\\repos\\H\\Services\\NullToVisibilityConverter.cs",
+              "RelativeDocumentMoniker": "Services\\NullToVisibilityConverter.cs",
+              "ToolTip": "C:\\Users\\461\\source\\repos\\H\\Services\\NullToVisibilityConverter.cs",
+              "RelativeToolTip": "Services\\NullToVisibilityConverter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-13T07:55:37.257Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Viewer3DWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\461\\source\\repos\\H\\Views\\Viewer3DWindow.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\Viewer3DWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\461\\source\\repos\\H\\Views\\Viewer3DWindow.xaml.cs",
+              "RelativeToolTip": "Views\\Viewer3DWindow.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T21:53:58.615Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Viewer3DWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\461\\source\\repos\\H\\Views\\Viewer3DWindow.xaml",
+              "RelativeDocumentMoniker": "Views\\Viewer3DWindow.xaml",
+              "ToolTip": "C:\\Users\\461\\source\\repos\\H\\Views\\Viewer3DWindow.xaml",
+              "RelativeToolTip": "Views\\Viewer3DWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-12T21:53:54.949Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "DepthEditorWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\461\\source\\repos\\H\\Views\\DepthEditorWindow.xaml",
+              "RelativeDocumentMoniker": "Views\\DepthEditorWindow.xaml",
+              "ToolTip": "C:\\Users\\461\\source\\repos\\H\\Views\\DepthEditorWindow.xaml",
+              "RelativeToolTip": "Views\\DepthEditorWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-12T21:44:36.171Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DepthEditorWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\461\\source\\repos\\H\\Views\\DepthEditorWindow.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\DepthEditorWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\461\\source\\repos\\H\\Views\\DepthEditorWindow.xaml.cs",
+              "RelativeToolTip": "Views\\DepthEditorWindow.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T21:44:26.646Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DataService.cs",
+              "DocumentMoniker": "C:\\Users\\461\\source\\repos\\H\\Services\\DataService.cs",
+              "RelativeDocumentMoniker": "Services\\DataService.cs",
+              "ToolTip": "C:\\Users\\461\\source\\repos\\H\\Services\\DataService.cs",
+              "RelativeToolTip": "Services\\DataService.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwB4AAABNAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T20:39:41.383Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Point3D.cs",
+              "DocumentMoniker": "C:\\Users\\461\\source\\repos\\H\\Models\\Point3D.cs",
+              "RelativeDocumentMoniker": "Models\\Point3D.cs",
+              "ToolTip": "C:\\Users\\461\\source\\repos\\H\\Models\\Point3D.cs",
+              "RelativeToolTip": "Models\\Point3D.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T20:36:27.052Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\461\\source\\repos\\H\\App.xaml.cs",
+              "RelativeDocumentMoniker": "App.xaml.cs",
+              "ToolTip": "C:\\Users\\461\\source\\repos\\H\\App.xaml.cs",
+              "RelativeToolTip": "App.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T20:33:06.236Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ImageWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\461\\source\\repos\\H\\Views\\ImageWindow.xaml",
+              "RelativeDocumentMoniker": "Views\\ImageWindow.xaml",
+              "ToolTip": "C:\\Users\\461\\source\\repos\\H\\Views\\ImageWindow.xaml",
+              "RelativeToolTip": "Views\\ImageWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-12T20:31:45.653Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ImageWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\461\\source\\repos\\H\\Views\\ImageWindow.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\ImageWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\461\\source\\repos\\H\\Views\\ImageWindow.xaml.cs",
+              "RelativeToolTip": "Views\\ImageWindow.xaml.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAEBVwCAAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T20:31:42.17Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Triangle.cs",
+              "DocumentMoniker": "C:\\Users\\461\\source\\repos\\H\\Models\\Triangle.cs",
+              "RelativeDocumentMoniker": "Models\\Triangle.cs",
+              "ToolTip": "C:\\Users\\461\\source\\repos\\H\\Models\\Triangle.cs",
+              "RelativeToolTip": "Models\\Triangle.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T20:35:56.024Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "OpenGLControl.xaml",
+              "DocumentMoniker": "C:\\Users\\461\\source\\repos\\H\\Views\\OpenGLControl.xaml",
+              "RelativeDocumentMoniker": "Views\\OpenGLControl.xaml",
+              "ToolTip": "C:\\Users\\461\\source\\repos\\H\\Views\\OpenGLControl.xaml",
+              "RelativeToolTip": "Views\\OpenGLControl.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-12T21:53:47.855Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TriangulationService.cs",
+              "DocumentMoniker": "C:\\Users\\461\\source\\repos\\H\\Services\\TriangulationService.cs",
+              "RelativeDocumentMoniker": "Services\\TriangulationService.cs",
+              "ToolTip": "C:\\Users\\461\\source\\repos\\H\\Services\\TriangulationService.cs",
+              "RelativeToolTip": "Services\\TriangulationService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFUAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T22:47:01.047Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\461\\source\\repos\\H\\App.xaml",
+              "RelativeDocumentMoniker": "App.xaml",
+              "ToolTip": "C:\\Users\\461\\source\\repos\\H\\App.xaml",
+              "RelativeToolTip": "App.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-12T23:26:50.585Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

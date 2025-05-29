@@ -1,21 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "C3AHgZMqV/o=",
+  "dgSpecHash": "36m3FPmv9Jo=",
   "success": true,
   "projectFilePath": "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/RGZ1.csproj",
   "expectedPackageFiles": [
-    "/home/ivannz/.nuget/packages/opentk/3.1.0/opentk.3.1.0.nupkg.sha512"
+    "/home/ivannz/.nuget/packages/csfml/2.6.1/csfml.2.6.1.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/sfml.audio/2.6.1/sfml.audio.2.6.1.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/sfml.graphics/2.6.1/sfml.graphics.2.6.1.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/sfml.net/2.6.1/sfml.net.2.6.1.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/sfml.system/2.6.1/sfml.system.2.6.1.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/sfml.window/2.6.1/sfml.window.2.6.1.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'OpenTK 3.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
-      "libraryId": "OpenTK",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  "logs": []
 }

@@ -155,81 +155,84 @@ public class Mesh
 {
     public List<Vec4> Vertices { get; } = new List<Vec4>(); // вершины
     public List<Tuple<int, int>> Lines { get; } = new List<Tuple<int, int>>(); // линии
-    public List<Triangle> Triangles { get; private set; } = new List<Triangle>(); // плоскости(полигоны)
+    public List<Triangle> Triangles { get; set; } = new List<Triangle>(); // плоскости(полигоны)
 
     public bool LoadFromFile(string filePath)
-{
-    try
     {
-        string[] lines = File.ReadAllLines(filePath);
-        Vertices.Clear();
-        Lines.Clear();
-        Triangles.Clear();
-
-        foreach (string line in lines)
+        try
         {
-            string trimmed = line.Trim();
-            if (string.IsNullOrWhiteSpace(trimmed)) continue;
+            string[] lines = File.ReadAllLines(filePath);
+            Vertices.Clear();
+            Lines.Clear();
+            Triangles.Clear();
 
-            string[] parts = trimmed.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
-            if (parts.Length == 0) continue;
-
-            switch (parts[0].ToLower())
+            foreach (string line in lines)
             {
-                case "v": // Vertex: v x y z
-                    if (parts.Length >= 4) // Проверяем, что есть как минимум 3 координаты
-                    {
-                        Vertices.Add(new Vec4(
-                            float.Parse(parts[1]),
-                            float.Parse(parts[2]),
-                            float.Parse(parts[3])));
-                    }
-                    break;
+                string trimmed = line.Trim();
+                if (string.IsNullOrWhiteSpace(trimmed)) continue;
 
-                case "l": // Line: l index1 index2
-                    if (parts.Length >= 3)
-                    {
-                        int index1 = int.Parse(parts[1]) - 1; // Вычитаем 1 для 0-based индекса
-                        int index2 = int.Parse(parts[2]) - 1;
-                        if (index1 >= 0 && index1 < Vertices.Count && 
-                            index2 >= 0 && index2 < Vertices.Count)
-                        {
-                            Lines.Add(new Tuple<int, int>(index1, index2));
-                        }
-                    }
-                    break;
+                string[] parts = trimmed.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-                case "f": // Face (полигон): f index1 index2 index3 (в OBJ обычно 'f', а не 'p')
-                case "p": // На случай, если в вашем формате используется 'p'
-                    if (parts.Length >= 4)
-                    {
-                        int index1 = int.Parse(parts[1]) - 1;
-                        int index2 = int.Parse(parts[2]) - 1;
-                        int index3 = int.Parse(parts[3]) - 1;
-                        if (index1 >= 0 && index1 < Vertices.Count && 
-                            index2 >= 0 && index2 < Vertices.Count && 
-                            index3 >= 0 && index3 < Vertices.Count)
+                if (parts.Length == 0) continue;
+
+                switch (parts[0].ToLower())
+                {
+                    case "v": // Vertex: v x y z
+                        if (parts.Length >= 4) // Проверяем, что есть как минимум 3 координаты
                         {
-                            Triangles.Add(new Triangle(
-                                Vertices[index1],
-                                Vertices[index2],
-                                Vertices[index3]));
+                            Vertices.Add(new Vec4(
+                                float.Parse(parts[1]),
+                                float.Parse(parts[2]),
+                                float.Parse(parts[3])));
                         }
-                    }
-                    break;
+
+                        break;
+
+                    case "l": // Line: l index1 index2
+                        if (parts.Length >= 3)
+                        {
+                            int index1 = int.Parse(parts[1]) - 1; // Вычитаем 1 для 0-based индекса
+                            int index2 = int.Parse(parts[2]) - 1;
+                            if (index1 >= 0 && index1 < Vertices.Count &&
+                                index2 >= 0 && index2 < Vertices.Count)
+                            {
+                                Lines.Add(new Tuple<int, int>(index1, index2));
+                            }
+                        }
+
+                        break;
+
+                    case "f": // Face (полигон): f index1 index2 index3 (в OBJ обычно 'f', а не 'p')
+                    case "p": // На случай, если в вашем формате используется 'p'
+                        if (parts.Length >= 4)
+                        {
+                            int index1 = int.Parse(parts[1]) - 1;
+                            int index2 = int.Parse(parts[2]) - 1;
+                            int index3 = int.Parse(parts[3]) - 1;
+                            if (index1 >= 0 && index1 < Vertices.Count &&
+                                index2 >= 0 && index2 < Vertices.Count &&
+                                index3 >= 0 && index3 < Vertices.Count)
+                            {
+                                Triangles.Add(new Triangle(
+                                    Vertices[index1],
+                                    Vertices[index2],
+                                    Vertices[index3]));
+                            }
+                        }
+
+                        break;
+                }
             }
-        }
 
-        return true;
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading file: {ex.Message}");
+            return false;
+        }
     }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Error loading file: {ex.Message}");
-        return false;
-    }
-}
-    
+
     // public bool LoadFromFile(string filePath)
     // {
     //     try
@@ -318,4 +321,68 @@ public class Mesh
             new Triangle(new Vec4(1.0f, -1.0f, 1.0f), new Vec4(-1.0f, -1.0f, -1.0f), new Vec4(1.0f, -1.0f, -1.0f))
         };
     }
+
+    public static Mesh Triangulate(Vector2[] points)
+    {
+        if (points == null || points.Length < 3)
+            throw new ArgumentException("Нужно минимум 3 точки для триангуляции.");
+
+        // 1. Найдем выпуклую оболочку (алгоритм Грэхема)
+        List<Vector2> hull = ComputeConvexHull(points);
+
+        Mesh mesh = new Mesh();
+
+        // 2. Преобразуем в Vec4 вершины
+        foreach (var pt in hull)
+            mesh.Vertices.Add(new Vec4(pt.X, pt.Y, 0f));
+
+        // 3. Триангулируем веером: вершина 0 и пары (i, i+1)
+        for (int i = 1; i < hull.Count - 1; i++)
+        {
+            var t = new Triangle(mesh.Vertices[0], mesh.Vertices[i], mesh.Vertices[i + 1]);
+            mesh.Triangles.Add(t);
+        }
+
+        return mesh;
+    }
+    
+    private static List<Vector2> ComputeConvexHull(Vector2[] points)
+    {
+        List<Vector2> sorted = new List<Vector2>(points);
+        sorted.Sort((a, b) =>
+            a.X != b.X ? a.X.CompareTo(b.X) : a.Y.CompareTo(b.Y));
+
+        List<Vector2> lower = new List<Vector2>();
+        foreach (var p in sorted)
+        {
+            while (lower.Count >= 2 &&
+                   Cross(lower[lower.Count - 2], lower[lower.Count - 1], p) <= 0)
+                lower.RemoveAt(lower.Count - 1);
+            lower.Add(p);
+        }
+
+        List<Vector2> upper = new List<Vector2>();
+        for (int i = sorted.Count - 1; i >= 0; i--)
+        {
+            Vector2 p = sorted[i];
+            while (upper.Count >= 2 &&
+                   Cross(upper[upper.Count - 2], upper[upper.Count - 1], p) <= 0)
+                upper.RemoveAt(upper.Count - 1);
+            upper.Add(p);
+        }
+
+        // Удалим дублирующие точки на стыке
+        upper.RemoveAt(upper.Count - 1);
+        lower.RemoveAt(lower.Count - 1);
+
+        lower.AddRange(upper);
+        return lower;
+    }
+
+    private static float Cross(Vector2 o, Vector2 a, Vector2 b)
+    {
+        return (a.X - o.X) * (b.Y - o.Y) - (a.Y - o.Y) * (b.X - o.X);
+    }
+
+
 }

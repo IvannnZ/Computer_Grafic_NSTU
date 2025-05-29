@@ -129,6 +129,24 @@ public class Mat4x4
     }
 
     // Матрица проекции
+    
+    public static Mat4x4 GetOrthographicProjectionMatrix(float left, float right, 
+        float bottom, float top, 
+        float near, float far)
+    {
+        Mat4x4 matrix = new Mat4x4();
+    
+        matrix.m[0, 0] = 2.0f / (right - left);
+        matrix.m[1, 1] = 2.0f / (top - bottom);
+        matrix.m[2, 2] = -2.0f / (far - near);
+    
+        matrix.m[3, 0] = -(right + left) / (right - left);
+        matrix.m[3, 1] = -(top + bottom) / (top - bottom);
+        matrix.m[3, 2] = -(far + near) / (far - near);
+        matrix.m[3, 3] = 1.0f;
+    
+        return matrix;
+    }
     public static Mat4x4 GetProjectionMatrix(int width = 1920, int height = 1080,
         float fNear = 0.1f, float fFar = 1000f,
         float fov = 90f)
@@ -310,6 +328,19 @@ public class Mat4x4
         return result;
     }
 
+    public static Mat4x4 GetTranslationMatrix(float x, float y, float z)
+    {
+        Mat4x4 matrix = new Mat4x4();
+        matrix.m[0, 0] = 1.0f;
+        matrix.m[1, 1] = 1.0f;
+        matrix.m[2, 2] = 1.0f;
+        matrix.m[3, 3] = 1.0f;
+        matrix.m[3, 0] = x;
+        matrix.m[3, 1] = y;
+        matrix.m[3, 2] = z;
+        return matrix;
+    }
+    
     // Для отладки
     public override string ToString()
     {

@@ -1,0 +1,17 @@
+﻿<Window x:Class="Photo3DEditor.Views.Viewer3DWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sharpGL="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF"
+        Title="3D Viewer" Height="600" Width="800">
+    <Grid>
+        <sharpGL:OpenGLControl x:Name="GLView"
+                       OpenGLDraw="GLView_OpenGLDraw"
+                       RenderContextType="FBO"
+                       FrameRate="60"
+                       DrawFPS="True"
+                       MouseLeftButtonDown="GLView_MouseLeftButtonDown"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"/>
+    </Grid>
+    
+</Window>

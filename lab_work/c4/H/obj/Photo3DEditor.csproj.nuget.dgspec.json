@@ -1,0 +1,87 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/H/Photo3DEditor.csproj": {}
+  },
+  "projects": {
+    "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/H/Photo3DEditor.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/H/Photo3DEditor.csproj",
+        "projectName": "Photo3DEditor",
+        "projectPath": "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/H/Photo3DEditor.csproj",
+        "packagesPath": "/home/ivannz/.nuget/packages/",
+        "outputPath": "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/H/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/ivannz/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0-windows"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0-windows7.0": {
+            "targetAlias": "net8.0-windows",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "Delaunator": {
+              "target": "Package",
+              "version": "[1.0.11, )"
+            },
+            "HelixToolkit": {
+              "target": "Package",
+              "version": "[2.27.0, )"
+            },
+            "MathNet.Numerics": {
+              "target": "Package",
+              "version": "[6.0.0-beta2, )"
+            },
+            "OpenTK.GLControl": {
+              "target": "Package",
+              "version": "[4.0.2, )"
+            },
+            "SharpGL": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            },
+            "SharpGL.WPF": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.116/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

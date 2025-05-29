@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "dgSpecHash": "WhoM8umkZ34=",
+  "success": true,
+  "projectFilePath": "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/H/Photo3DEditor.csproj",
+  "expectedPackageFiles": [
+    "/home/ivannz/.nuget/packages/delaunator/1.0.11/delaunator.1.0.11.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/helixtoolkit/2.27.0/helixtoolkit.2.27.0.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/mathnet.numerics/6.0.0-beta2/mathnet.numerics.6.0.0-beta2.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/microsoft.extensions.logging.abstractions/6.0.0/microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/microsoft.netcore.platforms/3.1.0/microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/microsoft.win32.systemevents/4.7.0/microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/opentk.core/4.9.3/opentk.core.4.9.3.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/opentk.glcontrol/4.0.2/opentk.glcontrol.4.0.2.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/opentk.graphics/4.9.3/opentk.graphics.4.9.3.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/opentk.mathematics/4.9.3/opentk.mathematics.4.9.3.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/opentk.redist.glfw/3.3.8.39/opentk.redist.glfw.3.3.8.39.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/opentk.windowing.common/4.9.3/opentk.windowing.common.4.9.3.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/opentk.windowing.desktop/4.9.3/opentk.windowing.desktop.4.9.3.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/opentk.windowing.graphicslibraryframework/4.9.3/opentk.windowing.graphicslibraryframework.4.9.3.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/sharpgl/3.1.1/sharpgl.3.1.1.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/sharpgl.scenegraph/3.1.1/sharpgl.scenegraph.3.1.1.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/sharpgl.wpf/3.1.1/sharpgl.wpf.3.1.1.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/system.data.datasetextensions/4.5.0/system.data.datasetextensions.4.5.0.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/system.drawing.common/4.7.0/system.drawing.common.4.7.0.nupkg.sha512",
+    "/home/ivannz/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
