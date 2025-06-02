@@ -384,5 +384,19 @@ public class Mesh
         return (a.X - o.X) * (b.Y - o.Y) - (a.Y - o.Y) * (b.X - o.X);
     }
 
+    public float[] GetVertexArray()
+    {
+        List<float> vertices = new List<float>();
+        foreach (var tri in this.Triangles)
+        {
+            foreach (var v in tri.Points)
+            {
+                vertices.Add(v.x);
+                vertices.Add(v.y);
+                vertices.Add(v.z);
+            }
+        }
+        return vertices.ToArray();
+    }
 
 }

@@ -38,6 +38,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "OpenTK": {
+              "target": "Package",
+              "version": "[4.9.4, )"
+            },
             "SFML.Net": {
               "target": "Package",
               "version": "[2.6.1, )"
