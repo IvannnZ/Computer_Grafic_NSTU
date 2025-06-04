@@ -197,3 +197,17 @@
 /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/obj/Debug/net8.0/RGZ1.pdb
 /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/obj/Debug/net8.0/RGZ1.genruntimeconfig.cache
 /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/obj/Debug/net8.0/ref/RGZ1.dll
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/bin/Debug/net8.0/OpenTK.Audio.OpenAL.dll
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/bin/Debug/net8.0/OpenTK.Compute.dll
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/bin/Debug/net8.0/OpenTK.Core.dll
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/bin/Debug/net8.0/OpenTK.Graphics.dll
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/bin/Debug/net8.0/OpenTK.Input.dll
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/bin/Debug/net8.0/OpenTK.Mathematics.dll
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/bin/Debug/net8.0/OpenTK.Windowing.Common.dll
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/bin/Debug/net8.0/OpenTK.Windowing.Desktop.dll
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/bin/Debug/net8.0/OpenTK.Windowing.GraphicsLibraryFramework.dll
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/bin/Debug/net8.0/runtimes/linux-x64/native/libglfw.so.3
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/bin/Debug/net8.0/runtimes/osx-arm64/native/libglfw.3.dylib
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/bin/Debug/net8.0/runtimes/osx-x64/native/libglfw.3.dylib
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/bin/Debug/net8.0/runtimes/win-x64/native/glfw3.dll
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/bin/Debug/net8.0/runtimes/win-x86/native/glfw3.dll

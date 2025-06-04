@@ -10,26 +10,24 @@
     <list default="true" id="54d45f9c-416a-49c8-b13d-bdff909a64da" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RGZ1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RGZ1/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RGZ1/RGZ1.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/RGZ1.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RGZ1/bin/Debug/net8.0/RGZ1.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/bin/Debug/net8.0/RGZ1.deps.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/bin/Debug/net8.0/RGZ1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/bin/Debug/net8.0/RGZ1.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/bin/Debug/net8.0/RGZ1.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/bin/Debug/net8.0/RGZ1.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RGZ1/mesh.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/mesh.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.sourcelink.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/ref/RGZ1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/ref/RGZ1.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/refint/RGZ1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/refint/RGZ1.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RGZ1/obj/RGZ1.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/RGZ1.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RGZ1/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RGZ1/obj/RGZ1.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/RGZ1.csproj.nuget.g.props" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RGZ1/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/project.packagespec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/rider.project.model.nuget.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/rider.project.restore.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../c4_test/3D-Engine" beforeDir="false" afterPath="$PROJECT_DIR$/../../c4_test/3D-Engine" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../kursovaya2/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/../../kursovaya2/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../lab2_1/3D-Engine" beforeDir="false" afterPath="$PROJECT_DIR$/../../lab2_1/3D-Engine" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,6 +41,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 0
@@ -104,13 +103,16 @@
       <workItem from="1748525474091" duration="635000" />
       <workItem from="1748579610822" duration="2980000" />
       <workItem from="1748697275492" duration="1366000" />
-      <workItem from="1748828567787" duration="1497000" />
+      <workItem from="1748828567787" duration="1861000" />
+      <workItem from="1748870553500" duration="4262000" />
+      <workItem from="1749001260356" duration="1600000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />

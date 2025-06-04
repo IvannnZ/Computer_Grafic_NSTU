@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RGZ1")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+360d931476254e852b1953bc6549c3e67b959c78")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c2289979f30d356a3c80aec98bbe3d01b7b33fa3")]
 [assembly: System.Reflection.AssemblyProductAttribute("RGZ1")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RGZ1")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

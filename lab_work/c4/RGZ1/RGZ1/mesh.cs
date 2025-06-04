@@ -345,7 +345,7 @@ public class Mesh
 
         return mesh;
     }
-    
+
     private static List<Vector2> ComputeConvexHull(Vector2[] points)
     {
         List<Vector2> sorted = new List<Vector2>(points);
@@ -396,7 +396,7 @@ public class Mesh
                 vertices.Add(v.z);
             }
         }
+
         return vertices.ToArray();
     }
-
 }
