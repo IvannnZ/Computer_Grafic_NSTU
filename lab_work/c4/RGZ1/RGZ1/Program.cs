@@ -34,8 +34,8 @@ public class MeshWindow : GameWindow
         _mesh.LoadFromFile("1.obj");
         
 
-        _vertexData =_mesh.GetVertexArray();
-        _vertexCount = _vertexData.Length / 3;
+        _vertexData = _mesh.GetVertexArrayWithNormals();
+        _vertexCount = _vertexData.Length / 6;
 
         _vao = GL.GenVertexArray();
         _vbo = GL.GenBuffer();
@@ -44,9 +44,12 @@ public class MeshWindow : GameWindow
         GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo);
         GL.BufferData(BufferTarget.ArrayBuffer, _vertexData.Length * sizeof(float), _vertexData, BufferUsageHint.StaticDraw);
 
-        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
+        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
         GL.EnableVertexAttribArray(0);
 
+        GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
+        GL.EnableVertexAttribArray(1);
+        
         _shaderProgram = CreateBasicShader();
         GL.UseProgram(_shaderProgram);
 
