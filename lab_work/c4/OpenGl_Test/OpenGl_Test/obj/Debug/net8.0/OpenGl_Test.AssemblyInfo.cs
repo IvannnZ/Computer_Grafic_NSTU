@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OpenGl_Test")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+86b658612f876a9d54a6eb815d4427836fe75f90")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aa97b6054ba03ed8d2ccd5b27a2799632eeaa649")]
 [assembly: System.Reflection.AssemblyProductAttribute("OpenGl_Test")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OpenGl_Test")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

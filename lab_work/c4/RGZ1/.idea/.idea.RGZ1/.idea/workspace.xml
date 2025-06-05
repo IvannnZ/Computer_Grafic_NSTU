@@ -8,23 +8,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54d45f9c-416a-49c8-b13d-bdff909a64da" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../OpenGl_Test/OpenGl_Test/obj/Debug/net8.0/OpenGl_Test.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../OpenGl_Test/OpenGl_Test/obj/Debug/net8.0/OpenGl_Test.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OpenGl_Test/OpenGl_Test/obj/Debug/net8.0/OpenGl_Test.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../OpenGl_Test/OpenGl_Test/obj/Debug/net8.0/OpenGl_Test.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RGZ1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RGZ1/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RGZ1/bin/Debug/net8.0/RGZ1.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/bin/Debug/net8.0/RGZ1.deps.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/bin/Debug/net8.0/RGZ1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/bin/Debug/net8.0/RGZ1.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/bin/Debug/net8.0/RGZ1.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/bin/Debug/net8.0/RGZ1.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RGZ1/mesh.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/mesh.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.sourcelink.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/ref/RGZ1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/ref/RGZ1.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/refint/RGZ1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/refint/RGZ1.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RGZ1/obj/RGZ1.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/RGZ1.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RGZ1/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/project.nuget.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/rider.project.model.nuget.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/rider.project.restore.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../c4_test/3D-Engine" beforeDir="false" afterPath="$PROJECT_DIR$/../../c4_test/3D-Engine" afterDir="false" />
@@ -106,6 +102,10 @@
       <workItem from="1748828567787" duration="1861000" />
       <workItem from="1748870553500" duration="4262000" />
       <workItem from="1749001260356" duration="1600000" />
+      <workItem from="1749010179686" duration="1242000" />
+      <workItem from="1749042671728" duration="399000" />
+      <workItem from="1749052164547" duration="982000" />
+      <workItem from="1749084912574" duration="866000" />
     </task>
     <servers />
   </component>

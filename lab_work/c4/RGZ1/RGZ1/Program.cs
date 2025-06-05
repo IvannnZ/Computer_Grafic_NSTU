@@ -5,6 +5,8 @@ using OpenTK.Mathematics;
 using System;
 using System.IO;
 using System.Collections.Generic;
+using OpenTK.Windowing.GraphicsLibraryFramework;
+
 
 public class MeshWindow : GameWindow
 {
@@ -28,7 +30,8 @@ public class MeshWindow : GameWindow
 
         // Пример: куб
         _mesh = new Mesh();
-        _mesh.DefineAsCube();
+        // _mesh.DefineAsCube();
+        _mesh.LoadFromFile("1.obj");
         
 
         _vertexData =_mesh.GetVertexArray();
@@ -50,6 +53,27 @@ public class MeshWindow : GameWindow
         GL.ClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         GL.Enable(EnableCap.DepthTest); // Включаем Z-buffer
     }
+    
+    protected override void OnUpdateFrame(FrameEventArgs args)
+    {
+        base.OnUpdateFrame(args);
+
+        const float rotSpeed = 1.5f;
+        const float moveSpeed = 1.5f;
+
+        var input = KeyboardState;
+
+        if (input.IsKeyDown(Keys.Left)) _rotation.Y += rotSpeed * (float)args.Time;
+        if (input.IsKeyDown(Keys.Right)) _rotation.Y -= rotSpeed * (float)args.Time;
+        if (input.IsKeyDown(Keys.Up)) _rotation.X += rotSpeed * (float)args.Time;
+        if (input.IsKeyDown(Keys.Down)) _rotation.X -= rotSpeed * (float)args.Time;
+
+        if (input.IsKeyDown(Keys.W)) _position.Z -= moveSpeed * (float)args.Time;
+        if (input.IsKeyDown(Keys.S)) _position.Z += moveSpeed * (float)args.Time;
+        if (input.IsKeyDown(Keys.A)) _position.X -= moveSpeed * (float)args.Time;
+        if (input.IsKeyDown(Keys.D)) _position.X += moveSpeed * (float)args.Time;
+    }
+
 
 
     protected override void OnRenderFrame(FrameEventArgs args)
@@ -59,8 +83,13 @@ public class MeshWindow : GameWindow
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
         GL.UseProgram(_shaderProgram);
-
+        
         Matrix4 model = Matrix4.Identity;
+        model *= Matrix4.CreateRotationX(_rotation.X);
+        model *= Matrix4.CreateRotationY(_rotation.Y);
+        model *= Matrix4.CreateTranslation(_position);
+
+        
         Matrix4 view = Matrix4.LookAt(new Vector3(2, 2, 2), Vector3.Zero, Vector3.UnitY);
         Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45f), Size.X / (float)Size.Y, 0.1f, 100f);
 

@@ -399,4 +399,29 @@ public class Mesh
 
         return vertices.ToArray();
     }
+    
+    public float[] GetVertexArrayWithNormals()
+    {
+        var list = new List<float>();
+        foreach (var tri in Triangles)
+        {
+            Vec4 edge1 = tri.Points[1] - tri.Points[0];
+            Vec4 edge2 = tri.Points[2] - tri.Points[0];
+            Vec4 normal = Vec4.Cross(edge1, edge2);
+            normal.Normalize();
+
+            foreach (var v in tri.Points)
+            {
+                list.Add(v.x);
+                list.Add(v.y);
+                list.Add(v.z);
+
+                list.Add(normal.x);
+                list.Add(normal.y);
+                list.Add(normal.z);
+            }
+        }
+        return list.ToArray();
+    }
+
 }
