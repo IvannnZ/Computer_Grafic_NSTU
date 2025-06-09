@@ -201,17 +201,16 @@ public class MeshWindow : GameWindow
 
 }
 
-
 public class InputWindow : GameWindow
 {
     private OpenTK.Mathematics.Vector2[] _points = [];
     private int _vao, _vbo, _shaderProgram;
+    private bool _needsBufferUpdate = true;
+
     public Action<Mesh>? OnMeshCreated;
 
     public InputWindow(GameWindowSettings gameSettings, NativeWindowSettings nativeSettings)
-        : base(gameSettings, nativeSettings)
-    {
-    }
+        : base(gameSettings, nativeSettings) { }
 
     protected override void OnLoad()
     {
@@ -219,6 +218,13 @@ public class InputWindow : GameWindow
 
         _vao = GL.GenVertexArray();
         _vbo = GL.GenBuffer();
+
+        GL.BindVertexArray(_vao);
+        GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo);
+        GL.BufferData(BufferTarget.ArrayBuffer, 1000 * sizeof(float), IntPtr.Zero, BufferUsageHint.DynamicDraw); // резерв на 500 точек
+
+        GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 2 * sizeof(float), 0);
+        GL.EnableVertexAttribArray(0);
 
         _shaderProgram = CreateShader();
 
@@ -233,47 +239,17 @@ public class InputWindow : GameWindow
             var mousePos = MousePosition;
             var newPoint = new OpenTK.Mathematics.Vector2(mousePos.X / Size.X * 2 - 1, -(mousePos.Y / Size.Y * 2 - 1));
 
-            // Добавление точки в массив
             Array.Resize(ref _points, _points.Length + 1);
             _points[^1] = newPoint;
+            _needsBufferUpdate = true;
             UpdateMesh();
         }
-    }
-
-    protected override void OnRenderFrame(FrameEventArgs args)
-    {
-        base.OnRenderFrame(args);
-
-        GL.Clear(ClearBufferMask.ColorBufferBit);
-
-        if (_points.Length > 0)
-        {
-            GL.BindVertexArray(_vao);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo);
-
-            float[] pointData = new float[_points.Length * 2];
-            for (int i = 0; i < _points.Length; i++)
-            {
-                pointData[i * 2] = _points[i].X;
-                pointData[i * 2 + 1] = _points[i].Y;
-            }
-
-            GL.BufferData(BufferTarget.ArrayBuffer, pointData.Length * sizeof(float), pointData,
-                BufferUsageHint.DynamicDraw);
-            GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 2 * sizeof(float), 0);
-            GL.EnableVertexAttribArray(0);
-
-            GL.UseProgram(_shaderProgram);
-            GL.PointSize(6f);
-            GL.DrawArrays(PrimitiveType.Points, 0, _points.Length);
-        }
-
-        SwapBuffers();
     }
 
     protected override void OnKeyDown(KeyboardKeyEventArgs e)
     {
         base.OnKeyDown(e);
+
         if (e.Key == Keys.Enter && _points.Length >= 3)
         {
             var convertedPoints = _points.Select(p => new System.Numerics.Vector2(p.X, p.Y)).ToArray();
@@ -285,7 +261,40 @@ public class InputWindow : GameWindow
         {
             // Удаление последней точки
             Array.Resize(ref _points, _points.Length - 1);
+            _needsBufferUpdate = true;
+            UpdateMesh();
         }
+    }
+
+    protected override void OnRenderFrame(FrameEventArgs args)
+    {
+        base.OnRenderFrame(args);
+        GL.Clear(ClearBufferMask.ColorBufferBit);
+
+        GL.UseProgram(_shaderProgram);
+        GL.BindVertexArray(_vao);
+
+        if (_needsBufferUpdate && _points.Length > 0)
+        {
+            float[] data = new float[_points.Length * 2];
+            for (int i = 0; i < _points.Length; i++)
+            {
+                data[i * 2] = _points[i].X;
+                data[i * 2 + 1] = _points[i].Y;
+            }
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo);
+            GL.BufferSubData(BufferTarget.ArrayBuffer, IntPtr.Zero, data.Length * sizeof(float), data);
+            _needsBufferUpdate = false;
+        }
+
+        if (_points.Length > 0)
+        {
+            GL.PointSize(8.0f); // увеличь размер для наглядности
+            GL.DrawArrays(PrimitiveType.Points, 0, _points.Length);
+        }
+
+        SwapBuffers();
     }
 
     protected override void OnUnload()
@@ -338,6 +347,7 @@ public class InputWindow : GameWindow
 
         return program;
     }
+
     private void UpdateMesh()
     {
         if (_points.Length >= 3)
@@ -347,7 +357,6 @@ public class InputWindow : GameWindow
             OnMeshCreated?.Invoke(mesh);
         }
     }
-
 }
 
 public static class Program
