@@ -8,11 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54d45f9c-416a-49c8-b13d-bdff909a64da" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RGZ1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RGZ1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RGZ1/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/bin/Debug/net8.0/RGZ1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/bin/Debug/net8.0/RGZ1.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/bin/Debug/net8.0/RGZ1.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/bin/Debug/net8.0/RGZ1.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RGZ1/fragment.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/fragment.glsl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/RGZ1.dll" afterDir="false" />
@@ -22,9 +19,7 @@
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/refint/RGZ1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/Debug/net8.0/refint/RGZ1.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/RGZ1.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/RGZ1.csproj.nuget.g.props" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RGZ1/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/rider.project.model.nuget.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RGZ1/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/obj/rider.project.restore.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RGZ1/vertex.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/RGZ1/vertex.glsl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../c4_test/3D-Engine" beforeDir="false" afterPath="$PROJECT_DIR$/../../c4_test/3D-Engine" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../lab2_1/3D-Engine" beforeDir="false" afterPath="$PROJECT_DIR$/../../lab2_1/3D-Engine" afterDir="false" />
     </list>

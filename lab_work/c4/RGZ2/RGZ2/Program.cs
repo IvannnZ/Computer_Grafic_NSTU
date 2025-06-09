@@ -182,6 +182,23 @@ public class MeshWindow : GameWindow
         _vertexData = _mesh.GetVertexArrayWithNormals();
         _vertexCount = _vertexData.Length / 6;
     }
+    
+    public void UpdateMesh(Mesh mesh)
+    {
+        _mesh = mesh;
+        _vertexData = _mesh.GetVertexArrayWithNormals();
+        _vertexCount = _vertexData.Length / 6;
+
+        GL.BindVertexArray(_vao);
+        GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo);
+        GL.BufferData(BufferTarget.ArrayBuffer, _vertexData.Length * sizeof(float), _vertexData, BufferUsageHint.DynamicDraw);
+
+        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
+        GL.EnableVertexAttribArray(0);
+        GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
+        GL.EnableVertexAttribArray(1);
+    }
+
 }
 
 
@@ -219,6 +236,7 @@ public class InputWindow : GameWindow
             // Добавление точки в массив
             Array.Resize(ref _points, _points.Length + 1);
             _points[^1] = newPoint;
+            UpdateMesh();
         }
     }
 
@@ -320,14 +338,23 @@ public class InputWindow : GameWindow
 
         return program;
     }
-}
+    private void UpdateMesh()
+    {
+        if (_points.Length >= 3)
+        {
+            var converted = _points.Select(p => new System.Numerics.Vector2(p.X, p.Y)).ToArray();
+            var mesh = Mesh.Triangulate(converted);
+            OnMeshCreated?.Invoke(mesh);
+        }
+    }
 
+}
 
 public static class Program
 {
     public static void Main()
     {
-        var inputWindowSettings = new NativeWindowSettings
+        var inputSettings = new NativeWindowSettings
         {
             ClientSize = new Vector2i(600, 600),
             Title = "Input Window - Draw 2D Polygon"
@@ -339,18 +366,19 @@ public static class Program
             Title = "Mesh Viewer"
         };
 
-        // Создаём окно ввода точек
-        var inputWindow = new InputWindow(GameWindowSettings.Default, inputWindowSettings);
+        MeshWindow? meshWin = null;
 
-        // Когда в окне ввода построен Mesh — запускаем окно отображения
-        inputWindow.OnMeshCreated = mesh =>
+        var inputWin = new InputWindow(GameWindowSettings.Default, inputSettings);
+        meshWin = new MeshWindow(GameWindowSettings.Default, meshWindowSettings);
+
+        inputWin.OnMeshCreated = (Mesh mesh) =>
         {
-            var meshWindow = new MeshWindow(GameWindowSettings.Default, meshWindowSettings);
-            meshWindow.SetMesh(mesh);
-            meshWindow.Run();
+            meshWin?.UpdateMesh(mesh);
         };
 
-        // Запуск первого окна
-        inputWindow.Run();
+        var meshThread = new Thread(() => meshWin.Run());
+        meshThread.Start();
+
+        inputWin.Run();
     }
 }
