@@ -281,15 +281,17 @@ public class PointEditorWindow : GameWindow
     public static Mesh Triangulate(List<Vector3> points)
     {
         Mesh mesh = new Mesh();
-        if (points.Count < 3)
-            return mesh;
+        if (points.Count < 3) return mesh;
 
+        // Убедимся, что копия нужна
         List<Vector3> verts = new(points);
         List<int> indices = Enumerable.Range(0, verts.Count).ToList();
 
-        int maxAttempts = 1000; // защита от зацикливания
+        bool isClockwise = IsPolygonClockwise(verts);
 
-        while (indices.Count >= 3 && maxAttempts-- > 0)
+        int attempts = 0;
+
+        while (indices.Count >= 3 && attempts++ < 1000)
         {
             bool earFound = false;
 
@@ -303,15 +305,12 @@ public class PointEditorWindow : GameWindow
                 Vector3 b = verts[i1];
                 Vector3 c = verts[i2];
 
-                if (!IsConvex(a, b, c))
-                    continue;
+                if (!IsConvex(a, b, c, isClockwise)) continue;
 
                 bool hasPointInside = false;
                 for (int j = 0; j < verts.Count; j++)
                 {
-                    if (j == i0 || j == i1 || j == i2)
-                        continue;
-
+                    if (j == i0 || j == i1 || j == i2) continue;
                     if (PointInTriangle(verts[j], a, b, c))
                     {
                         hasPointInside = true;
@@ -319,33 +318,32 @@ public class PointEditorWindow : GameWindow
                     }
                 }
 
-                if (hasPointInside)
-                    continue;
+                if (hasPointInside) continue;
 
-                // Добавляем треугольник
-                mesh.Triangles.Add(new Triangle(new Vec4(a.X, a.Y, a.Z),
-                                                new Vec4(b.X, b.Y, b.Z),
-                                                new Vec4(c.X, c.Y, c.Z)));
+                mesh.Triangles.Add(new Triangle(
+                    new Vec4(a.X, a.Y, a.Z),
+                    new Vec4(b.X, b.Y, b.Z),
+                    new Vec4(c.X, c.Y, c.Z)));
 
                 indices.RemoveAt(i);
                 earFound = true;
                 break;
             }
 
-            if (!earFound)
-                break; // Ошибка: не найдено ни одного уха (возможно, пересечения)
+            if (!earFound) break;
         }
 
         return mesh;
     }
 
-    private static bool IsConvex(Vector3 a, Vector3 b, Vector3 c)
+    private static bool IsConvex(Vector3 a, Vector3 b, Vector3 c, bool clockwise)
     {
         Vector2 ab = new Vector2(b.X - a.X, b.Y - a.Y);
         Vector2 bc = new Vector2(c.X - b.X, c.Y - b.Y);
         float cross = ab.X * bc.Y - ab.Y * bc.X;
-        return cross < 0; // < 0 если по часовой, > 0 если против
+        return clockwise ? (cross < 0) : (cross > 0);
     }
+
 
     private static bool PointInTriangle(Vector3 p, Vector3 a, Vector3 b, Vector3 c)
     {
@@ -362,6 +360,19 @@ public class PointEditorWindow : GameWindow
 
         return !(hasNeg && hasPos); // все значения одного знака — точка внутри
     }
+    
+    private static bool IsPolygonClockwise(List<Vector3> points)
+    {
+        float sum = 0f;
+        for (int i = 0; i < points.Count; i++)
+        {
+            Vector3 a = points[i];
+            Vector3 b = points[(i + 1) % points.Count];
+            sum += (b.X - a.X) * (b.Y + a.Y);
+        }
+        return sum > 0;
+    }
+
 
     
     public static Mesh TriangulatePolygon(List<Vector3> polygonPoints)
