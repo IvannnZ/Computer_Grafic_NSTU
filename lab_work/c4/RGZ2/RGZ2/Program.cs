@@ -6,31 +6,22 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using System;
-using System.Collections.Generic;
-using System.Numerics;
 
 
 public class MeshWindow : GameWindow
 {
     private int _vao, _vbo;
-
     private int _shaderProgram;
-
     // private float[] _vertexData;
     private int _vertexCount;
-
     // private Mesh _mesh;
     private float[] _vertexData = Array.Empty<float>();
     private Mesh _mesh = new Mesh();
-
     public MeshWindow(GameWindowSettings gameSettings, NativeWindowSettings nativeSettings)
-        : base(gameSettings, nativeSettings)
-    {
-    }
-
-    private OpenTK.Mathematics.Vector3 _rotation = OpenTK.Mathematics.Vector3.Zero;
-    private OpenTK.Mathematics.Vector3 _position = OpenTK.Mathematics.Vector3.Zero;
+        : base(gameSettings, nativeSettings) { }
+    
+    private Vector3 _rotation = Vector3.Zero;
+    private Vector3 _position = Vector3.Zero;
 
 
     protected override void OnLoad()
@@ -38,10 +29,10 @@ public class MeshWindow : GameWindow
         base.OnLoad();
 
         // Пример: куб
-        // _mesh = new Mesh();
+        _mesh = new Mesh();
         // _mesh.DefineAsCube();
-        // _mesh.LoadFromFile("teapot.obj");
-
+        _mesh.LoadFromFile("3.obj");
+        
 
         _vertexData = _mesh.GetVertexArrayWithNormals();
         _vertexCount = _vertexData.Length / 6;
@@ -51,22 +42,21 @@ public class MeshWindow : GameWindow
 
         GL.BindVertexArray(_vao);
         GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo);
-        GL.BufferData(BufferTarget.ArrayBuffer, _vertexData.Length * sizeof(float), _vertexData,
-            BufferUsageHint.StaticDraw);
+        GL.BufferData(BufferTarget.ArrayBuffer, _vertexData.Length * sizeof(float), _vertexData, BufferUsageHint.StaticDraw);
 
         GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
         GL.EnableVertexAttribArray(0);
 
         GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
         GL.EnableVertexAttribArray(1);
-
+        
         _shaderProgram = CreateBasicShader();
         GL.UseProgram(_shaderProgram);
 
         GL.ClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         GL.Enable(EnableCap.DepthTest); // Включаем Z-buffer
     }
-
+    
     protected override void OnUpdateFrame(FrameEventArgs args)
     {
         base.OnUpdateFrame(args);
@@ -88,6 +78,7 @@ public class MeshWindow : GameWindow
     }
 
 
+
     protected override void OnRenderFrame(FrameEventArgs args)
     {
         base.OnRenderFrame(args);
@@ -95,17 +86,15 @@ public class MeshWindow : GameWindow
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
         GL.UseProgram(_shaderProgram);
-
+        
         Matrix4 model = Matrix4.Identity;
         model *= Matrix4.CreateRotationX(_rotation.X);
         model *= Matrix4.CreateRotationY(_rotation.Y);
         model *= Matrix4.CreateTranslation(_position);
 
-
-        Matrix4 view = Matrix4.LookAt(new OpenTK.Mathematics.Vector3(2, 2, 2), OpenTK.Mathematics.Vector3.Zero,
-            OpenTK.Mathematics.Vector3.UnitY);
-        Matrix4 projection =
-            Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45f), Size.X / (float)Size.Y, 0.1f, 100f);
+        
+        Matrix4 view = Matrix4.LookAt(new Vector3(2, 2, 2), Vector3.Zero, Vector3.UnitY);
+        Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45f), Size.X / (float)Size.Y, 0.1f, 100f);
 
         GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "model"), false, ref model);
         GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "view"), false, ref view);
@@ -137,16 +126,13 @@ public class MeshWindow : GameWindow
                 vertices.Add(v.z);
             }
         }
-
         return vertices.ToArray();
     }
 
     private int CreateBasicShader()
     {
-        string vertexShaderSource =
-            File.ReadAllText("/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/vertex.glsl");
-        string fragmentShaderSource =
-            File.ReadAllText("/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/fragment.glsl");
+        string vertexShaderSource = File.ReadAllText("/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/vertex.glsl");
+        string fragmentShaderSource = File.ReadAllText("/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ1/RGZ1/fragment.glsl");
         int vertexShader = GL.CreateShader(ShaderType.VertexShader);
         GL.ShaderSource(vertexShader, vertexShaderSource);
         GL.CompileShader(vertexShader);
@@ -175,219 +161,21 @@ public class MeshWindow : GameWindow
 
         return program;
     }
-
-    public void SetMesh(Mesh mesh)
-    {
-        _mesh = mesh;
-        _vertexData = _mesh.GetVertexArrayWithNormals();
-        _vertexCount = _vertexData.Length / 6;
-    }
-    
-    public void UpdateMesh(Mesh mesh)
-    {
-        _mesh = mesh;
-        _vertexData = _mesh.GetVertexArrayWithNormals();
-        _vertexCount = _vertexData.Length / 6;
-
-        GL.BindVertexArray(_vao);
-        GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo);
-        GL.BufferData(BufferTarget.ArrayBuffer, _vertexData.Length * sizeof(float), _vertexData, BufferUsageHint.DynamicDraw);
-
-        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
-        GL.EnableVertexAttribArray(0);
-        GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
-        GL.EnableVertexAttribArray(1);
-    }
-
-}
-
-public class InputWindow : GameWindow
-{
-    private OpenTK.Mathematics.Vector2[] _points = [];
-    private int _vao, _vbo, _shaderProgram;
-    private bool _needsBufferUpdate = true;
-
-    public Action<Mesh>? OnMeshCreated;
-
-    public InputWindow(GameWindowSettings gameSettings, NativeWindowSettings nativeSettings)
-        : base(gameSettings, nativeSettings) { }
-
-    protected override void OnLoad()
-    {
-        base.OnLoad();
-
-        _vao = GL.GenVertexArray();
-        _vbo = GL.GenBuffer();
-
-        GL.BindVertexArray(_vao);
-        GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo);
-        GL.BufferData(BufferTarget.ArrayBuffer, 1000 * sizeof(float), IntPtr.Zero, BufferUsageHint.DynamicDraw); // резерв на 500 точек
-
-        GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 2 * sizeof(float), 0);
-        GL.EnableVertexAttribArray(0);
-
-        _shaderProgram = CreateShader();
-
-        GL.ClearColor(0f, 0f, 0f, 1f);
-    }
-
-    protected override void OnMouseDown(MouseButtonEventArgs e)
-    {
-        base.OnMouseDown(e);
-        if (e.Button == MouseButton.Left)
-        {
-            var mousePos = MousePosition;
-            var newPoint = new OpenTK.Mathematics.Vector2(mousePos.X / Size.X * 2 - 1, -(mousePos.Y / Size.Y * 2 - 1));
-
-            Array.Resize(ref _points, _points.Length + 1);
-            _points[^1] = newPoint;
-            _needsBufferUpdate = true;
-            UpdateMesh();
-        }
-    }
-
-    protected override void OnKeyDown(KeyboardKeyEventArgs e)
-    {
-        base.OnKeyDown(e);
-
-        if (e.Key == Keys.Enter && _points.Length >= 3)
-        {
-            var convertedPoints = _points.Select(p => new System.Numerics.Vector2(p.X, p.Y)).ToArray();
-            var mesh = Mesh.Triangulate(convertedPoints);
-            OnMeshCreated?.Invoke(mesh);
-            Close();
-        }
-        else if (e.Key == Keys.Backspace && _points.Length > 0)
-        {
-            // Удаление последней точки
-            Array.Resize(ref _points, _points.Length - 1);
-            _needsBufferUpdate = true;
-            UpdateMesh();
-        }
-    }
-
-    protected override void OnRenderFrame(FrameEventArgs args)
-    {
-        base.OnRenderFrame(args);
-        GL.Clear(ClearBufferMask.ColorBufferBit);
-
-        GL.UseProgram(_shaderProgram);
-        GL.BindVertexArray(_vao);
-
-        if (_needsBufferUpdate && _points.Length > 0)
-        {
-            float[] data = new float[_points.Length * 2];
-            for (int i = 0; i < _points.Length; i++)
-            {
-                data[i * 2] = _points[i].X;
-                data[i * 2 + 1] = _points[i].Y;
-            }
-
-            GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo);
-            GL.BufferSubData(BufferTarget.ArrayBuffer, IntPtr.Zero, data.Length * sizeof(float), data);
-            _needsBufferUpdate = false;
-        }
-
-        if (_points.Length > 0)
-        {
-            GL.PointSize(8.0f); // увеличь размер для наглядности
-            GL.DrawArrays(PrimitiveType.Points, 0, _points.Length);
-        }
-
-        SwapBuffers();
-    }
-
-    protected override void OnUnload()
-    {
-        base.OnUnload();
-        GL.DeleteBuffer(_vbo);
-        GL.DeleteVertexArray(_vao);
-        GL.DeleteProgram(_shaderProgram);
-    }
-
-    private int CreateShader()
-    {
-        string vertex = @"
-        #version 330 core
-        layout (location = 0) in vec2 aPosition;
-        void main()
-        {
-            gl_Position = vec4(aPosition, 0.0, 1.0);
-        }";
-
-        string fragment = @"
-        #version 330 core
-        out vec4 FragColor;
-        void main()
-        {
-            FragColor = vec4(1.0, 1.0, 0.0, 1.0);
-        }";
-
-        int v = GL.CreateShader(ShaderType.VertexShader);
-        GL.ShaderSource(v, vertex);
-        GL.CompileShader(v);
-        GL.GetShader(v, ShaderParameter.CompileStatus, out int successV);
-        if (successV != (int)All.True)
-            Console.WriteLine(GL.GetShaderInfoLog(v));
-
-        int f = GL.CreateShader(ShaderType.FragmentShader);
-        GL.ShaderSource(f, fragment);
-        GL.CompileShader(f);
-        GL.GetShader(f, ShaderParameter.CompileStatus, out int successF);
-        if (successF != (int)All.True)
-            Console.WriteLine(GL.GetShaderInfoLog(f));
-
-        int program = GL.CreateProgram();
-        GL.AttachShader(program, v);
-        GL.AttachShader(program, f);
-        GL.LinkProgram(program);
-
-        GL.DeleteShader(v);
-        GL.DeleteShader(f);
-
-        return program;
-    }
-
-    private void UpdateMesh()
-    {
-        if (_points.Length >= 3)
-        {
-            var converted = _points.Select(p => new System.Numerics.Vector2(p.X, p.Y)).ToArray();
-            var mesh = Mesh.Triangulate(converted);
-            OnMeshCreated?.Invoke(mesh);
-        }
-    }
 }
 
 public static class Program
 {
     public static void Main()
     {
-        var inputSettings = new NativeWindowSettings
-        {
-            ClientSize = new Vector2i(600, 600),
-            Title = "Input Window - Draw 2D Polygon"
-        };
-
-        var meshWindowSettings = new NativeWindowSettings
+        
+        var nativeSettings = new NativeWindowSettings
         {
             ClientSize = new Vector2i(800, 600),
-            Title = "Mesh Viewer"
+            Title = "Mesh Viewer (OpenTK)"
         };
 
-        MeshWindow? meshWin = null;
 
-        var inputWin = new InputWindow(GameWindowSettings.Default, inputSettings);
-        meshWin = new MeshWindow(GameWindowSettings.Default, meshWindowSettings);
-
-        inputWin.OnMeshCreated = (Mesh mesh) =>
-        {
-            meshWin?.UpdateMesh(mesh);
-        };
-
-        var meshThread = new Thread(() => meshWin.Run());
-        meshThread.Start();
-
-        inputWin.Run();
+        using var window = new MeshWindow(GameWindowSettings.Default, nativeSettings);
+        window.Run();
     }
 }
