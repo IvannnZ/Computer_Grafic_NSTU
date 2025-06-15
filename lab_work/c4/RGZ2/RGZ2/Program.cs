@@ -277,30 +277,146 @@ public class PointEditorWindow : GameWindow
 
         SwapBuffers();
     }
+ 
+    public static Mesh Triangulate(List<Vector3> points)
+    {
+        Mesh mesh = new Mesh();
+        if (points.Count < 3)
+            return mesh;
+
+        List<Vector3> verts = new(points);
+        List<int> indices = Enumerable.Range(0, verts.Count).ToList();
+
+        int maxAttempts = 1000; // защита от зацикливания
+
+        while (indices.Count >= 3 && maxAttempts-- > 0)
+        {
+            bool earFound = false;
+
+            for (int i = 0; i < indices.Count; i++)
+            {
+                int i0 = indices[(i - 1 + indices.Count) % indices.Count];
+                int i1 = indices[i];
+                int i2 = indices[(i + 1) % indices.Count];
+
+                Vector3 a = verts[i0];
+                Vector3 b = verts[i1];
+                Vector3 c = verts[i2];
+
+                if (!IsConvex(a, b, c))
+                    continue;
+
+                bool hasPointInside = false;
+                for (int j = 0; j < verts.Count; j++)
+                {
+                    if (j == i0 || j == i1 || j == i2)
+                        continue;
+
+                    if (PointInTriangle(verts[j], a, b, c))
+                    {
+                        hasPointInside = true;
+                        break;
+                    }
+                }
+
+                if (hasPointInside)
+                    continue;
+
+                // Добавляем треугольник
+                mesh.Triangles.Add(new Triangle(new Vec4(a.X, a.Y, a.Z),
+                                                new Vec4(b.X, b.Y, b.Z),
+                                                new Vec4(c.X, c.Y, c.Z)));
+
+                indices.RemoveAt(i);
+                earFound = true;
+                break;
+            }
+
+            if (!earFound)
+                break; // Ошибка: не найдено ни одного уха (возможно, пересечения)
+        }
+
+        return mesh;
+    }
+
+    private static bool IsConvex(Vector3 a, Vector3 b, Vector3 c)
+    {
+        Vector2 ab = new Vector2(b.X - a.X, b.Y - a.Y);
+        Vector2 bc = new Vector2(c.X - b.X, c.Y - b.Y);
+        float cross = ab.X * bc.Y - ab.Y * bc.X;
+        return cross < 0; // < 0 если по часовой, > 0 если против
+    }
+
+    private static bool PointInTriangle(Vector3 p, Vector3 a, Vector3 b, Vector3 c)
+    {
+        Vector2 pa = new Vector2(p.X - a.X, p.Y - a.Y);
+        Vector2 pb = new Vector2(p.X - b.X, p.Y - b.Y);
+        Vector2 pc = new Vector2(p.X - c.X, p.Y - c.Y);
+
+        float cross1 = pa.X * pb.Y - pa.Y * pb.X;
+        float cross2 = pb.X * pc.Y - pb.Y * pc.X;
+        float cross3 = pc.X * pa.Y - pc.Y * pa.X;
+
+        bool hasNeg = (cross1 < 0) || (cross2 < 0) || (cross3 < 0);
+        bool hasPos = (cross1 > 0) || (cross2 > 0) || (cross3 > 0);
+
+        return !(hasNeg && hasPos); // все значения одного знака — точка внутри
+    }
+
+    
+    public static Mesh TriangulatePolygon(List<Vector3> polygonPoints)
+    {
+        var mesh = new Mesh();
+
+        if (polygonPoints.Count < 3)
+            return mesh;  // нельзя сделать триангуляцию
+
+        for (int i = 1; i < polygonPoints.Count - 1; i++)
+        {
+            Vec4 v0 = new Vec4(polygonPoints[0].X, polygonPoints[0].Y, polygonPoints[0].Z);
+            Vec4 v1 = new Vec4(polygonPoints[i].X, polygonPoints[i].Y, polygonPoints[i].Z);
+            Vec4 v2 = new Vec4(polygonPoints[i + 1].X, polygonPoints[i + 1].Y, polygonPoints[i + 1].Z);
+
+            var triangle = new Triangle(v0, v1, v2);
+            mesh.Triangles.Add(triangle);
+        }
+
+        return mesh;
+    }
 
     private void UpdateMesh()
     {
         if (_points.Count < 3)
             return;
 
-        _generatedMesh = new Mesh();
-
-        
-        // Простейшая триангуляция (по порядку) — ты можешь заменить на свою
-        for (int i = 0; i + 2 < _points.Count; i += 3)
-        {
-            Vec4 v1 = new Vec4(_points[i].X,     _points[i].Y,     _points[i].Z);
-            Vec4 v2 = new Vec4(_points[i + 1].X, _points[i + 1].Y, _points[i + 1].Z);
-            Vec4 v3 = new Vec4(_points[i + 2].X, _points[i + 2].Y, _points[i + 2].Z);
-
-            Triangle tri = new Triangle(v1, v2, v3);
-            _generatedMesh.Triangles.Add(tri);
-        }
-
-
-        // Отдаём полученный Mesh обратно
+        _generatedMesh = Triangulate(_points);
         OnMeshGenerated?.Invoke(_generatedMesh);
     }
+
+
+    // private void UpdateMesh()
+    // {
+    //     if (_points.Count < 3)
+    //         return;
+    //
+    //     _generatedMesh = new Mesh();
+    //
+    //     
+    //     // Простейшая триангуляция (по порядку) — ты можешь заменить на свою
+    //     for (int i = 0; i + 2 < _points.Count; i += 3)
+    //     {
+    //         Vec4 v1 = new Vec4(_points[i].X,     _points[i].Y,     _points[i].Z);
+    //         Vec4 v2 = new Vec4(_points[i + 1].X, _points[i + 1].Y, _points[i + 1].Z);
+    //         Vec4 v3 = new Vec4(_points[i + 2].X, _points[i + 2].Y, _points[i + 2].Z);
+    //
+    //         Triangle tri = new Triangle(v1, v2, v3);
+    //         _generatedMesh.Triangles.Add(tri);
+    //     }
+    //
+    //
+    //     // Отдаём полученный Mesh обратно
+    //     OnMeshGenerated?.Invoke(_generatedMesh);
+    // }
 
     protected override void OnUnload()
     {
