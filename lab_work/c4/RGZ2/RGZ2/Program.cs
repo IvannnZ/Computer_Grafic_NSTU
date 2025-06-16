@@ -272,6 +272,8 @@ public class PointEditorWindow : GameWindow
 
         GL.UseProgram(_shaderProgram);
 
+        GL.PointSize(10f);  // <-- Увеличенный размер точек
+
         GL.BindVertexArray(_vao);
         GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo);
         GL.BufferData(BufferTarget.ArrayBuffer, _points.Count * 3 * sizeof(float), _points.ToArray(), BufferUsageHint.DynamicDraw);
