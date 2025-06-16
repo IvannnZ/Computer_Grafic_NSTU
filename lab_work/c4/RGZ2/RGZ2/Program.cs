@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using System.Collections.Concurrent;
 
+using DelaunatorSharp;
+using System.Collections.Generic;
+
 public class MeshWindow : GameWindow
 {
     private int _vao, _vbo;
@@ -277,7 +280,38 @@ public class PointEditorWindow : GameWindow
 
         SwapBuffers();
     }
- 
+
+    public static Mesh Triangulate(List<Vector3> points)
+    {
+        Mesh mesh = new Mesh();
+        if (points == null || points.Count < 3)
+            return mesh;
+
+        IPoint[] delaunayPoints = new IPoint[points.Count];
+        for (int i = 0; i < points.Count; i++)
+            delaunayPoints[i] = new Point(points[i].X, points[i].Y);
+
+        var delaunator = new Delaunator(delaunayPoints);
+
+        for (int i = 0; i < delaunator.Triangles.Length; i += 3)
+        {
+            int i0 = delaunator.Triangles[i];
+            int i1 = delaunator.Triangles[i + 1];
+            int i2 = delaunator.Triangles[i + 2];
+
+            var p0 = points[i0];
+            var p1 = points[i1];
+            var p2 = points[i2];
+
+            mesh.Triangles.Add(new Triangle(
+                new Vec4(p0.X, p0.Y, p0.Z),
+                new Vec4(p1.X, p1.Y, p1.Z),
+                new Vec4(p2.X, p2.Y, p2.Z)));
+        }
+
+        return mesh;
+    }
+
   
     
     
@@ -286,8 +320,12 @@ public class PointEditorWindow : GameWindow
     {
         if (_points.Count < 3)
             return;
-
+        for (int i = 0; i < _points.Count; i++){
+            Console.WriteLine(_points[i]);
+        }
+        Console.WriteLine("\n");
         _generatedMesh = Triangulate(_points);
+        Console.WriteLine(_generatedMesh.Triangles.Count);
         OnMeshGenerated?.Invoke(_generatedMesh);
     }
 

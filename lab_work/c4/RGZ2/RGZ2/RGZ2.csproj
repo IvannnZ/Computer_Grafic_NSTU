@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Delaunator" Version="1.0.11" />
       <PackageReference Include="OpenTK" Version="4.9.4" />
     </ItemGroup>
 

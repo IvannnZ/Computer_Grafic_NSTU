@@ -29,3 +29,4 @@
 /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ2/RGZ2/obj/Debug/net8.0/RGZ2.pdb
 /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ2/RGZ2/obj/Debug/net8.0/RGZ2.genruntimeconfig.cache
 /home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ2/RGZ2/obj/Debug/net8.0/ref/RGZ2.dll
+/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ2/RGZ2/bin/Debug/net8.0/DelaunatorSharp.dll

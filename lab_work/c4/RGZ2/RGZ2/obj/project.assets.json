@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net8.0": {
+      "Delaunator/1.0.11": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/DelaunatorSharp.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/DelaunatorSharp.dll": {}
+        }
+      },
       "OpenTK/4.9.4": {
         "type": "package",
         "dependencies": {
@@ -208,6 +217,19 @@
     }
   },
   "libraries": {
+    "Delaunator/1.0.11": {
+      "sha512": "1G1A/OtQwv/Dad2N+u8RCtUTRsdbz9oqjvxYXZMcmxfUYMpUZ4AV0cU4qUM/EDZa0iTemSbYMNg3ICYO7fFNgg==",
+      "type": "package",
+      "path": "delaunator/1.0.11",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "delaunator.1.0.11.nupkg.sha512",
+        "delaunator.nuspec",
+        "lib/net471/DelaunatorSharp.dll",
+        "lib/netstandard2.0/DelaunatorSharp.dll"
+      ]
+    },
     "OpenTK/4.9.4": {
       "sha512": "fp9ZI6akO4ZuIGzuUE0QRU5zRJhXbSXa5racehFoTdvodhRDecXCOcH68mRsZaMwnxLO9ECnf2LGM9BmiJKvhw==",
       "type": "package",
@@ -419,6 +441,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "Delaunator >= 1.0.11",
       "OpenTK >= 4.9.4"
     ]
   },
@@ -459,6 +482,10 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
+          "Delaunator": {
+            "target": "Package",
+            "version": "[1.0.11, )"
+          },
           "OpenTK": {
             "target": "Package",
             "version": "[4.9.4, )"

@@ -38,6 +38,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Delaunator": {
+              "target": "Package",
+              "version": "[1.0.11, )"
+            },
             "OpenTK": {
               "target": "Package",
               "version": "[4.9.4, )"

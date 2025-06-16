@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "pSPt5Xrs9/g=",
+  "dgSpecHash": "CsEZGj6ioq0iClYjiAqErfCc5RciBJiIabKFL5a5JTZbSViNwf2gj2Fz6WnlyfhAtwh14fs4pNEqVCPfI3X16g==",
   "success": true,
   "projectFilePath": "/home/ivannz/Programing/Computer_Grafic_NSTU/lab_work/c4/RGZ2/RGZ2/RGZ2.csproj",
   "expectedPackageFiles": [
+    "/home/ivannz/.nuget/packages/delaunator/1.0.11/delaunator.1.0.11.nupkg.sha512",
     "/home/ivannz/.nuget/packages/opentk/4.9.4/opentk.4.9.4.nupkg.sha512",
     "/home/ivannz/.nuget/packages/opentk.audio.openal/4.9.4/opentk.audio.openal.4.9.4.nupkg.sha512",
     "/home/ivannz/.nuget/packages/opentk.compute/4.9.4/opentk.compute.4.9.4.nupkg.sha512",

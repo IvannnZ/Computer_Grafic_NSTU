@@ -28,6 +28,22 @@ public struct Vec4
     public static Vec4 operator *(Vec4 v, float f) => new Vec4(v.x * f, v.y * f, v.z * f);
     public static Vec4 operator /(Vec4 v, float f) => new Vec4(v.x / f, v.y / f, v.z / f);
     public static Vec4 operator -(Vec4 v) => v * -1;
+    public static bool operator ==(Vec4 a, Vec4 b) => a.x == b.x && a.y == b.y && a.z == b.z;
+    public static bool operator !=(Vec4 a, Vec4 b) => !(a == b);
+
+    
+    public override bool Equals(object obj)
+    {
+        if (obj is Vec4 v)
+            return x == v.x && y == v.y && z == v.z && w == v.w;
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(x, y,z, w);
+    }
+
 
     // Операторы присваивания
     public void Add(Vec4 v)

@@ -40,6 +40,12 @@ public class Triangle
         Points[2] = new Vec4(p3.X, p3.Y, p3.Z);
     }
 
+    public Triangle(OpenTK.Mathematics.Vector3 p1, OpenTK.Mathematics.Vector3 p2, OpenTK.Mathematics.Vector3 p3)
+    {
+        Points[0] = new Vec4(p1.X, p1.Y, p1.Z);
+        Points[1] = new Vec4(p2.X, p2.Y, p2.Z);
+        Points[2] = new Vec4(p3.X, p3.Y, p3.Z);}
+
 
     /*
      Что делает:
@@ -153,7 +159,7 @@ public class Triangle
 
 public class Mesh
 {
-    public List<Vec4> Vertices { get; } = new List<Vec4>(); // вершины
+    public List<Vec4> Vertices { get; set; } = new List<Vec4>(); // вершины
     public List<Tuple<int, int>> Lines { get; } = new List<Tuple<int, int>>(); // линии
     public List<Triangle> Triangles { get; set; } = new List<Triangle>(); // плоскости(полигоны)
 
